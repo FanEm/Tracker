@@ -1,0 +1,86 @@
+/* 
+  Localizable.strings
+  Tracker
+*/
+
+"Trackers" = "Trackers";
+
+"Statistics" = "Statistics";
+
+"Search" = "Search";
+
+"There is nothing to analyze yet" = "There is nothing to analyze yet";
+
+"What will we track" = "What will we track?";
+
+"Habits and events can be combined in meaning" = "Habits and events can be\ncombined in meaning";
+
+"Event" = "Event";
+
+"Habit" = "Habit";
+
+"Create tracker" = "Create tracker";
+
+"New habit" = "New habit";
+
+"New event" = "New event";
+
+"Enter tracker name" = "Enter tracker name";
+
+"Cancel" = "Cancel";
+
+"Create" = "Create";
+
+"Schedule" = "Schedule";
+
+"Category" = "Category";
+
+"Add category" = "Add category";
+
+"New category" = "New category";
+
+"Enter category name" = "Enter category name";
+
+"Done" = "Done";
+
+"Emoji" = "Emoji";
+
+"Color" = "Color";
+
+"Filters" = "Filters";
+
+"All trackers" = "All trackers";
+
+"Trackers for today" = "Trackers for today";
+
+"Сompleted" = "Сompleted";
+
+"Not completed" = "Not completed";
+
+"Monday" = "Monday";
+
+"Tuesday" = "Tuesday";
+
+"Wednesday" = "Wednesday";
+
+"Thursday" = "Thursday";
+
+"Friday" = "Friday";
+
+"Saturday" = "Saturday";
+
+"Sunday" = "Sunday";
+
+"Mo" = "Mo";
+
+"Tu" = "Tu";
+
+"We" = "We";
+
+"Th" = "Th";
+
+"Fr" = "Fr";
+
+"Sa" = "Sa";
+
+"Su" = "Su";

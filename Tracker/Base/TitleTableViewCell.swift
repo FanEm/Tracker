@@ -1,0 +1,30 @@
+//
+//  TitleTableViewCell.swift
+//  Tracker
+//
+
+import UIKit
+
+// MARK: - TitleTableViewCell
+class TitleTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "TitleTableViewCell"
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
+
+        backgroundColor = .trBackground
+        separatorInset = GlobalConstants.TableViewCell.separatorInset
+        
+        textLabel?.font = GlobalConstants.Font.sfPro17
+        textLabel?.textColor = .trBlack
+    }
+    
+    func configCell(label: String) {
+        textLabel?.text = label
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

@@ -1,0 +1,87 @@
+/* 
+  Localizable.strings
+  Tracker
+
+*/
+
+"Trackers" = "Трекеры";
+
+"Statistics" = "Статистика";
+
+"Search" = "Поиск";
+
+"There is nothing to analyze yet" = "Анализировать пока нечего";
+
+"What will we track" = "Что будем отслеживать?";
+
+"Habits and events can be combined in meaning" = "Привычки и события можно\nобъединить по смыслу";
+
+"Event" = "Нерегулярное событие";
+
+"Habit" = "Привычка";
+
+"Create tracker" = "Создание трекера";
+
+"New habit" = "Новая привычка";
+
+"New event" = "Новое нерегулярное событие";
+
+"Enter tracker name" = "Введите название трекера";
+
+"Cancel" = "Отменить";
+
+"Create" = "Создать";
+
+"Schedule" = "Расписание";
+
+"Category" = "Категория";
+
+"Add category" = "Добавить категорию";
+
+"New category" = "Новая категория";
+
+"Enter category name" = "Введите название категории";
+
+"Done" = "Готово";
+
+"Emoji" = "Emoji";
+
+"Color" = "Цвет";
+
+"Filters" = "Фильтры";
+
+"All trackers" = "Все трекеры";
+
+"Trackers for today" = "Трекеры на сегодня";
+
+"Сompleted" = "Завершенные";
+
+"Not completed" = "Не завершенные";
+
+"Monday" = "Понедельник";
+
+"Tuesday" = "Вторник";
+
+"Wednesday" = "Среда";
+
+"Thursday" = "Четверг";
+
+"Friday" = "Пятница";
+
+"Saturday" = "Суббота";
+
+"Sunday" = "Воскресенье";
+
+"Mo" = "Пн";
+
+"Tu" = "Вт";
+
+"We" = "Ср";
+
+"Th" = "Чт";
+
+"Fr" = "Пт";
+
+"Sa" = "Сб";
+
+"Su" = "Вс";
