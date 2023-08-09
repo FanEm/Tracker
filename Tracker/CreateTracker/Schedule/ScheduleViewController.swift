@@ -13,10 +13,7 @@ protocol ScheduleViewControllerDelegate: AnyObject {
 // MARK: - ScheduleViewController
 final class ScheduleViewController: UIViewController {
     private let scheduleView = ScheduleView()
-    private let weekDays: [WeekDay] = [
-        .monday, .tuesday, .wednesday,
-        .thursday, .friday, .saturday, .sunday
-    ]
+    private let weekDays: [WeekDay] = WeekDay.allCases
     var schedule: Set<WeekDay> = []
 
     weak var delegate: ScheduleViewControllerDelegate?

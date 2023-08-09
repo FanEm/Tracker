@@ -17,9 +17,7 @@ extension Date {
     }
     
     func dayOfTheWeek() -> WeekDay {
-        let weekdays: [WeekDay] = [
-            .sunday, .monday, .tuesday, .wednesday,.thursday, .friday, .saturday
-        ]
+        let weekdays: [WeekDay] = WeekDay.allCases
         guard
             let weekdayNumber = Calendar.current.dateComponents([.weekday], from: self).weekday
         else {

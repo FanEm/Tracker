@@ -6,7 +6,7 @@
 import Foundation
 
 // MARK: - WeekDay
-enum WeekDay: String, Codable {
+enum WeekDay: String, Codable, CaseIterable {
     case monday
     case tuesday
     case wednesday
