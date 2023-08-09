@@ -150,9 +150,20 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         case (.habit, .category):
             subLabel = vc.category?.name
         case (.habit, .schedule):
-            subLabel = vc.schedule.map { $0.abbreviatedName }.joined(separator: ", ")
+            subLabel = subLabelForSchedule(vc.schedule)
         }
         return subLabel
+    }
+
+    private func subLabelForSchedule(_ schedule: Set<WeekDay>) -> String {
+        let allWeekDays = WeekDay.allCases
+        if schedule == Set(allWeekDays) {
+            return "Every day".localized()
+        }
+        return schedule
+            .map { $0.abbreviatedName }
+            .reorder(by: allWeekDays.map { $0.abbreviatedName })
+            .joined(separator: ", ")
     }
 
     @objc private func reloadTableView() {
