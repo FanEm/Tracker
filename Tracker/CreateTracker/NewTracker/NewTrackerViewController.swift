@@ -90,12 +90,17 @@ final class NewTrackerViewController: UIViewController {
             "#F9D4D4", "#34A7FE", "#46E69D", "#35347C", "#FF674D", "#FF99CC",
             "#F6C48B", "#7994F5", "#832CF1", "#AD56DA", "#8D72E6", "#2FD058"
         ]
+        let trackerSchedule: Set<WeekDay>
+        switch type {
+            case .habit: trackerSchedule = schedule
+            case .event: trackerSchedule = Set(WeekDay.allCases)
+        }
         return Tracker(
             id: UUID(),
             name: name ?? "",
             color: colors.randomElement()!,
             emoji: emojies.randomElement()!,
-            schedule: type == .habit ? schedule : []
+            schedule: trackerSchedule
         )
     }
 
