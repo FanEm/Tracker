@@ -28,10 +28,12 @@ final class CategoryViewController: UIViewController {
     weak var delegate: CategoryViewControllerDelegate?
 
     override func loadView() {
+        super.loadView()
         setNeededView()
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         categoryView.tableView.delegate = self
         categoryView.tableView.dataSource = self
         categoryView.button.addTarget(self, action: #selector(onTap), for: .touchUpInside)

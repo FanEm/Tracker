@@ -38,6 +38,7 @@ final class NewTrackerViewController: UIViewController {
     }
 
     override func loadView() {
+        super.loadView()
         switch type {
         case .habit:
             view = NewHabitView()
@@ -47,6 +48,7 @@ final class NewTrackerViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         checkIfAllFieldsFilled()
     }

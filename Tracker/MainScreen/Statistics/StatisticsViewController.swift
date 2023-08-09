@@ -8,10 +8,12 @@ import UIKit
 // MARK: - StatisticsViewController
 final class StatisticsViewController: UIViewController {   
     override func loadView() {
+        super.loadView()
         view = EmptyView(props: .statistics)
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = .trWhite
         
         navigationController?.navigationBar.prefersLargeTitles = true

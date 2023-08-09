@@ -9,10 +9,12 @@ import UIKit
 final class CreateTrackerViewController: UIViewController {
     private let createTrackerView = CreateTrackerView()
     override func loadView() {
+        super.loadView()
         view = createTrackerView
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         createTrackerView.delegate = self
     }
 }

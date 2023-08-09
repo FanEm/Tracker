@@ -18,10 +18,12 @@ final class NewCategoryViewController: UIViewController {
     weak var delegate: NewCategoryViewControllerDelegate?
 
     override func loadView() {
+        super.loadView()
         view = newCategoryView
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         newCategoryView.button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         hideKeyboardWhenTappedAround()
         newCategoryView.textField.delegate = self

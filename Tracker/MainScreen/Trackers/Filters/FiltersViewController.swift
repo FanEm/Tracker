@@ -20,6 +20,7 @@ final class FiltersViewController: UIViewController {
     }
 
     override func loadView() {
+        super.loadView()
         view = filtersView
     }
     

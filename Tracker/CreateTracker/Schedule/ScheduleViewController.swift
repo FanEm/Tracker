@@ -22,11 +22,13 @@ final class ScheduleViewController: UIViewController {
     weak var delegate: ScheduleViewControllerDelegate?
 
     override func loadView() {
+        super.loadView()
         view = scheduleView
         scheduleView.button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         scheduleView.tableView.dataSource = self
         scheduleView.tableView.delegate = self
     }
