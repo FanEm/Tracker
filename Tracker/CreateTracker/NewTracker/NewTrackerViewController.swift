@@ -55,13 +55,20 @@ final class NewTrackerViewController: UIViewController {
     
     private func checkIfAllFieldsFilled() {
         var isAllFieldsFilled = false
-        switch type {
-        case .habit:
-            isAllFieldsFilled = name != nil && name != "" && category != nil && !schedule.isEmpty
-        case .event:
-            isAllFieldsFilled = name != nil && name != "" && category != nil
+                
+        defer {
+            NotificationCenter.default.post(name: .didAllFieldsFilled,
+                                            object: isAllFieldsFilled)
         }
-        NotificationCenter.default.post(name: .didAllFieldsFilled, object: isAllFieldsFilled)
+        
+        guard let name,
+              category != nil,
+              !name.isEmpty else { return }
+        
+        switch type {
+        case .habit: isAllFieldsFilled = !schedule.isEmpty
+        case .event: isAllFieldsFilled = true
+        }
     }
 }
 
