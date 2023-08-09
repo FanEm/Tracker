@@ -12,12 +12,16 @@ protocol ScheduleViewControllerDelegate: AnyObject {
 
 // MARK: - ScheduleViewController
 final class ScheduleViewController: UIViewController {
-    private let scheduleView = ScheduleView()
-    private let weekDays: [WeekDay] = WeekDay.allCases
-    var schedule: Set<WeekDay> = []
 
+    // MARK: - Public Properties
+    var schedule: Set<WeekDay> = []
     weak var delegate: ScheduleViewControllerDelegate?
 
+    // MARK: - Private Properties
+    private let scheduleView = ScheduleView()
+    private let weekDays: [WeekDay] = WeekDay.allCases
+
+    // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
         view = scheduleView
@@ -30,6 +34,7 @@ final class ScheduleViewController: UIViewController {
         scheduleView.tableView.delegate = self
     }
 
+    // MARK: - Private Methods
     @objc private func onTap() {
         delegate?.didTapDoneButton(schedule: schedule)
         NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)

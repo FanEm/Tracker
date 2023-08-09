@@ -7,12 +7,23 @@ import UIKit
 
 // MARK: - NewTrackerEmojiViewCell
 final class NewTrackerEmojiViewCell: UICollectionViewCell {
+
+    // MARK: - Public Properties
+    static let reuseIdentifier = "NewTrackerEmojiViewCell"
+
+    // MARK: - Private Properties
     private enum Constants {
         static let fontSize: CGFloat = 32
     }
 
-    static let reuseIdentifier = "NewTrackerEmojiViewCell"
+    private var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .sfPro(ofSize: Constants.fontSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(titleLabel)
@@ -23,17 +34,12 @@ final class NewTrackerEmojiViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Public Methods
     func configCell(emoji: String) {
         titleLabel.text = emoji
     }
 
-    private var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .sfPro(ofSize: Constants.fontSize)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -44,13 +50,24 @@ final class NewTrackerEmojiViewCell: UICollectionViewCell {
 
 // MARK: - NewTrackerColorViewCell
 final class NewTrackerColorViewCell: UICollectionViewCell {
+
+    // MARK: - Public Properties
+    static let reuseIdentifier = "NewTrackerColorViewCell"
+
+    // MARK: - Private Properties
     private enum Constants {
         static let inset: CGFloat = 5
         static let cornerRadius: CGFloat = 8
     }
 
-    static let reuseIdentifier = "NewTrackerColorViewCell"
+    private var view: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = Constants.cornerRadius
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(view)
@@ -61,17 +78,12 @@ final class NewTrackerColorViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Public Methods
     func configCell(color: UIColor) {
         view.backgroundColor = color
     }
 
-    private var view: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = Constants.cornerRadius
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.inset),

@@ -5,7 +5,10 @@
 
 import UIKit
 
+// MARK: - NewHabitView
 final class NewHabitView: NewTrackerBaseView {
+
+    // MARK: - Initializers
     init() {
         super.init(tableViewCells: [.category, .schedule])
         title.text = "New habit".localized()

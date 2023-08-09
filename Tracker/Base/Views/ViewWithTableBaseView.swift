@@ -7,31 +7,8 @@ import UIKit
 
 // MARK: - ViewWithTableBaseView
 class ViewWithTableBaseView: UIView {
-    private enum Constants {
-        enum Button {
-            static let topAndBottomInset: CGFloat = 16
-            static let trailingAndLeadingInsets: CGFloat = 20
-        }
-        enum TableView {
-            static let topInset: CGFloat = 30
-            static let bottomInset: CGFloat = 20
-            static let trailingAndLeadingInsets: CGFloat = 16
-        }
-    }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .trWhite
-        addSubview(title)
-        addSubview(tableView)
-        addSubview(button)
-        activateConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
+    // MARK: - Public Properties
     var title: UILabel = {
         let label = UILabel()
         label.font = GlobalConstants.Font.sfPro16
@@ -55,6 +32,34 @@ class ViewWithTableBaseView: UIView {
         return button
     }()
 
+    // MARK: - Private Properties
+    private enum Constants {
+        enum Button {
+            static let topAndBottomInset: CGFloat = 16
+            static let trailingAndLeadingInsets: CGFloat = 20
+        }
+        enum TableView {
+            static let topInset: CGFloat = 30
+            static let bottomInset: CGFloat = 20
+            static let trailingAndLeadingInsets: CGFloat = 16
+        }
+    }
+
+    // MARK: - Initializers
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .trWhite
+        addSubview(title)
+        addSubview(tableView)
+        addSubview(button)
+        activateConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(

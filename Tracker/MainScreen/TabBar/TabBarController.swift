@@ -7,14 +7,9 @@ import UIKit
 
 // MARK: - TabBarController
 final class TabBarController: UITabBarController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-        setAppearance()
-
-        self.viewControllers = [trackersNavigationController, statisticsNavigationController]
-    }
-
+    
+    // MARK: - Private Properties
     private var trackersNavigationController: TrackersNavigationController {
         let navigationController = TrackersNavigationController()
         let viewController = TrackersViewController()
@@ -43,6 +38,16 @@ final class TabBarController: UITabBarController {
         return navigationController
     }
 
+    // MARK: - Overrides Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setAppearance()
+
+        self.viewControllers = [trackersNavigationController, statisticsNavigationController]
+    }
+
+    // MARK: - Private Methods
     private func setAppearance() {
         tabBar.backgroundColor = .trWhite
         tabBar.barTintColor = .trWhite

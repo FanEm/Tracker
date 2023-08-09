@@ -7,6 +7,12 @@ import UIKit
 
 // MARK: - NewTrackerFooterView
 final class NewTrackerFooterView: UICollectionReusableView {
+
+    // MARK: - Public Properties
+    static let reuseIdentifier = "NewTrackerFooterView"
+    weak var delegate: NewTrackerBaseViewDelegate?
+
+    // MARK: - Private Properties
     private enum Constants {
         enum StackView {
             static let topAndBottomInset: CGFloat = 16
@@ -16,22 +22,6 @@ final class NewTrackerFooterView: UICollectionReusableView {
         enum Button {
             static let borderWidth: CGFloat = 1
         }
-    }
-
-    static let reuseIdentifier = "NewTrackerFooterView"
-
-    weak var delegate: NewTrackerBaseViewDelegate?
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .trWhite
-        addSubview(stackView)
-        createAllFieldsFilledObserver()
-        activateConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private lazy var cancelButton: UIButton = {
@@ -66,13 +56,20 @@ final class NewTrackerFooterView: UICollectionReusableView {
         return stackView
     }()
 
-    @objc private func changeCreateButtonState(notification: Notification) {
-        guard let isEnabled = notification.object as? Bool else { return }
-        createButton.isEnabled = isEnabled
-        createButton.backgroundColor = isEnabled ? .trBlack : .trGray
-        createButton.setTitleColor(isEnabled ? .trWhite : .trPermWhite , for: .normal)
+    // MARK: - Initializers
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .trWhite
+        addSubview(stackView)
+        createAllFieldsFilledObserver()
+        activateConstraints()
     }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Methods
     private func createAllFieldsFilledObserver() {
         return NotificationCenter.default.addObserver(self,
                                                       selector: #selector(changeCreateButtonState(notification:)),
@@ -101,11 +98,18 @@ final class NewTrackerFooterView: UICollectionReusableView {
         ])
     }
 
-    @objc func didTapCancelButton() {
+    @objc private func didTapCancelButton() {
         delegate?.didTapCancelButton()
     }
-    
-    @objc func didTapCreateButton() {
+
+    @objc private func didTapCreateButton() {
         delegate?.didTapCreateButton()
+    }
+
+    @objc private func changeCreateButtonState(notification: Notification) {
+        guard let isEnabled = notification.object as? Bool else { return }
+        createButton.isEnabled = isEnabled
+        createButton.backgroundColor = isEnabled ? .trBlack : .trGray
+        createButton.setTitleColor(isEnabled ? .trWhite : .trPermWhite , for: .normal)
     }
 }

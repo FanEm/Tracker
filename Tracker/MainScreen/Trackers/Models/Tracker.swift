@@ -5,6 +5,7 @@
 
 import UIKit
 
+// MARK: - Tracker
 struct Tracker: Codable {
     let id: UUID
     let name: String

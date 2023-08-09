@@ -7,6 +7,7 @@ import UIKit
 
 // MARK: - FiltersViewController
 final class FiltersViewController: UIViewController {
+    // MARK: - Private Properties
     private let filtersView = FiltersView()
     private let storage = Storage.shared
     private let filters: [FilterType] = [.all, .today, .completed, .inProgress]
@@ -19,11 +20,12 @@ final class FiltersViewController: UIViewController {
         }
     }
 
+    // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
         view = filtersView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         filtersView.tableView.delegate = self
@@ -55,18 +57,6 @@ extension FiltersViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension FiltersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        checkCell(at: indexPath, in: tableView)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        GlobalConstants.TableViewCell.height
-    }
-
-    private func checkCell(at indexPath: IndexPath, in tableView: UITableView) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         tableView.visibleCells.forEach { visibleCell in
             visibleCell.accessoryType = .none
@@ -78,5 +68,13 @@ extension FiltersViewController: UITableViewDelegate {
             cell.isSelected = true
             currentFilter = filter
         }
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        GlobalConstants.TableViewCell.height
     }
 }

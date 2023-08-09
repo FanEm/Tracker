@@ -7,6 +7,15 @@ import UIKit
 
 // MARK: - CategoryEmptyView
 final class CategoryEmptyView: EmptyView {
+    
+    // MARK: - Public Properties
+    var button: UIButton = {
+        let button = BaseButton()
+        button.setTitle("Add category".localized(), for: .normal)
+        return button
+    }()
+
+    // MARK: - Private Properties
     private enum Constants {
         enum Button {
             static let bottomInset: CGFloat = 16
@@ -14,6 +23,16 @@ final class CategoryEmptyView: EmptyView {
         }
     }
 
+    private var title: UILabel = {
+        let label = UILabel()
+        label.font = GlobalConstants.Font.sfPro16
+        label.textColor = .trBlack
+        label.text = "Category".localized()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    // MARK: - Initializers
     init() {
         super.init(props: .category)
         addSubview(title)
@@ -24,22 +43,8 @@ final class CategoryEmptyView: EmptyView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private var title: UILabel = {
-        let label = UILabel()
-        label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
-        label.text = "Category".localized()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    var button: UIButton = {
-        let button = BaseButton()
-        button.setTitle("Add category".localized(), for: .normal)
-        return button
-    }()
-    
+
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(

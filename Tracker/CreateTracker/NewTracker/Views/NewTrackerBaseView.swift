@@ -13,6 +13,18 @@ protocol NewTrackerBaseViewDelegate: AnyObject {
 
 // MARK: - NewTrackerBaseView
 class NewTrackerBaseView: UIView {
+
+    // MARK: - Public Properties
+    var tableViewCells: [NewTrackerCellType]
+    var title: UILabel = {
+        let label = UILabel()
+        label.font = GlobalConstants.Font.sfPro16
+        label.textColor = .trBlack
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    // MARK: - Private Properties
     private enum Constants {
         enum CollectionView {
             static let topInset: CGFloat = 14
@@ -21,46 +33,6 @@ class NewTrackerBaseView: UIView {
             static let sectionInset = UIEdgeInsets(top: 24, left: 18, bottom: 24, right: 18)
         }
     }
-
-    private let emojies = [
-        "🙂", "😻", "🌺", "🐶", "❤️", "😱",
-        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
-        "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
-    ]
-
-    private let colors: [UIColor] = [
-        "#FD4C49", "#FF881E", "#007BFA", "#6E44FE", "#33CF69", "#E66DD4",
-        "#F9D4D4", "#34A7FE", "#46E69D", "#35347C", "#FF674D", "#FF99CC",
-        "#F6C48B", "#7994F5", "#832CF1", "#AD56DA", "#8D72E6", "#2FD058"
-    ].map { UIColor(hexString: $0) }
-
-    var tableViewCells: [NewTrackerCellType]
-
-    init(tableViewCells: [NewTrackerCellType]) {
-        self.tableViewCells = tableViewCells
-        super.init(frame: .zero)
-        backgroundColor = .trWhite
-
-        addSubview(title)
-        addSubview(collectionView)
-
-        collectionView.dataSource = self
-        collectionView.delegate = self
-
-        activateConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    var title: UILabel = {
-        let label = UILabel()
-        label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
 
     private var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
@@ -94,6 +66,39 @@ class NewTrackerBaseView: UIView {
         return collectionView
     }()
 
+    private let emojies = [
+        "🙂", "😻", "🌺", "🐶", "❤️", "😱",
+        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
+        "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
+    ]
+
+    private let colors: [UIColor] = [
+        "#FD4C49", "#FF881E", "#007BFA", "#6E44FE", "#33CF69", "#E66DD4",
+        "#F9D4D4", "#34A7FE", "#46E69D", "#35347C", "#FF674D", "#FF99CC",
+        "#F6C48B", "#7994F5", "#832CF1", "#AD56DA", "#8D72E6", "#2FD058"
+    ].map { UIColor(hexString: $0) }
+
+    
+    // MARK: - Initializers
+    init(tableViewCells: [NewTrackerCellType]) {
+        self.tableViewCells = tableViewCells
+        super.init(frame: .zero)
+        backgroundColor = .trWhite
+
+        addSubview(title)
+        addSubview(collectionView)
+
+        collectionView.dataSource = self
+        collectionView.delegate = self
+
+        activateConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(
@@ -293,15 +298,5 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         )
-    }
-}
-
-// MARK: - NewTrackerCellType
-enum NewTrackerCellType: String {
-    case category
-    case schedule
-    
-    var name: String {
-        self.rawValue.capitalized.localized()
     }
 }

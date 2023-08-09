@@ -7,6 +7,8 @@ import UIKit
 
 // MARK: - BaseButton
 final class BaseButton: UIButton {
+
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = GlobalConstants.cornerRadius

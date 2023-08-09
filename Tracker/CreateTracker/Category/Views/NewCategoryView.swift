@@ -7,6 +7,31 @@ import UIKit
 
 // MARK: - NewCategoryView
 final class NewCategoryView: UIView {
+
+    // MARK: - Public Properties
+    lazy var textField: TextField = {
+        let textField = TextField()
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Enter category name".localized(),
+            attributes: [
+                .foregroundColor: UIColor.trGray,
+                .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
+            ]
+        )
+        textField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        return textField
+    }()
+
+    lazy var button: UIButton = {
+        let button = BaseButton()
+        button.setTitleColor(.trPermWhite, for: .normal)
+        button.setTitle("Done".localized(), for: .normal)
+        button.backgroundColor = .trGray
+        button.isEnabled = false
+        return button
+    }()
+
+    // MARK: - Private Properties
     private enum Constants {
         enum Button {
             static let bottomInset: CGFloat = 16
@@ -18,7 +43,17 @@ final class NewCategoryView: UIView {
             static let trailingAndLeadingInsets: CGFloat = 16
         }
     }
+    
+    private var title: UILabel = {
+        let label = UILabel()
+        label.text = "New category".localized()
+        label.font = GlobalConstants.Font.sfPro16
+        label.textColor = .trBlack
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .trWhite
@@ -32,37 +67,7 @@ final class NewCategoryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var title: UILabel = {
-        let label = UILabel()
-        label.text = "New category".localized()
-        label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    lazy var textField: TextField = {
-        let textField = TextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Enter category name".localized(),
-            attributes: [
-                .foregroundColor: UIColor.trGray,
-                .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
-            ]
-        )
-        textField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-        return textField
-    }()
-    
-    lazy var button: UIButton = {
-        let button = BaseButton()
-        button.setTitleColor(.trPermWhite, for: .normal)
-        button.setTitle("Done".localized(), for: .normal)
-        button.backgroundColor = .trGray
-        button.isEnabled = false
-        return button
-    }()
-    
+    // MARK: - Private Methods
     @objc private func changeButtonState(isEnabled: Bool) {
         button.isEnabled = isEnabled
         button.backgroundColor = isEnabled ? .trBlack : .trGray

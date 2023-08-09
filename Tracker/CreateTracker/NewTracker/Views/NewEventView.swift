@@ -7,6 +7,8 @@ import UIKit
 
 // MARK: - NewEventView
 final class NewEventView: NewTrackerBaseView {
+
+    // MARK: - Initializers
     init() {
         super.init(tableViewCells: [.category])
         title.text = "New event".localized()

@@ -7,6 +7,20 @@ import UIKit
 
 // MARK: - BaseSectionTitleView
 final class BaseSectionTitleView: UICollectionReusableView {
+
+    // MARK: - Public Properties
+    static let reuseIdentifier = "NewEventSectionTitleView"
+
+    var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = .sfPro(ofSize: Constants.fontSize, withStyle: .bold)
+        label.textColor = .trBlack
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    // MARK: - Private Properties
     private enum Constants {
         static let fontSize: CGFloat = 19
         enum Label {
@@ -14,8 +28,7 @@ final class BaseSectionTitleView: UICollectionReusableView {
         }
     }
 
-    static let reuseIdentifier = "NewEventSectionTitleView"
-
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
     
@@ -28,15 +41,7 @@ final class BaseSectionTitleView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var titleLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.font = .sfPro(ofSize: Constants.fontSize, withStyle: .bold)
-        label.textColor = .trBlack
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(

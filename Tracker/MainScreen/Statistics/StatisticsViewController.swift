@@ -6,7 +6,9 @@
 import UIKit
 
 // MARK: - StatisticsViewController
-final class StatisticsViewController: UIViewController {   
+final class StatisticsViewController: UIViewController {
+
+    // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
         view = EmptyView(props: .statistics)

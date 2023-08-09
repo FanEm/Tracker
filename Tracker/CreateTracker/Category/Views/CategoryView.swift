@@ -7,6 +7,8 @@ import UIKit
 
 // MARK: - CategoryView
 final class CategoryView: ViewWithTableBaseView {
+
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         setpUpUI()
@@ -15,7 +17,8 @@ final class CategoryView: ViewWithTableBaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    // MARK: - Private Methods
     private func setpUpUI() {
         title.text = "Category".localized()
         tableView.register(

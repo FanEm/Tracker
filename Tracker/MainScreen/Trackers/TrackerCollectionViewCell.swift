@@ -7,6 +7,15 @@ import UIKit
 
 // MARK: - TrackerCollectionViewCell
 final class TrackerCollectionViewCell: UICollectionViewCell {
+
+
+    // MARK: - Public Properties
+    static let reuseIdentifier = "TrackerCollectionViewCell"
+    var tracker: Tracker? = nil
+    var currentDate: Date = Date().stripTime()
+
+    // MARK: - Private Properties
+    private let storage = Storage.shared
     private enum Constants {
         static let leadingAndTrailingInsets: CGFloat = 12
         enum Label {
@@ -30,9 +39,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
             static let bottomInset: CGFloat = 16
         }
     }
-
-    static let reuseIdentifier = "TrackerCollectionViewCell"
-    private let storage = Storage.shared
+    
     private var doneCounter: Int = 0 {
         didSet {
             self.quantityLabel.text = "Days".localizedWithFormat(args: doneCounter)
@@ -46,76 +53,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
             storage.completedTrackers = newValue
         }
     }
-    var tracker: Tracker? = nil
-    var currentDate: Date = Date().stripTime()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        contentView.addSubview(cardView)
-        cardView.addSubview(emojiLabel)
-        cardView.addSubview(label)
-
-        contentView.addSubview(quantityView)
-        quantityView.addSubview(quantityLabel)
-        quantityView.addSubview(quantityButton)
-
-        activateConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func configCell(tracker: Tracker) {
-        let color = UIColor(hexString: tracker.color)
-        cardView.backgroundColor = color
-        quantityButton.tintColor = color
-        emojiLabel.text = tracker.emoji
-        label.text = tracker.name
-        
-        if checkIfTrackerIsDone(tracker) {
-            // TODO: заменить на doneButton, когда иконку поправят.
-            setImageForButton(image: .Trackers.minusButton, color: color)
-        } else {
-            setImageForButton(image: .Trackers.plusButton, color: color)
-        }
-        doneCounter = doneCounterForTracker(tracker)
-    }
-
-    private func setImageForButton(image: UIImage, color: UIColor) {
-        let tintedImage = image.withRenderingMode(.alwaysTemplate)
-        quantityButton.setImage(tintedImage, for: .normal)
-    }
-
-    @objc private func tapOnQuantityButton() {
-        guard let tracker else { return }
-        let color = UIColor(hexString: tracker.color)
-        let isDoneToday = checkIfTrackerIsDone(tracker)
-        if isDoneToday {
-            setImageForButton(image: .Trackers.plusButton, color: color)
-            completedTrackers = completedTrackersWithout(tracker)
-        } else {
-            // TODO: заменить на doneButton, когда иконку поправят.
-            setImageForButton(image: .Trackers.minusButton, color: color)
-            completedTrackers.append(TrackerRecord(trackerId: tracker.id, date: currentDate))
-        }
-        doneCounter = doneCounterForTracker(tracker)
-    }
-
-    private func completedTrackersWithout(_ tracker: Tracker) -> [TrackerRecord] {
-        completedTrackers.filter { !($0.trackerId == tracker.id && $0.date == currentDate) }
-    }
-
-    private func checkIfTrackerIsDone(_ tracker: Tracker) -> Bool {
-        completedTrackers.filter { $0.trackerId == tracker.id && $0.date == currentDate }.count == 1
-    }
-
-    private func doneCounterForTracker(_ tracker: Tracker) -> Int {
-        completedTrackers.filter { $0.trackerId == tracker.id && $0.date <= currentDate }.count
-    }
-
-    // MARK: Configure UI
     private var cardView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = GlobalConstants.cornerRadius
@@ -255,6 +193,60 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         ]
     }
 
+    // MARK: - Initializers
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        contentView.addSubview(cardView)
+        cardView.addSubview(emojiLabel)
+        cardView.addSubview(label)
+
+        contentView.addSubview(quantityView)
+        quantityView.addSubview(quantityLabel)
+        quantityView.addSubview(quantityButton)
+
+        activateConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Public Methods
+    func configCell(tracker: Tracker) {
+        let color = UIColor(hexString: tracker.color)
+        cardView.backgroundColor = color
+        quantityButton.tintColor = color
+        emojiLabel.text = tracker.emoji
+        label.text = tracker.name
+        
+        if checkIfTrackerIsDone(tracker) {
+            // TODO: заменить на doneButton, когда иконку поправят.
+            setImageForButton(image: .Trackers.minusButton, color: color)
+        } else {
+            setImageForButton(image: .Trackers.plusButton, color: color)
+        }
+        doneCounter = doneCounterForTracker(tracker)
+    }
+
+    // MARK: - Private Methods
+    private func setImageForButton(image: UIImage, color: UIColor) {
+        let tintedImage = image.withRenderingMode(.alwaysTemplate)
+        quantityButton.setImage(tintedImage, for: .normal)
+    }
+
+    private func completedTrackersWithout(_ tracker: Tracker) -> [TrackerRecord] {
+        completedTrackers.filter { !($0.trackerId == tracker.id && $0.date == currentDate) }
+    }
+
+    private func checkIfTrackerIsDone(_ tracker: Tracker) -> Bool {
+        completedTrackers.filter { $0.trackerId == tracker.id && $0.date == currentDate }.count == 1
+    }
+
+    private func doneCounterForTracker(_ tracker: Tracker) -> Int {
+        completedTrackers.filter { $0.trackerId == tracker.id && $0.date <= currentDate }.count
+    }
+
     private func activateConstraints() {
         NSLayoutConstraint.activate(
             cardViewConstraints +
@@ -264,5 +256,20 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
             emojiLabelConstraints +
             labelConstraints
         )
+    }
+
+    @objc private func tapOnQuantityButton() {
+        guard let tracker else { return }
+        let color = UIColor(hexString: tracker.color)
+        let isDoneToday = checkIfTrackerIsDone(tracker)
+        if isDoneToday {
+            setImageForButton(image: .Trackers.plusButton, color: color)
+            completedTrackers = completedTrackersWithout(tracker)
+        } else {
+            // TODO: заменить на doneButton, когда иконку поправят.
+            setImageForButton(image: .Trackers.minusButton, color: color)
+            completedTrackers.append(TrackerRecord(trackerId: tracker.id, date: currentDate))
+        }
+        doneCounter = doneCounterForTracker(tracker)
     }
 }

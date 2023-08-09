@@ -13,28 +13,17 @@ protocol CreateTrackerViewDelegate: AnyObject {
 
 // MARK: - CreateTrackerView
 final class CreateTrackerView: UIView {
+
+    // MARK: - Public Properties
+    weak var delegate: CreateTrackerViewDelegate?
+    
+    // MARK: - Private Properties
     private enum Constants {
         static let topInset: CGFloat = 250
         static let bottomInset: CGFloat = 16
         static let leadingAndTrailingInset: CGFloat = 20
     }
 
-    weak var delegate: CreateTrackerViewDelegate?
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        backgroundColor = .trWhite
-        addSubview(title)
-        addSubview(habitButton)
-        addSubview(eventButton)
-        activateConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     private lazy var habitButton: UIButton = {
         let button = BaseButton()
         button.setTitle("Habit".localized(), for: .normal)
@@ -58,6 +47,22 @@ final class CreateTrackerView: UIView {
         return label
     }()
 
+    // MARK: - Initializers
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        backgroundColor = .trWhite
+        addSubview(title)
+        addSubview(habitButton)
+        addSubview(eventButton)
+        activateConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             title.topAnchor.constraint(

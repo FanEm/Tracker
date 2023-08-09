@@ -7,14 +7,9 @@ import Foundation
 
 // MARK: - Storage
 final class Storage {
-    private enum Keys: String {
-        case categories, filter, trackers, completedTrackers
-    }
 
+    // MARK: - Public Properties
     static let shared = Storage()
-    private let userDefaults = UserDefaults.standard
-
-    private init() { }
 
     var categories: [Category] {
         get {
@@ -83,4 +78,14 @@ final class Storage {
             userDefaults.set(data, forKey: Keys.filter.rawValue)
         }
     }
+
+    // MARK: - Private Properties
+    private let userDefaults = UserDefaults.standard
+    
+    private enum Keys: String {
+        case categories, filter, trackers, completedTrackers
+    }
+
+    // MARK: - Initializers
+    private init() { }
 }

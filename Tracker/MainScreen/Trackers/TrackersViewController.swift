@@ -7,6 +7,8 @@ import UIKit
 
 // MARK: - TrackersViewController
 final class TrackersViewController: UIViewController {
+    
+    // MARK: - Private Properties
     private static let dateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -14,9 +16,13 @@ final class TrackersViewController: UIViewController {
         formatter.timeZone = .current
         return formatter
     }()
+
     private let storage = Storage.shared
     private let trackersView = TrackersView()
     private let emptyView = EmptyView(props: .trackers)
+
+    private var currentDate: Date = Date().stripTime()
+    private var visibleCategories: [TrackerCategory] = []
 
     private var trackerCategories: [TrackerCategory] {
         get {
@@ -26,7 +32,6 @@ final class TrackersViewController: UIViewController {
             storage.trackerCategories = newValue
         }
     }
-    private var visibleCategories: [TrackerCategory] = []
     private var completedTrackers: [TrackerRecord] {
         get {
             return storage.completedTrackers
@@ -35,22 +40,10 @@ final class TrackersViewController: UIViewController {
             storage.completedTrackers = newValue
         }
     }
-    private var currentDate: Date = Date().stripTime()
+
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureNavigationBar()
-        filterCategoriesByDate()
-        setNeededView()
-
-        trackersView.collectionView.delegate = self
-        trackersView.collectionView.dataSource = self
-
-        createNewTrackerCreatedObserver()
     }
 
     private lazy var searchController: UISearchController = {
@@ -71,6 +64,20 @@ final class TrackersViewController: UIViewController {
         return datePicker
     }()
 
+    // MARK: - Overrides Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureNavigationBar()
+        filterCategoriesByDate()
+        setNeededView()
+
+        trackersView.collectionView.delegate = self
+        trackersView.collectionView.dataSource = self
+
+        createNewTrackerCreatedObserver()
+    }
+
+    // MARK: - Private Methods
     private func configureNavigationBar() {
         guard let navBar = navigationController?.navigationBar else { return }
 
@@ -92,18 +99,6 @@ final class TrackersViewController: UIViewController {
         navigationItem.searchController = searchController
 
         navBar.tintColor = .trBlack
-    }
-    
-    @objc private func presentCreateTrackerViewController() {
-        let viewController = CreateTrackerViewController()
-        present(viewController, animated: true)
-    }
-
-    @objc func datePickerChanged(picker: UIDatePicker) {
-        currentDate = picker.date.stripTime()
-        filterCategoriesByDate()
-        setNeededView()
-        trackersView.collectionView.reloadData()
     }
 
     private func dateCondition(tracker: Tracker) -> Bool {
@@ -142,6 +137,18 @@ final class TrackersViewController: UIViewController {
                                                       selector: #selector(reloadCollectionView),
                                                       name: .didNewTrackerCreated,
                                                       object: nil)
+    }
+
+    @objc private func presentCreateTrackerViewController() {
+        let viewController = CreateTrackerViewController()
+        present(viewController, animated: true)
+    }
+
+    @objc private func datePickerChanged(picker: UIDatePicker) {
+        currentDate = picker.date.stripTime()
+        filterCategoriesByDate()
+        setNeededView()
+        trackersView.collectionView.reloadData()
     }
 
     @objc private func reloadCollectionView() {

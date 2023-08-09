@@ -13,6 +13,13 @@ enum NewTrackerViewControllerType {
 
 // MARK: - NewTrackerViewController
 final class NewTrackerViewController: UIViewController {
+
+    // MARK: - Public Properties
+    let type: NewTrackerViewControllerType
+    var category: Category? = nil
+    var schedule: Set<WeekDay> = []
+
+    // MARK: - Private Properties
     private let storage = Storage.shared
     private var name: String?
     private var trackerCategories: [TrackerCategory] {
@@ -24,10 +31,7 @@ final class NewTrackerViewController: UIViewController {
         }
     }
 
-    var category: Category? = nil
-    var schedule: Set<WeekDay> = []
-    let type: NewTrackerViewControllerType
-    
+    // MARK: - Initializers
     init(type: NewTrackerViewControllerType) {
         self.type = type
         super.init(nibName: nil, bundle: nil)
@@ -37,6 +41,7 @@ final class NewTrackerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
         switch type {
@@ -52,7 +57,8 @@ final class NewTrackerViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         checkIfAllFieldsFilled()
     }
-    
+
+    // MARK: - Private Methods
     private func checkIfAllFieldsFilled() {
         var isAllFieldsFilled = false
                 
@@ -70,29 +76,7 @@ final class NewTrackerViewController: UIViewController {
         case .event: isAllFieldsFilled = true
         }
     }
-}
 
-// MARK: - NewTrackerBaseViewDelegate
-extension NewTrackerViewController: NewTrackerBaseViewDelegate {
-    func didTapCancelButton() {
-        dismiss(animated: true)
-    }
-    
-    func didTapCreateButton() {
-        guard let category else {
-            assertionFailure("Some params are nil")
-            return
-        }
-        let tracker = buildTracker()
-        if trackerCategories.contains(where: {$0.name == category.name } ) {
-            addTrackerToExistingCategory(tracker: tracker, category: category)
-        } else {
-            addTrackerToNewCategory(tracker: tracker, category: category)
-        }
-        NotificationCenter.default.post(name: .didNewTrackerCreated, object: nil)
-        dismiss(animated: true)
-    }
-    
     private func buildTracker() -> Tracker {
         // TODO: добавить возможность выбрать цвет и эмоджи на экране
         let emojies = [
@@ -114,7 +98,7 @@ extension NewTrackerViewController: NewTrackerBaseViewDelegate {
             schedule: type == .habit ? schedule : []
         )
     }
-    
+
     private func addTrackerToExistingCategory(tracker: Tracker, category: Category) {
         var newCategories = trackerCategories
         guard
@@ -138,6 +122,28 @@ extension NewTrackerViewController: NewTrackerBaseViewDelegate {
             trackers: [tracker]
         )
         trackerCategories.append(trackerCategory)
+    }
+}
+
+// MARK: - NewTrackerBaseViewDelegate
+extension NewTrackerViewController: NewTrackerBaseViewDelegate {
+    func didTapCancelButton() {
+        dismiss(animated: true)
+    }
+    
+    func didTapCreateButton() {
+        guard let category else {
+            assertionFailure("Some params are nil")
+            return
+        }
+        let tracker = buildTracker()
+        if trackerCategories.contains(where: {$0.name == category.name } ) {
+            addTrackerToExistingCategory(tracker: tracker, category: category)
+        } else {
+            addTrackerToNewCategory(tracker: tracker, category: category)
+        }
+        NotificationCenter.default.post(name: .didNewTrackerCreated, object: nil)
+        dismiss(animated: true)
     }
 }
 

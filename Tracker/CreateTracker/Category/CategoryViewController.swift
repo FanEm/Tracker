@@ -12,6 +12,12 @@ protocol CategoryViewControllerDelegate: AnyObject {
 
 // MARK: - CategoryViewController
 final class CategoryViewController: UIViewController {
+
+    // MARK: - Public Properties
+    var selectedCategory: Category?
+    weak var delegate: CategoryViewControllerDelegate?
+
+    // MARK: - Private Properties
     private let storage = Storage.shared
     private let emptyView = CategoryEmptyView()
     private let categoryView = CategoryView()
@@ -23,10 +29,8 @@ final class CategoryViewController: UIViewController {
             storage.categories = newValue
         }
     }
-    var selectedCategory: Category?
 
-    weak var delegate: CategoryViewControllerDelegate?
-
+    // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
         setNeededView()
@@ -40,6 +44,7 @@ final class CategoryViewController: UIViewController {
         emptyView.button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
+    // MARK: - Private Methods
     private func setNeededView() {
         view = categories.isEmpty ? emptyView : categoryView
     }

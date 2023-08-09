@@ -12,6 +12,30 @@ protocol NewTrackerHeaderViewDelegate: AnyObject {
 
 // MARK: - NewTrackerHeaderView
 final class NewTrackerHeaderView: UICollectionReusableView {
+
+    // MARK: - Public Properties
+    static let reuseIdentifier = "NewTrackerHeaderView"
+    weak var delegate: NewTrackerHeaderViewDelegate?
+    var tableViewCells: [NewTrackerCellType] = [] {
+        didSet {
+            layoutTableViewHeight()
+        }
+    }
+
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .trWhite
+        tableView.register(
+            SubtitleTableViewCell.self,
+            forCellReuseIdentifier: SubtitleTableViewCell.reuseIdentifier
+        )
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .trGray
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+
+    // MARK: - Private Properties
     private enum Constants {
         static let leadingAndTrailingInsets: CGFloat = 16
         enum TextField {
@@ -24,16 +48,25 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         }
     }
 
-    static let reuseIdentifier = "NewTrackerHeaderView"
+    private lazy var textField: TextField = {
+        let textField = TextField()
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "Enter tracker name".localized(),
+            attributes: [
+                .foregroundColor: UIColor.trGray,
+                .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
+            ]
+        )
+        textField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        return textField
+    }()
 
-    weak var delegate: NewTrackerHeaderViewDelegate?
+    private lazy var tableViewHeightAnchor = {
+        self.tableView.heightAnchor.constraint(equalToConstant: 0)
+    }()
 
-    var tableViewCells: [NewTrackerCellType] = [] {
-        didSet {
-            layoutTableViewHeight()
-        }
-    }
 
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .trWhite
@@ -53,41 +86,8 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private lazy var textField: TextField = {
-        let textField = TextField()
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Enter tracker name".localized(),
-            attributes: [
-                .foregroundColor: UIColor.trGray,
-                .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
-            ]
-        )
-        textField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-        return textField
-    }()
 
-    @objc func textFieldChanged(_ textField: UITextField) {
-        delegate?.didChangedTextField(text: textField.text)
-    }
-
-    var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .trWhite
-        tableView.register(
-            SubtitleTableViewCell.self,
-            forCellReuseIdentifier: SubtitleTableViewCell.reuseIdentifier
-        )
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .trGray
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-
-    private lazy var tableViewHeightAnchor = {
-        self.tableView.heightAnchor.constraint(equalToConstant: 0)
-    }()
-
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             textField.topAnchor.constraint(
@@ -140,9 +140,29 @@ final class NewTrackerHeaderView: UICollectionReusableView {
                                                       object: nil)
     }
 
-    @objc func reloadTableView() {
+    private func subLabelOn(_ vc: NewTrackerViewController, for cellType: NewTrackerCellType) -> String? {
+        var subLabel: String?
+        switch (vc.type, cellType)  {
+        case (.event, .category):
+            subLabel = vc.category?.name
+        case (.event, .schedule):
+            subLabel = nil
+        case (.habit, .category):
+            subLabel = vc.category?.name
+        case (.habit, .schedule):
+            subLabel = vc.schedule.map { $0.abbreviatedName }.joined(separator: ", ")
+        }
+        return subLabel
+    }
+
+    @objc private func reloadTableView() {
         tableView.reloadData()
     }
+
+    @objc private func textFieldChanged(_ textField: UITextField) {
+        delegate?.didChangedTextField(text: textField.text)
+    }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -169,21 +189,6 @@ extension NewTrackerHeaderView: UITableViewDataSource {
         subtitleTableViewCell.accessoryType = .disclosureIndicator
         tableView.hideLastSeparator(cell: subtitleTableViewCell, indexPath: indexPath)
         return subtitleTableViewCell
-    }
-
-    private func subLabelOn(_ vc: NewTrackerViewController, for cellType: NewTrackerCellType) -> String? {
-        var subLabel: String?
-        switch (vc.type, cellType)  {
-        case (.event, .category):
-            subLabel = vc.category?.name
-        case (.event, .schedule):
-            subLabel = nil
-        case (.habit, .category):
-            subLabel = vc.category?.name
-        case (.habit, .schedule):
-            subLabel = vc.schedule.map { $0.abbreviatedName }.joined(separator: ", ")
-        }
-        return subLabel
     }
 }
 

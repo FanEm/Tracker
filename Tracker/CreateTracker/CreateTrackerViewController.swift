@@ -7,7 +7,11 @@ import UIKit
 
 // MARK: - CreateTrackerViewController
 final class CreateTrackerViewController: UIViewController {
+
+    // MARK: - Private Properties
     private let createTrackerView = CreateTrackerView()
+
+    // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
         view = createTrackerView

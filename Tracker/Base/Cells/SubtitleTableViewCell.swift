@@ -7,8 +7,11 @@ import UIKit
 
 // MARK: - SubtitleTableViewCell
 class SubtitleTableViewCell: UITableViewCell {
+    
+    // MARK: - Public Properties
     static let reuseIdentifier = "SubtitleTableViewCell"
 
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -22,13 +25,14 @@ class SubtitleTableViewCell: UITableViewCell {
         detailTextLabel?.font = GlobalConstants.Font.sfPro17
         detailTextLabel?.textColor = .trGray
     }
-    
-    func configCell(label: String, subLabel: String?) {
-        textLabel?.text = label
-        detailTextLabel?.text = subLabel
-    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Public Methods
+    func configCell(label: String, subLabel: String?) {
+        textLabel?.text = label
+        detailTextLabel?.text = subLabel
     }
 }

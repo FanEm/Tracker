@@ -28,27 +28,14 @@ struct EmptyViewProps {
 
 // MARK: - EmptyView
 class EmptyView: UIView {
+
+    // MARK: - Private Properties
     private enum Constants {
         static let fontSize: CGFloat = 12
         static let labelInset: CGFloat = 8
     }
 
     private let props: EmptyViewProps
-
-    init(props: EmptyViewProps) {
-        self.props = props
-
-        super.init(frame: .zero)
-        backgroundColor = .trWhite
-
-        addSubview(nothingToShowImageView)
-        addSubview(nothingToShowLabel)
-        activateConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     private lazy var nothingToShowImageView: UIImageView = {
         let imageView = UIImageView()
@@ -69,6 +56,23 @@ class EmptyView: UIView {
         return label
     }()
 
+    // MARK: - Initializers
+    init(props: EmptyViewProps) {
+        self.props = props
+
+        super.init(frame: .zero)
+        backgroundColor = .trWhite
+
+        addSubview(nothingToShowImageView)
+        addSubview(nothingToShowLabel)
+        activateConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Private Methods
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             nothingToShowImageView.centerXAnchor.constraint(equalTo: centerXAnchor),

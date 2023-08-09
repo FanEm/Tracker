@@ -12,10 +12,20 @@ protocol ScheduleCellDelegate: AnyObject {
 
 // MARK: - ScheduleCell
 final class ScheduleCell: TitleTableViewCell {
+
+    // MARK: - Public Properties
     static let reuseId = "ScheduleCell"
-    
     weak var delegate: ScheduleCellDelegate?
-    
+
+    // MARK: - Private Properties
+    private lazy var switchView: UISwitch = {
+        let switchView = UISwitch(frame: .zero)
+        switchView.onTintColor = .trBlue
+        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+        return switchView
+    }()
+
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
@@ -24,6 +34,7 @@ final class ScheduleCell: TitleTableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Public Methods
     func configCell(label: String, isOn: Bool, indexPath: IndexPath) {
         super.configCell(label: label)
         switchView.tag = indexPath.row
@@ -31,13 +42,7 @@ final class ScheduleCell: TitleTableViewCell {
         accessoryView = switchView
     }
 
-    private lazy var switchView: UISwitch = {
-        let switchView = UISwitch(frame: .zero)
-        switchView.onTintColor = .trBlue
-        switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
-        return switchView
-    }()
-
+    // MARK: - Private Methods
     @objc private func switchChanged(_ sender: UISwitch) {
         delegate?.didSwitchChanged(to: sender.isOn, forCellAt: sender.tag)
     }
