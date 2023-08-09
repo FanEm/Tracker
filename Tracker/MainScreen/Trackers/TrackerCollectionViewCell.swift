@@ -219,14 +219,21 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         quantityButton.tintColor = color
         emojiLabel.text = tracker.emoji
         label.text = tracker.name
-        
+        doneCounter = doneCounterForTracker(tracker)
+    
+        if currentDate > Date().stripTime() {
+            setImageForButton(image: .Trackers.plusButton, color: .trGray)
+            quantityButton.isEnabled = false
+            return
+        }
+
+        quantityButton.isEnabled = true
         if checkIfTrackerIsDone(tracker) {
             // TODO: заменить на doneButton, когда иконку поправят.
             setImageForButton(image: .Trackers.minusButton, color: color)
         } else {
             setImageForButton(image: .Trackers.plusButton, color: color)
         }
-        doneCounter = doneCounterForTracker(tracker)
     }
 
     // MARK: - Private Methods
