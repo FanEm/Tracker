@@ -143,20 +143,23 @@ extension NewTrackerBaseView: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         switch indexPath.section {
         case 1:
-            let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: NewTrackerEmojiViewCell.reuseIdentifier,
-                                     for: indexPath) as! NewTrackerEmojiViewCell
-            cell.configCell(emoji: emojies[indexPath.row])
-            return cell
+            guard let emojiCell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: NewTrackerEmojiViewCell.reuseIdentifier,
+                for: indexPath
+            ) as? NewTrackerEmojiViewCell else { break }
+            emojiCell.configCell(emoji: emojies[indexPath.row])
+            return emojiCell
         case 2:
-            let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: NewTrackerColorViewCell.reuseIdentifier,
-                                     for: indexPath) as! NewTrackerColorViewCell
-            cell.configCell(color: colors[indexPath.row])
-            return cell
+            guard let colorCell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: NewTrackerColorViewCell.reuseIdentifier,
+                for: indexPath
+            ) as? NewTrackerColorViewCell else { break }
+            colorCell.configCell(color: colors[indexPath.row])
+            return colorCell
         default:
-            return UICollectionViewCell()
+            break
         }
+        return UICollectionViewCell()
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -175,19 +178,20 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         let section = indexPath.section
+        let reusableView = UICollectionReusableView()
         if kind == UICollectionView.elementKindSectionHeader {
-            let sectionTitleView = collectionView.dequeueReusableSupplementaryView(
+            guard let sectionTitleView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: BaseSectionTitleView.reuseIdentifier,
                 for: indexPath
-            ) as! BaseSectionTitleView
+            ) as? BaseSectionTitleView else { return reusableView }
             switch section {
             case 0:
-                let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: UICollectionView.elementKindSectionHeader,
+                guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
                     withReuseIdentifier: NewTrackerHeaderView.reuseIdentifier,
                     for: indexPath
-                ) as! NewTrackerHeaderView
+                ) as? NewTrackerHeaderView else { break }
                 headerView.delegate = parentViewController as? any NewTrackerHeaderViewDelegate
                 headerView.tableViewCells = tableViewCells
                 return headerView
@@ -198,22 +202,22 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
                 sectionTitleView.titleLabel.text = "Color".localized()
                 return sectionTitleView
             default:
-                return UICollectionReusableView()
+                break
             }
+            return reusableView
         }
         if kind == UICollectionView.elementKindSectionFooter,
             section == 3
         {
-            let footerView = collectionView.dequeueReusableSupplementaryView(
+            guard let footerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: NewTrackerFooterView.reuseIdentifier,
                 for: indexPath
-            ) as! NewTrackerFooterView
+            ) as? NewTrackerFooterView else { return reusableView }
             footerView.delegate = self.parentViewController as? any NewTrackerBaseViewDelegate
-    
             return footerView
         }
-        return UICollectionReusableView()
+        return reusableView
     }
 }
 

@@ -117,7 +117,13 @@ extension NewTrackerViewController: NewTrackerBaseViewDelegate {
     
     private func addTrackerToExistingCategory(tracker: Tracker, category: Category) {
         var newCategories = trackerCategories
-        let categoryToDelete = newCategories.first(where: { $0.name == category.name })!
+        guard
+            let categoryToDelete = newCategories.first(where: { $0.name == category.name })
+        else {
+            assertionFailure("There is no category with name '\(category.name)'")
+            return
+        }
+
         var trackers = categoryToDelete.trackers
         trackers.append(tracker)
         let newCategory = TrackerCategory(name: categoryToDelete.name, trackers: trackers)

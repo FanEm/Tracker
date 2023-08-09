@@ -158,16 +158,16 @@ final class TrackersNavigationController: UINavigationController {
 // MARK: - UISearchResultsUpdating
 extension TrackersViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+        filterContentForSearchText(searchController.searchBar.text)
     }
     
-    private func filterContentForSearchText(_ searchText: String) {
+    private func filterContentForSearchText(_ searchText: String?) {
         if searchBarIsEmpty {
             filterCategoriesByDate()
             trackersView.hideFilterButton(false)
         } else {
             trackersView.hideFilterButton(true)
-            filterCategoriesBySearchText(searchText)
+            if let searchText { filterCategoriesBySearchText(searchText) }
         }
         setNeededView()
         trackersView.collectionView.reloadData()
@@ -189,15 +189,17 @@ extension TrackersViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.reuseIdentifier,
-                                 for: indexPath) as! TrackerCollectionViewCell
-        
+        guard let trackerCollectionViewCell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TrackerCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? TrackerCollectionViewCell
+        else {
+            return UICollectionViewCell()
+        }
         let tracker = visibleCategories[indexPath.section].trackers[indexPath.row]
-        cell.currentDate = currentDate
-        cell.tracker = tracker
-        cell.configCell(tracker: tracker)
-        return cell
+        trackerCollectionViewCell.currentDate = currentDate
+        trackerCollectionViewCell.tracker = tracker
+        trackerCollectionViewCell.configCell(tracker: tracker)
+        return trackerCollectionViewCell
     }
 }
 
