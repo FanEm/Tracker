@@ -9,7 +9,7 @@ import UIKit
 final class BaseSectionTitleView: UICollectionReusableView {
 
     // MARK: - Public Properties
-    static let reuseIdentifier = "NewEventSectionTitleView"
+    static let reuseIdentifier = "BaseSectionTitleView"
 
     var titleLabel: UILabel = {
         let label = UILabel()

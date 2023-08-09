@@ -24,6 +24,11 @@ struct EmptyViewProps {
         image: .Trackers.nothingToShow,
         label: "What will we track".localized()
     )
+
+    static let search = EmptyViewProps(
+        image: .Trackers.nothingFound,
+        label: "Nothing found".localized()
+    )
 }
 
 // MARK: - EmptyView

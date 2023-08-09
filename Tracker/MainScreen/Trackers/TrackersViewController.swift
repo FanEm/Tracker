@@ -237,6 +237,7 @@ extension TrackersViewController: UICollectionViewDelegate {
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     private enum CollectionViewConstants {
         static let itemHeight: CGFloat = 148
+        static let headerHeight: CGFloat = 19
         static let sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         static let minimumInteritemSpacing: CGFloat = 9
     }
@@ -269,25 +270,9 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        return getReferenceSize(
-            collectionView: collectionView,
-            section: section,
-            kind: UICollectionView.elementKindSectionHeader
-        )
-    }
-
-    func getReferenceSize(collectionView: UICollectionView, section: Int, kind: String) -> CGSize {
-        let indexPath = IndexPath(row: 0, section: section)
-        let view = self.collectionView(
-            collectionView,
-            viewForSupplementaryElementOfKind: kind,
-            at: indexPath
-        )
-        return view.systemLayoutSizeFitting(
-            CGSize(width: collectionView.frame.width,
-                   height: UIView.layoutFittingExpandedSize.height),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
+        return CGSize(
+            width: collectionView.frame.width,
+            height: CollectionViewConstants.headerHeight
         )
     }
 }

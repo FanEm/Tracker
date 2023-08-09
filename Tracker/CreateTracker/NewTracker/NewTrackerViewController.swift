@@ -148,7 +148,11 @@ extension NewTrackerViewController: NewTrackerBaseViewDelegate {
             addTrackerToNewCategory(tracker: tracker, category: category)
         }
         NotificationCenter.default.post(name: .didNewTrackerCreated, object: nil)
-        dismiss(animated: true)
+
+        let presentingViewController = presentingViewController
+        dismiss(animated: true) {
+            presentingViewController?.dismiss(animated: true)
+        }
     }
 }
 
