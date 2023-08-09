@@ -54,7 +54,11 @@ final class TabBarController: UITabBarController {
         tabBar.tintColor = .trBlue
         tabBar.isTranslucent = false
         tabBar.barStyle = .default
-        tabBar.clipsToBounds = true
+
+        tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.layer.shadowOpacity = 0.3
+        tabBar.layer.shadowOffset = CGSize.zero
+        tabBar.layer.shadowRadius = 0.5
     }
 }
 
