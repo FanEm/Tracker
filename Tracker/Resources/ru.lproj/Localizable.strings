@@ -14,6 +14,8 @@
 
 "What will we track" = "Что будем отслеживать?";
 
+"Nothing found" = "Ничего не найдено";
+
 "Habits and events can be combined in meaning" = "Привычки и события можно\nобъединить по смыслу";
 
 "Event" = "Нерегулярное событие";
@@ -57,6 +59,8 @@
 "Сompleted" = "Завершенные";
 
 "Not completed" = "Не завершенные";
+
+"Every day" = "Каждый день";
 
 "Monday" = "Понедельник";
 

@@ -20,6 +20,7 @@ final class TrackersViewController: UIViewController {
     private let storage = Storage.shared
     private let trackersView = TrackersView()
     private let emptyView = EmptyView(props: .trackers)
+    private let nothingFoundView = EmptyView(props: .search)
 
     private var currentDate: Date = Date().stripTime()
     private var visibleCategories: [TrackerCategory] = []
@@ -128,8 +129,9 @@ final class TrackersViewController: UIViewController {
         }.filter { $0.trackers.count > 0 }
     }
 
-    private func setNeededView() {
-        view = visibleCategories.isEmpty ? emptyView : trackersView
+    private func setNeededView(isSearch: Bool = false) {
+        let suitableEmptyView = isSearch ? nothingFoundView : emptyView
+        view = visibleCategories.isEmpty ? suitableEmptyView : trackersView
     }
 
     private func createNewTrackerCreatedObserver() {
@@ -172,11 +174,12 @@ extension TrackersViewController: UISearchResultsUpdating {
         if searchBarIsEmpty {
             filterCategoriesByDate()
             trackersView.hideFilterButton(false)
+            setNeededView()
         } else {
             trackersView.hideFilterButton(true)
             if let searchText { filterCategoriesBySearchText(searchText) }
+            setNeededView(isSearch: true)
         }
-        setNeededView()
         trackersView.collectionView.reloadData()
     }
 }

@@ -9,6 +9,7 @@ extension UIImage {
     enum Trackers {
         static var addTracker: UIImage { UIImage(named: "add_tracker_icon") ?? UIImage() }
         static var nothingToShow: UIImage { UIImage(named: "nothing_to_show_icon") ?? UIImage() }
+        static var nothingFound: UIImage { UIImage(named: "nothing_found_icon") ?? UIImage() }
         static var plusButton: UIImage { UIImage(named: "tracker_plus_button") ?? UIImage() }
         static var minusButton: UIImage { UIImage(named: "tracker_minus_button") ?? UIImage() }
         // TODO: кривая иконка - нужно перезалить новую, когда поправят
