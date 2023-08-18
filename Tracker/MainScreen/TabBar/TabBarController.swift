@@ -13,6 +13,10 @@ final class TabBarController: UITabBarController {
     private var trackersNavigationController: TrackersNavigationController {
         let navigationController = TrackersNavigationController()
         let viewController = TrackersViewController()
+        let presenter = TrackersPresenter(trackerService: TrackerService.shared)
+        viewController.presenter = presenter
+        presenter.view = viewController
+
         navigationController.viewControllers = [viewController]
 
         navigationController.tabBarItem = UITabBarItem(

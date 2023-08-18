@@ -18,15 +18,12 @@ final class CategoryViewController: UIViewController {
     weak var delegate: CategoryViewControllerDelegate?
 
     // MARK: - Private Properties
-    private let storage = Storage.shared
+    private let trackerService = TrackerService.shared
     private let emptyView = CategoryEmptyView()
     private let categoryView = CategoryView()
     private var categories: [Category] {
         get {
-            storage.categories
-        }
-        set {
-            storage.categories = newValue
+            trackerService.categories
         }
     }
 
@@ -54,20 +51,26 @@ final class CategoryViewController: UIViewController {
         viewController.delegate = self
         present(viewController, animated: true)
     }
+
+    private func configCell(in tableView: UITableView, at indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        tableView.visibleCells.forEach { $0.accessoryType = .none }
+        cell.accessoryType = .checkmark
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        trackerService.numberOfCategories
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.reuseIdentifier, for: indexPath)
         guard let сategoryCell = cell as? TitleTableViewCell else { return UITableViewCell() }
-
-        сategoryCell.accessoryType = categories[indexPath.row] == selectedCategory ? .checkmark : .none
-        сategoryCell.configCell(label: categories[indexPath.row].name)
+        let category = categories[indexPath.row]
+        сategoryCell.accessoryType = category == selectedCategory ? .checkmark : .none
+        сategoryCell.configCell(label: category.name)
         tableView.hideLastSeparator(cell: сategoryCell, indexPath: indexPath)
         return сategoryCell
     }
@@ -76,11 +79,9 @@ extension CategoryViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        configCell(in: tableView, at: indexPath)
         let category = categories[indexPath.row]
-        tableView.visibleCells.forEach { $0.accessoryType = .none }
         selectedCategory = category
-        cell.accessoryType = .checkmark
         delegate?.didTapOnCategory(category)
         NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)
 
@@ -90,7 +91,7 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         GlobalConstants.TableViewCell.height
     }
@@ -99,6 +100,7 @@ extension CategoryViewController: UITableViewDelegate {
 // MARK: - NewCategoryViewControllerDelegate
 extension CategoryViewController: NewCategoryViewControllerDelegate {
     func didTapOnDoneButton() {
+        assert(Thread.isMainThread)
         setNeededView()
         categoryView.tableView.reloadData()
     }

@@ -5,12 +5,18 @@
 
 import UIKit
 
+// MARK: - NewTrackerFooterViewDelegate
+protocol NewTrackerFooterViewDelegate: AnyObject {
+    func didTapCancelButton()
+    func didTapCreateButton()
+}
+
 // MARK: - NewTrackerFooterView
 final class NewTrackerFooterView: UICollectionReusableView {
 
     // MARK: - Public Properties
     static let reuseIdentifier = "NewTrackerFooterView"
-    weak var delegate: NewTrackerBaseViewDelegate?
+    weak var delegate: NewTrackerFooterViewDelegate?
 
     // MARK: - Private Properties
     private enum Constants {

@@ -13,6 +13,7 @@ extension UIColor {
     static let trRed = UIColor(named: "trRed") ?? .red
     static let trBlue = UIColor(named: "trBlue") ?? .blue
     static let trGray = UIColor(named: "trGray") ?? .gray
+    static let trLightGray = UIColor(named: "trLightGray") ?? .gray
     static let trDatePickerBtnBg = UIColor(named: "trDatePickerBtnBg") ?? .gray
     static let trBackground = UIColor(named: "trBackground") ?? .gray
     static let trTransperentWhite = UIColor(named: "trTransperentWhite") ?? .white

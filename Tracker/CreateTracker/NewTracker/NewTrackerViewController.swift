@@ -17,19 +17,13 @@ final class NewTrackerViewController: UIViewController {
     // MARK: - Public Properties
     let type: NewTrackerViewControllerType
     var category: Category? = nil
+    var emoji: String? = nil
+    var color: String? = nil
     var schedule: Set<WeekDay> = []
 
     // MARK: - Private Properties
-    private let storage = Storage.shared
+    private let trackerService = TrackerService.shared
     private var name: String?
-    private var trackerCategories: [TrackerCategory] {
-        get {
-            storage.trackerCategories
-        }
-        set {
-            storage.trackerCategories = newValue
-        }
-    }
 
     // MARK: - Initializers
     init(type: NewTrackerViewControllerType) {
@@ -56,21 +50,24 @@ final class NewTrackerViewController: UIViewController {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
         checkIfAllFieldsFilled()
+        (view as? NewTrackerBaseView)?.delegate = self
     }
 
     // MARK: - Private Methods
     private func checkIfAllFieldsFilled() {
         var isAllFieldsFilled = false
-                
+
         defer {
             NotificationCenter.default.post(name: .didAllFieldsFilled,
                                             object: isAllFieldsFilled)
         }
-        
+
         guard let name,
               category != nil,
-              !name.isEmpty else { return }
-        
+              !name.isEmpty,
+              color != nil,
+              emoji != nil else { return }
+
         switch type {
         case .habit: isAllFieldsFilled = !schedule.isEmpty
         case .event: isAllFieldsFilled = true
@@ -78,18 +75,15 @@ final class NewTrackerViewController: UIViewController {
     }
 
     private func buildTracker() -> Tracker {
-        // TODO: добавить возможность выбрать цвет и эмоджи на экране
-        let emojies = [
-            "🙂", "😻", "🌺", "🐶", "❤️", "😱",
-            "😇", "😡", "🥶", "🤔", "🙌", "🍔",
-            "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
-        ]
-
-        let colors: [String] = [
-            "#FD4C49", "#FF881E", "#007BFA", "#6E44FE", "#33CF69", "#E66DD4",
-            "#F9D4D4", "#34A7FE", "#46E69D", "#35347C", "#FF674D", "#FF99CC",
-            "#F6C48B", "#7994F5", "#832CF1", "#AD56DA", "#8D72E6", "#2FD058"
-        ]
+        guard let name, let color, let emoji else {
+            fatalError("""
+            Some of the params are nil.
+            Params:
+                name - \(String(describing: name)),
+                color - \(String(describing: color)),
+                emoji - \(String(describing: emoji))
+            """)
+        }
         let trackerSchedule: Set<WeekDay>
         switch type {
             case .habit: trackerSchedule = schedule
@@ -97,41 +91,38 @@ final class NewTrackerViewController: UIViewController {
         }
         return Tracker(
             id: UUID(),
-            name: name ?? "",
-            color: colors.randomElement()!,
-            emoji: emojies.randomElement()!,
+            name: name,
+            color: color,
+            emoji: emoji,
             schedule: trackerSchedule
         )
     }
 
-    private func addTrackerToExistingCategory(tracker: Tracker, category: Category) {
-        var newCategories = trackerCategories
-        guard
-            let categoryToDelete = newCategories.first(where: { $0.name == category.name })
-        else {
-            assertionFailure("There is no category with name '\(category.name)'")
-            return
+    private func closePresentingController() {
+        let presentingViewController = presentingViewController
+        dismiss(animated: true) {
+            presentingViewController?.dismiss(animated: true)
         }
-
-        var trackers = categoryToDelete.trackers
-        trackers.append(tracker)
-        let newCategory = TrackerCategory(name: categoryToDelete.name, trackers: trackers)
-        newCategories.removeAll(where: { $0.name == category.name })
-        newCategories.append(newCategory)
-        trackerCategories = newCategories
-    }
-
-    private func addTrackerToNewCategory(tracker: Tracker, category: Category) {
-        let trackerCategory = TrackerCategory(
-            name: category.name,
-            trackers: [tracker]
-        )
-        trackerCategories.append(trackerCategory)
     }
 }
 
+
 // MARK: - NewTrackerBaseViewDelegate
 extension NewTrackerViewController: NewTrackerBaseViewDelegate {
+    func didTapOnColor(_ hexString: String) {
+        self.color = hexString
+        checkIfAllFieldsFilled()
+    }
+    
+    func didTapOnEmoji(_ emoji: String) {
+        self.emoji = emoji
+        checkIfAllFieldsFilled()
+    }
+}
+
+
+// MARK: - NewTrackerFooterViewDelegate
+extension NewTrackerViewController: NewTrackerFooterViewDelegate {
     func didTapCancelButton() {
         dismiss(animated: true)
     }
@@ -142,17 +133,9 @@ extension NewTrackerViewController: NewTrackerBaseViewDelegate {
             return
         }
         let tracker = buildTracker()
-        if trackerCategories.contains(where: {$0.name == category.name } ) {
-            addTrackerToExistingCategory(tracker: tracker, category: category)
-        } else {
-            addTrackerToNewCategory(tracker: tracker, category: category)
-        }
+        trackerService.add(tracker: tracker, for: category.name)
         NotificationCenter.default.post(name: .didNewTrackerCreated, object: nil)
-
-        let presentingViewController = presentingViewController
-        dismiss(animated: true) {
-            presentingViewController?.dismiss(animated: true)
-        }
+        closePresentingController()
     }
 }
 

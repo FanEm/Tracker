@@ -7,8 +7,8 @@ import UIKit
 
 // MARK: - NewTrackerBaseViewDelegate
 protocol NewTrackerBaseViewDelegate: AnyObject {
-    func didTapCancelButton()
-    func didTapCreateButton()
+    func didTapOnColor(_ hexString: String)
+    func didTapOnEmoji(_ emoji: String)
 }
 
 // MARK: - NewTrackerBaseView
@@ -23,6 +23,7 @@ class NewTrackerBaseView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    weak var delegate: NewTrackerBaseViewDelegate?
 
     // MARK: - Private Properties
     private enum Constants {
@@ -62,6 +63,7 @@ class NewTrackerBaseView: UIView {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: NewTrackerFooterView.reuseIdentifier
         )
+        collectionView.allowsMultipleSelection = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -72,11 +74,11 @@ class NewTrackerBaseView: UIView {
         "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
     ]
 
-    private let colors: [UIColor] = [
+    private let hexStrings: [String] = [
         "#FD4C49", "#FF881E", "#007BFA", "#6E44FE", "#33CF69", "#E66DD4",
         "#F9D4D4", "#34A7FE", "#46E69D", "#35347C", "#FF674D", "#FF99CC",
         "#F6C48B", "#7994F5", "#832CF1", "#AD56DA", "#8D72E6", "#2FD058"
-    ].map { UIColor(hexString: $0) }
+    ]
 
     
     // MARK: - Initializers
@@ -136,7 +138,7 @@ extension NewTrackerBaseView: UICollectionViewDataSource {
         case 1:
             return emojies.count
         case 2:
-            return colors.count
+            return hexStrings.count
         default:
             return 0
         }
@@ -159,7 +161,7 @@ extension NewTrackerBaseView: UICollectionViewDataSource {
                 withReuseIdentifier: NewTrackerColorViewCell.reuseIdentifier,
                 for: indexPath
             ) as? NewTrackerColorViewCell else { break }
-            colorCell.configCell(color: colors[indexPath.row])
+            colorCell.configCell(hexString: hexStrings[indexPath.row])
             return colorCell
         default:
             break
@@ -175,6 +177,26 @@ extension NewTrackerBaseView: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension NewTrackerBaseView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 1:
+            delegate?.didTapOnEmoji(emojies[indexPath.row])
+        case 2:
+            delegate?.didTapOnColor(hexStrings[indexPath.row])
+        default:
+            return
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        collectionView.indexPathsForSelectedItems?
+            .filter { $0.section == indexPath.section }
+            .forEach { collectionView.deselectItem(at: $0, animated: false) }
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+        guard let item = collectionView.cellForItem(at: indexPath) else { return false }
+        return !item.isSelected
     }
     
     func collectionView(
@@ -219,7 +241,7 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
                 withReuseIdentifier: NewTrackerFooterView.reuseIdentifier,
                 for: indexPath
             ) as? NewTrackerFooterView else { return reusableView }
-            footerView.delegate = self.parentViewController as? any NewTrackerBaseViewDelegate
+            footerView.delegate = self.parentViewController as? any NewTrackerFooterViewDelegate
             return footerView
         }
         return reusableView

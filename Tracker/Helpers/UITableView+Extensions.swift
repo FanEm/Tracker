@@ -5,7 +5,9 @@
 
 import UIKit
 
+
 extension UITableView {
+
     /// Calculates the last cell index path if available
     var lastCellIndexPath: IndexPath? {
         for section in (0..<self.numberOfSections).reversed() {
@@ -17,11 +19,9 @@ extension UITableView {
     }
 
     func hideLastSeparator(cell: UITableViewCell, indexPath: IndexPath) {
-        if indexPath == self.lastCellIndexPath {
-            cell.separatorInset = UIEdgeInsets(
-                top: 0, left: 0, bottom: 0, right: self.bounds.width + 1
-            )
-        }
+        let insetToHide = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: self.bounds.width + 1)
+        let inset = GlobalConstants.TableViewCell.separatorInset
+        cell.separatorInset = indexPath == lastCellIndexPath ? insetToHide : inset
     }
 
     static func addCornerRadiusForFirstAndLastCells(
@@ -36,14 +36,16 @@ extension UITableView {
             return
         }
 
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             cell.layer.cornerRadius = cornerRadius
             cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        }
-
-        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+        case tableView.numberOfRows(inSection: indexPath.section) - 1:
             cell.layer.cornerRadius = cornerRadius
             cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        default:
+            cell.layer.cornerRadius = 0
         }
     }
+
 }
