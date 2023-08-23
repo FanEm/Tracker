@@ -27,4 +27,5 @@ final class FiltersView: ViewWithTableBaseView {
         )
         button.isHidden = true
     }
+
 }

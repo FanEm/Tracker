@@ -11,7 +11,7 @@ final class ScheduleView: ViewWithTableBaseView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setpUpUI()
+        setUpUI()
     }
 
     required init?(coder: NSCoder) {
@@ -19,7 +19,7 @@ final class ScheduleView: ViewWithTableBaseView {
     }
 
     // MARK: - Private Methods
-    private func setpUpUI() {
+    private func setUpUI() {
         title.text = "Schedule".localized()
         tableView.register(ScheduleCell.self,forCellReuseIdentifier: ScheduleCell.reuseId)
         button.setTitle("Done".localized(), for: .normal)

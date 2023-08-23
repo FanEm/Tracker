@@ -18,7 +18,7 @@ final class NewCategoryViewController: UIViewController {
 
     // MARK: - Private Properties
     private let newCategoryView = NewCategoryView()
-    private let storage = Storage.shared
+    private let trackerService = TrackerService.shared
 
     // MARK: - Overrides Methods
     override func loadView() {
@@ -36,7 +36,7 @@ final class NewCategoryViewController: UIViewController {
     // MARK: - Private Methods
     @objc private func onTap() {
         guard let text = newCategoryView.textField.text else { return }
-        storage.categories.append(Category(name: text))
+        trackerService.add(categoryName: text)
         delegate?.didTapOnDoneButton()
         dismiss(animated: true)
     }

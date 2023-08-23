@@ -7,7 +7,8 @@ import Foundation
 
 extension Date {
     func stripTime() -> Date {
-        let components = Calendar.current.dateComponents([.year, .month, .day, .timeZone], from: self)
+        var components = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        components.timeZone = NSTimeZone.system
         guard let date = Calendar.current.date(from: components) else {
             fatalError("Date has not been created from components \(components)")
         }

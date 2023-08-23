@@ -6,6 +6,7 @@
 import UIKit
 import Foundation
 
+
 // MARK: - TrackersView
 final class TrackersView: UIView {
 
@@ -69,8 +70,8 @@ final class TrackersView: UIView {
     }
 
     // MARK: - Public Methods
-    func hideFilterButton(_ hide: Bool) {
-        button.isHidden = hide
+    func showFilterButton(_ show: Bool) {
+        button.isHidden = !show
     }
 
     // MARK: - Private Methods

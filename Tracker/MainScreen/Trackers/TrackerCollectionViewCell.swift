@@ -5,17 +5,29 @@
 
 import UIKit
 
+
+// MARK: - TrackerCollectionViewCellDelegate
+protocol TrackerCollectionViewCellDelegate: AnyObject {
+    func didTapOnQuantityButton(_ cell: TrackerCollectionViewCell)
+}
+
+
 // MARK: - TrackerCollectionViewCell
 final class TrackerCollectionViewCell: UICollectionViewCell {
 
-
     // MARK: - Public Properties
     static let reuseIdentifier = "TrackerCollectionViewCell"
+    weak var delegate: TrackerCollectionViewCellDelegate?
     var tracker: Tracker? = nil
     var currentDate: Date = Date().stripTime()
+    var isTrackerCompleted: Bool = false
+    var doneCounter: Int = 0 {
+        didSet {
+            self.quantityLabel.text = "Days".localizedWithFormat(args: doneCounter)
+        }
+    }
 
     // MARK: - Private Properties
-    private let storage = Storage.shared
     private enum Constants {
         static let leadingAndTrailingInsets: CGFloat = 12
         enum Label {
@@ -37,20 +49,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         enum QuantityButton {
             static let topInset: CGFloat = 8
             static let bottomInset: CGFloat = 16
-        }
-    }
-    
-    private var doneCounter: Int = 0 {
-        didSet {
-            self.quantityLabel.text = "Days".localizedWithFormat(args: doneCounter)
-        }
-    }
-    private var completedTrackers: [TrackerRecord] {
-        get {
-            return storage.completedTrackers
-        }
-        set {
-            storage.completedTrackers = newValue
         }
     }
 
@@ -219,7 +217,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         quantityButton.tintColor = color
         emojiLabel.text = tracker.emoji
         label.text = tracker.name
-        doneCounter = doneCounterForTracker(tracker)
     
         if currentDate > Date().stripTime() {
             setImageForButton(image: .Trackers.plusButton, color: .trGray)
@@ -228,32 +225,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         }
 
         quantityButton.isEnabled = true
-        if checkIfTrackerIsDone(tracker) {
-            // TODO: заменить на doneButton, когда иконку поправят.
-            setImageForButton(image: .Trackers.minusButton, color: color)
-        } else {
-            setImageForButton(image: .Trackers.plusButton, color: color)
-        }
+        let image: UIImage = isTrackerCompleted ? .Trackers.minusButton : .Trackers.plusButton
+        setImageForButton(image: image, color: color)
     }
 
     // MARK: - Private Methods
-    private func setImageForButton(image: UIImage, color: UIColor) {
-        let tintedImage = image.withRenderingMode(.alwaysTemplate)
-        quantityButton.setImage(tintedImage, for: .normal)
-    }
-
-    private func completedTrackersWithout(_ tracker: Tracker) -> [TrackerRecord] {
-        completedTrackers.filter { !($0.trackerId == tracker.id && $0.date == currentDate) }
-    }
-
-    private func checkIfTrackerIsDone(_ tracker: Tracker) -> Bool {
-        completedTrackers.filter { $0.trackerId == tracker.id && $0.date == currentDate }.count == 1
-    }
-
-    private func doneCounterForTracker(_ tracker: Tracker) -> Int {
-        completedTrackers.filter { $0.trackerId == tracker.id && $0.date <= currentDate }.count
-    }
-
     private func activateConstraints() {
         NSLayoutConstraint.activate(
             cardViewConstraints +
@@ -265,18 +241,16 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         )
     }
 
+    private func setImageForButton(image: UIImage, color: UIColor) {
+        let tintedImage = image.withRenderingMode(.alwaysTemplate)
+        quantityButton.setImage(tintedImage, for: .normal)
+    }
+
     @objc private func tapOnQuantityButton() {
         guard let tracker else { return }
         let color = UIColor(hexString: tracker.color)
-        let isDoneToday = checkIfTrackerIsDone(tracker)
-        if isDoneToday {
-            setImageForButton(image: .Trackers.plusButton, color: color)
-            completedTrackers = completedTrackersWithout(tracker)
-        } else {
-            // TODO: заменить на doneButton, когда иконку поправят.
-            setImageForButton(image: .Trackers.minusButton, color: color)
-            completedTrackers.append(TrackerRecord(trackerId: tracker.id, date: currentDate))
-        }
-        doneCounter = doneCounterForTracker(tracker)
+        let image: UIImage = isTrackerCompleted ? .Trackers.plusButton : .Trackers.minusButton
+        setImageForButton(image: image, color: color)
+        delegate?.didTapOnQuantityButton(self)
     }
 }

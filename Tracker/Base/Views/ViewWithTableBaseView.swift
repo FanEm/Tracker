@@ -16,7 +16,7 @@ class ViewWithTableBaseView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .trWhite
@@ -26,11 +26,8 @@ class ViewWithTableBaseView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
-    var button: UIButton = {
-        let button = BaseButton()
-        return button
-    }()
+
+    var button: UIButton = BaseButton()
 
     // MARK: - Private Properties
     private enum Constants {
