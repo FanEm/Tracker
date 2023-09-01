@@ -27,12 +27,21 @@ final class Storage {
             userDefaults.set(data, forKey: Keys.filter.rawValue)
         }
     }
+    
+    var wasOnboardingShown: Bool {
+        get {
+            userDefaults.bool(forKey: Keys.wasOnboardingShown.rawValue)
+        }
+        set {
+            userDefaults.set(newValue, forKey: Keys.wasOnboardingShown.rawValue)
+        }
+    }
 
     // MARK: - Private Properties
     private let userDefaults = UserDefaults.standard
     
     private enum Keys: String {
-        case filter
+        case filter, wasOnboardingShown
     }
 
     // MARK: - Initializers

@@ -5,20 +5,24 @@
 
 import UIKit
 
-// MARK: - NewCategoryViewControllerDelegate
-protocol NewCategoryViewControllerDelegate: AnyObject {
-    func didTapOnDoneButton()
-}
 
 // MARK: - NewCategoryViewController
 final class NewCategoryViewController: UIViewController {
 
-    // MARK: - Public Properties
-    weak var delegate: NewCategoryViewControllerDelegate?
-
     // MARK: - Private Properties
     private let newCategoryView = NewCategoryView()
-    private let trackerService = TrackerService.shared
+    private let categoryViewModel: CategoryViewModel
+
+    // MARK: - Initializers
+    init(categoryViewModel: CategoryViewModel) {
+        self.categoryViewModel = categoryViewModel
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Overrides Methods
     override func loadView() {
@@ -36,8 +40,7 @@ final class NewCategoryViewController: UIViewController {
     // MARK: - Private Methods
     @objc private func onTap() {
         guard let text = newCategoryView.textField.text else { return }
-        trackerService.add(categoryName: text)
-        delegate?.didTapOnDoneButton()
+        categoryViewModel.add(categoryName: text)
         dismiss(animated: true)
     }
 }

@@ -5,26 +5,33 @@
 
 import UIKit
 
+
 // MARK: - CategoryViewControllerDelegate
 protocol CategoryViewControllerDelegate: AnyObject {
     func didTapOnCategory(_ category: Category)
 }
 
+
 // MARK: - CategoryViewController
 final class CategoryViewController: UIViewController {
 
     // MARK: - Public Properties
-    var selectedCategory: Category?
     weak var delegate: CategoryViewControllerDelegate?
 
     // MARK: - Private Properties
-    private let trackerService = TrackerService.shared
     private let emptyView = CategoryEmptyView()
     private let categoryView = CategoryView()
-    private var categories: [Category] {
-        get {
-            trackerService.categories
-        }
+    private let categoryViewModel: CategoryViewModel
+
+    // MARK: - Initializers
+    init(categoryViewModel: CategoryViewModel) {
+        self.categoryViewModel = categoryViewModel
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Overrides Methods
@@ -39,38 +46,45 @@ final class CategoryViewController: UIViewController {
         categoryView.tableView.dataSource = self
         categoryView.button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         emptyView.button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+        addBindToCategories()
     }
 
     // MARK: - Private Methods
     private func setNeededView() {
-        view = categories.isEmpty ? emptyView : categoryView
+        view = categoryViewModel.categoriesExist ? categoryView : emptyView
+    }
+
+    private func addBindToCategories() {
+        categoryViewModel.$categories.bind(action: { [weak self] _ in
+            guard let self else { return }
+            self.setNeededView()
+            self.categoryView.tableView.reloadData()
+        })
     }
 
     @objc private func onTap() {
-        let viewController = NewCategoryViewController()
-        viewController.delegate = self
+        let viewController = NewCategoryViewController(categoryViewModel: categoryViewModel)
         present(viewController, animated: true)
     }
 
-    private func configCell(in tableView: UITableView, at indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
-        tableView.visibleCells.forEach { $0.accessoryType = .none }
-        cell.accessoryType = .checkmark
-    }
 }
 
 // MARK: - UITableViewDataSource
 extension CategoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        trackerService.numberOfCategories
+        categoryViewModel.numberOfCategories
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.reuseIdentifier, for: indexPath)
-        guard let сategoryCell = cell as? TitleTableViewCell else { return UITableViewCell() }
-        let category = categories[indexPath.row]
-        сategoryCell.accessoryType = category == selectedCategory ? .checkmark : .none
-        сategoryCell.configCell(label: category.name)
+        guard
+            let сategoryCell = tableView.dequeueReusableCell(
+                withIdentifier: CategoryCell.reuseId,
+                for: indexPath) as? CategoryCell,
+            let category = categoryViewModel.category(at: indexPath)
+        else { return UITableViewCell() }
+
+        let isCategorySelected = categoryViewModel.isCategorySelected(category)
+        сategoryCell.configCell(label: category.name, isCategorySelected: isCategorySelected)
         tableView.hideLastSeparator(cell: сategoryCell, indexPath: indexPath)
         return сategoryCell
     }
@@ -79,9 +93,9 @@ extension CategoryViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        configCell(in: tableView, at: indexPath)
-        let category = categories[indexPath.row]
-        selectedCategory = category
+        guard let category = categoryViewModel.category(at: indexPath) else { return }
+        categoryViewModel.configCell(in: tableView, at: indexPath)
+        categoryViewModel.selectedCategory = category
         delegate?.didTapOnCategory(category)
         NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)
 
@@ -94,14 +108,5 @@ extension CategoryViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         GlobalConstants.TableViewCell.height
-    }
-}
-
-// MARK: - NewCategoryViewControllerDelegate
-extension CategoryViewController: NewCategoryViewControllerDelegate {
-    func didTapOnDoneButton() {
-        assert(Thread.isMainThread)
-        setNeededView()
-        categoryView.tableView.reloadData()
     }
 }

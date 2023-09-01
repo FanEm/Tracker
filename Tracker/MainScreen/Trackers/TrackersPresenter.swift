@@ -35,10 +35,10 @@ final class TrackersPresenter: TrackersPresenterProtocol {
     }
 
     // MARK: - Private Properties
-    private var trackerService: TrackerServiceProtocol?
+    private var trackerService: TrackersServiceProtocol?
     private var currentDate = Date().stripTime()
 
-    init(trackerService: TrackerServiceProtocol) {
+    init(trackerService: TrackersServiceProtocol) {
         self.trackerService = trackerService
         self.trackerService?.dataProviderDelegate = self
     }
@@ -91,10 +91,10 @@ final class TrackersPresenter: TrackersPresenterProtocol {
 }
 
 
-// MARK: - DataProviderDelegate
-extension TrackersPresenter: DataProviderDelegate {
+// MARK: - TrackersDataProviderDelegate
+extension TrackersPresenter: TrackersDataProviderDelegate {
 
-    func didUpdate(_ update: TrackerStoreUpdate) {
+    func didUpdate(_ update: StoreUpdate) {
         view?.reloadCollectionView()
     }
 

@@ -64,7 +64,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .sfPro(ofSize: Constants.Label.fontSize)
         label.textColor = .trPermWhite
-        label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

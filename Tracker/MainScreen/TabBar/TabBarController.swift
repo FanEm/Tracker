@@ -13,7 +13,7 @@ final class TabBarController: UITabBarController {
     private var trackersNavigationController: TrackersNavigationController {
         let navigationController = TrackersNavigationController()
         let viewController = TrackersViewController()
-        let presenter = TrackersPresenter(trackerService: TrackerService.shared)
+        let presenter = TrackersPresenter(trackerService: TrackersService.shared)
         viewController.presenter = presenter
         presenter.view = viewController
 
@@ -49,6 +49,17 @@ final class TabBarController: UITabBarController {
         setAppearance()
 
         self.viewControllers = [trackersNavigationController, statisticsNavigationController]
+    }
+
+    // MARK: - Public Methods
+    func showOnboardingIfNeeded() {
+        let storage = Storage.shared
+        if !storage.wasOnboardingShown {
+            let onboardingViewController = OnboardingPageViewController()
+            onboardingViewController.modalPresentationStyle = .fullScreen
+            present(onboardingViewController, animated: true)
+            storage.wasOnboardingShown = true
+        }
     }
 
     // MARK: - Private Methods
