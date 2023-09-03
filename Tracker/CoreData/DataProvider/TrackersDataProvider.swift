@@ -1,29 +1,20 @@
 //
-//  DataProvider.swift
+//  TrackersDataProvider.swift
 //  Tracker
 //
 
 import CoreData
 
 
-// MARK: - TrackerStoreUpdate
-struct TrackerStoreUpdate {
-    let insertedIndexes: IndexSet
-    let deletedIndexes: IndexSet
+// MARK: - TrackersDataProviderDelegate
+protocol TrackersDataProviderDelegate: AnyObject {
+    func didUpdate(_ update: StoreUpdate)
 }
 
 
-// MARK: - DataProviderDelegate
-protocol DataProviderDelegate: AnyObject {
-    func didUpdate(_ update: TrackerStoreUpdate)
-}
-
-
-// MARK: - DataProviderProtocol
-protocol DataProviderProtocol {
+// MARK: - TrackersDataProviderProtocol
+protocol TrackersDataProviderProtocol {
     var numberOfSections: Int { get }
-    var categories: [TrackerCategoryCoreData] { get }
-    var numberOfCategories: Int { get }
 
     func numberOfItemsInSection(_ section: Int) -> Int
     func fetchTrackers(weekDay: WeekDay)
@@ -33,18 +24,17 @@ protocol DataProviderProtocol {
     func recordsCount(with trackerId: UUID) -> Int
     func tracker(at indexPath: IndexPath) -> TrackerCoreData?
     func categoryTitle(at indexPath: IndexPath) -> String
-    func add(categoryName: String)
     func add(tracker: Tracker, for categoryName: String)
     func markTrackerAsCompleted(trackerId: UUID, date: Date)
     func markTrackerAsNotCompleted(trackerId: UUID, date: Date)
 }
 
 
-// MARK: - DataProvider
-final class DataProvider: NSObject {
+// MARK: - TrackersDataProvider
+final class TrackersDataProvider: NSObject {
 
     // MARK: - Public Properties
-    weak var delegate: DataProviderDelegate?
+    weak var delegate: TrackersDataProviderDelegate?
 
     // MARK: - Private Properties
     private let context: NSManagedObjectContext
@@ -88,20 +78,12 @@ final class DataProvider: NSObject {
 }
 
 
-// MARK: - DataProviderProtocol
-extension DataProvider: DataProviderProtocol {
+// MARK: - TrackersDataProviderProtocol
+extension TrackersDataProvider: TrackersDataProviderProtocol {
 
     // MARK: - Public Properties
     var numberOfSections: Int {
         fetchedResultsController.sections?.count ?? 0
-    }
-
-    var categories: [TrackerCategoryCoreData] {
-        dataStore.trackerCategoryStore.categories
-    }
-
-    var numberOfCategories: Int {
-        dataStore.trackerCategoryStore.numberOfCategories
     }
 
     // MARK: - Public Methods
@@ -146,10 +128,6 @@ extension DataProvider: DataProviderProtocol {
         return trackerCoreData.category.name
     }
 
-    func add(categoryName: String) {
-        dataStore.trackerCategoryStore.add(categoryName)
-    }
-
     func add(tracker: Tracker, for categoryName: String) {
         let trackerCoreData = TrackerCoreData(context: context)
         trackerCoreData.name = tracker.name
@@ -179,7 +157,8 @@ extension DataProvider: DataProviderProtocol {
 
 
 // MARK: - NSFetchedResultsControllerDelegate
-extension DataProvider: NSFetchedResultsControllerDelegate {
+extension TrackersDataProvider: NSFetchedResultsControllerDelegate {
+
     func controllerWillChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
@@ -190,12 +169,12 @@ extension DataProvider: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>
     ) {
-        delegate?.didUpdate(TrackerStoreUpdate(insertedIndexes: insertedIndexes!,
-                                               deletedIndexes: deletedIndexes!))
+        delegate?.didUpdate(StoreUpdate(insertedIndexes: insertedIndexes!,
+                                        deletedIndexes: deletedIndexes!))
         insertedIndexes = nil
         deletedIndexes = nil
     }
-    
+
     func controller(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChange anObject: Any,
@@ -216,4 +195,5 @@ extension DataProvider: NSFetchedResultsControllerDelegate {
             break
         }
     }
+
 }

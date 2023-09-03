@@ -71,7 +71,6 @@ final class TrackersViewController: UIViewController, TrackersViewControllerProt
         trackersView.collectionView.delegate = self
         trackersView.collectionView.dataSource = self
         createNewTrackerCreatedObserver()
-        
     }
     
     // MARK: - Public Methods
@@ -183,8 +182,8 @@ extension TrackersViewController: UICollectionViewDataSource {
             let trackerCollectionViewCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: TrackerCollectionViewCell.reuseIdentifier,
                 for: indexPath) as? TrackerCollectionViewCell,
-            let tracker = presenter?.tracker(at: indexPath),
-            let presenter
+            let presenter,
+            let tracker = presenter.tracker(at: indexPath)
         else {
             return UICollectionViewCell()
         }
@@ -248,7 +247,11 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         return CollectionViewConstants.minimumInteritemSpacing
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
         return CollectionViewConstants.sectionInset
     }
 

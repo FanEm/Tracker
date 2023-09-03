@@ -21,17 +21,25 @@ final class CreateTrackerViewController: UIViewController {
         super.viewDidLoad()
         createTrackerView.delegate = self
     }
+
+    // MARK: - Private Methods
+    private func presentNewTrackerViewController(type: NewTrackerViewControllerType) {
+        let presenter = NewTrackerViewPresenter(type: type)
+        let viewController = NewTrackerViewController()
+        viewController.presenter = presenter
+        presenter.view = viewController
+        present(viewController, animated: true)
+    }
+
 }
 
 // MARK: - CreateTrackerViewDelegate
 extension CreateTrackerViewController: CreateTrackerViewDelegate {
     func didTapHabitButton() {
-        let viewController = NewTrackerViewController(type: .habit)
-        present(viewController, animated: true)
+        presentNewTrackerViewController(type: .habit)
     }
     
     func didTapEventButton() {
-        let viewController = NewTrackerViewController(type: .event)
-        present(viewController, animated: true)
+        presentNewTrackerViewController(type: .event)
     }
 }

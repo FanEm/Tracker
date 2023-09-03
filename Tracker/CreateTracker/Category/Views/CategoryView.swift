@@ -22,8 +22,8 @@ final class CategoryView: ViewWithTableBaseView {
     private func setpUpUI() {
         title.text = "Category".localized()
         tableView.register(
-            TitleTableViewCell.self,
-            forCellReuseIdentifier: TitleTableViewCell.reuseIdentifier
+            CategoryCell.self,
+            forCellReuseIdentifier: CategoryCell.reuseId
         )
         button.setTitle("Add category".localized(), for: .normal)
     }

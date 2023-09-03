@@ -19,10 +19,10 @@ protocol DataStoreProtocol: AnyObject {
 final class DataStore: DataStoreProtocol {
 
     // MARK: - Public Properties
-    var context: NSManagedObjectContext
-    var trackerStore: TrackerStoreProtocol
-    var trackerCategoryStore: TrackerCategoryStoreProtocol
-    var trackerRecordStore: TrackerRecordStoreProtocol
+    private(set) var context: NSManagedObjectContext
+    private(set) var trackerStore: TrackerStoreProtocol
+    private(set) var trackerCategoryStore: TrackerCategoryStoreProtocol
+    private(set) var trackerRecordStore: TrackerRecordStoreProtocol
 
     // MARK: - Private Properties
     private let container: NSPersistentContainer

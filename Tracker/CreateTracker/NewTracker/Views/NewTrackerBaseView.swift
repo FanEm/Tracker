@@ -206,6 +206,8 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
     ) -> UICollectionReusableView {
         let section = indexPath.section
         let reusableView = UICollectionReusableView()
+        let newTrackerViewController = parentViewController as? NewTrackerViewController
+        let newTrackerPresenter = newTrackerViewController?.presenter
         if kind == UICollectionView.elementKindSectionHeader {
             guard let sectionTitleView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
@@ -219,7 +221,7 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
                     withReuseIdentifier: NewTrackerHeaderView.reuseIdentifier,
                     for: indexPath
                 ) as? NewTrackerHeaderView else { break }
-                headerView.delegate = parentViewController as? any NewTrackerHeaderViewDelegate
+                headerView.delegate = newTrackerPresenter as? any NewTrackerHeaderViewDelegate
                 headerView.tableViewCells = tableViewCells
                 return headerView
             case 1:
@@ -241,7 +243,8 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
                 withReuseIdentifier: NewTrackerFooterView.reuseIdentifier,
                 for: indexPath
             ) as? NewTrackerFooterView else { return reusableView }
-            footerView.delegate = self.parentViewController as? any NewTrackerFooterViewDelegate
+            footerView.delegate = newTrackerViewController
+            newTrackerPresenter?.checkIfAllFieldsFilled()
             return footerView
         }
         return reusableView
@@ -288,7 +291,7 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        return getReferenceSize(
+        getReferenceSize(
             collectionView: collectionView,
             section: section,
             kind: UICollectionView.elementKindSectionHeader
@@ -300,7 +303,7 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForFooterInSection section: Int
     ) -> CGSize {
-        return getReferenceSize(
+        getReferenceSize(
             collectionView: collectionView,
             section: section,
             kind: UICollectionView.elementKindSectionFooter

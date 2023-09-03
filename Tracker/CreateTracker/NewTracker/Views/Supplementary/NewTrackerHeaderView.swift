@@ -5,10 +5,12 @@
 
 import UIKit
 
+
 // MARK: - NewTrackerHeaderViewDelegate
 protocol NewTrackerHeaderViewDelegate: AnyObject {
     func didChangedTextField(text: String?)
 }
+
 
 // MARK: - NewTrackerHeaderView
 final class NewTrackerHeaderView: UICollectionReusableView {
@@ -126,11 +128,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     }
 
     private func layoutTableViewHeight() {
-        tableViewHeightAnchor.isActive = false
-        tableView.layoutIfNeeded()
-        tableView.heightAnchor.constraint(
-            equalToConstant: GlobalConstants.TableViewCell.height * CGFloat(tableViewCells.count)
-        ).isActive = true
+        tableViewHeightAnchor.constant = GlobalConstants.TableViewCell.height * CGFloat(tableViewCells.count)
     }
 
     private func createDidScheduleOrCategoryChosenObserver() {
@@ -140,17 +138,17 @@ final class NewTrackerHeaderView: UICollectionReusableView {
                                                       object: nil)
     }
 
-    private func subLabelOn(_ vc: NewTrackerViewController, for cellType: NewTrackerCellType) -> String? {
+    private func getSubLabel(presenter: NewTrackerViewPresenterProtocol, cellType: NewTrackerCellType) -> String? {
         var subLabel: String?
-        switch (vc.type, cellType)  {
+        switch (presenter.type, cellType)  {
         case (.event, .category):
-            subLabel = vc.category?.name
+            subLabel = presenter.category?.name
         case (.event, .schedule):
             subLabel = nil
         case (.habit, .category):
-            subLabel = vc.category?.name
+            subLabel = presenter.category?.name
         case (.habit, .schedule):
-            subLabel = subLabelForSchedule(vc.schedule)
+            subLabel = subLabelForSchedule(presenter.schedule)
         }
         return subLabel
     }
@@ -173,7 +171,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     @objc private func textFieldChanged(_ textField: UITextField) {
         delegate?.didChangedTextField(text: textField.text)
     }
-    
+
 }
 
 // MARK: - UITableViewDataSource
@@ -193,8 +191,9 @@ extension NewTrackerHeaderView: UITableViewDataSource {
         let cellType = tableViewCells[indexPath.row]
         let label = cellType.name
         var subLabel: String? = nil
-        if let newTrackerViewController = parentViewController as? NewTrackerViewController {
-            subLabel = subLabelOn(newTrackerViewController, for: cellType)
+        if let newTrackerViewController = parentViewController as? NewTrackerViewController,
+           let presenter = newTrackerViewController.presenter {
+            subLabel = getSubLabel(presenter: presenter, cellType: cellType)
         }
         subtitleTableViewCell.configCell(label: label, subLabel: subLabel)
         subtitleTableViewCell.accessoryType = .disclosureIndicator
@@ -208,16 +207,18 @@ extension NewTrackerHeaderView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let parentViewController else { return }
         let newTrackerViewController = parentViewController as? NewTrackerViewController
+        let newTrackerPresenter = newTrackerViewController?.presenter
         switch tableViewCells[indexPath.row] {
         case .category:
-            let viewController = CategoryViewController()
-            viewController.delegate = newTrackerViewController
-            viewController.selectedCategory = newTrackerViewController?.category
+            let categoryViewModel = CategoryViewModel()
+            let viewController = CategoryViewController(categoryViewModel: categoryViewModel)
+            viewController.delegate = newTrackerPresenter as? any CategoryViewControllerDelegate
+            categoryViewModel.selectedCategory = newTrackerPresenter?.category
             parentViewController.present(viewController, animated: true)
         case .schedule:
             let viewController = ScheduleViewController()
-            viewController.delegate = newTrackerViewController
-            viewController.schedule = newTrackerViewController?.schedule ?? []
+            viewController.delegate = newTrackerPresenter as? any ScheduleViewControllerDelegate
+            viewController.schedule = newTrackerPresenter?.schedule ?? []
             parentViewController.present(viewController, animated: true)
         }
     }
@@ -229,12 +230,15 @@ extension NewTrackerHeaderView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
     }
+
 }
 
 // MARK: - UITextFieldDelegate
 extension NewTrackerHeaderView: UITextFieldDelegate {
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         endEditing(true)
         return false
     }
+
 }

@@ -32,4 +32,9 @@ extension UIImage {
             }
         }
     }
+
+    enum Onboarding {
+        static var background1: UIImage { UIImage(named: "onboarding-background-1") ?? UIImage() }
+        static var background2: UIImage { UIImage(named: "onboarding-background-2") ?? UIImage() }
+    }
 }
