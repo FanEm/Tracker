@@ -8,7 +8,7 @@ import UIKit
 
 // MARK: - NewTrackerViewControllerProtocol
 protocol NewTrackerViewControllerProtocol: AnyObject {
-    var presenter: NewTrackerViewPresenterProtocol? { get set }
+    var presenter: NewTrackerPresenterProtocol? { get set }
 }
 
 
@@ -16,13 +16,13 @@ protocol NewTrackerViewControllerProtocol: AnyObject {
 final class NewTrackerViewController: UIViewController, NewTrackerViewControllerProtocol {
 
     // MARK: - Public Properties
-    var presenter: NewTrackerViewPresenterProtocol?
+    var presenter: NewTrackerPresenterProtocol?
 
     // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
         guard let presenter else { fatalError("Presenter is nil") }
-        switch presenter.type {
+        switch presenter.newTrackerModel.type {
         case .habit:
             view = NewHabitView()
         case .event:
@@ -33,7 +33,7 @@ final class NewTrackerViewController: UIViewController, NewTrackerViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
-        presenter?.checkIfAllFieldsFilled()
+        presenter?.newTrackerModel.checkIfAllFieldsFilled()
         (view as? NewTrackerBaseView)?.delegate = presenter as? any NewTrackerBaseViewDelegate
     }
 

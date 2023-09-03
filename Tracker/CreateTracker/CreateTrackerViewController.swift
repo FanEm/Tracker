@@ -23,8 +23,8 @@ final class CreateTrackerViewController: UIViewController {
     }
 
     // MARK: - Private Methods
-    private func presentNewTrackerViewController(type: NewTrackerViewControllerType) {
-        let presenter = NewTrackerViewPresenter(type: type)
+    private func presentNewTrackerViewController(type: NewTrackerType) {
+        let presenter = NewTrackerPresenter(type: type)
         let viewController = NewTrackerViewController()
         viewController.presenter = presenter
         presenter.view = viewController

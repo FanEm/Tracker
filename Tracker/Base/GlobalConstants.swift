@@ -22,4 +22,7 @@ enum GlobalConstants {
     enum Title {
         static let inset: CGFloat = 27
     }
+    enum TextField {
+        static let maxLength: Int = 38
+    }
 }

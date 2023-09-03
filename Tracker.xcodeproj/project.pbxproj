@@ -66,9 +66,11 @@
 		F362C9472AA0C4150010A665 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C9462AA0C4150010A665 /* CategoryService.swift */; };
 		F362C9492AA0CB5B0010A665 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C9482AA0CB5B0010A665 /* Observable.swift */; };
 		F362C94C2AA113290010A665 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C94B2AA113290010A665 /* CategoryCell.swift */; };
-		F362C94E2AA117C60010A665 /* NewTrackerViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C94D2AA117C60010A665 /* NewTrackerViewPresenter.swift */; };
+		F362C94E2AA117C60010A665 /* NewTrackerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C94D2AA117C60010A665 /* NewTrackerPresenter.swift */; };
 		F362C9512AA12A3E0010A665 /* NewTrackerColorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C9502AA12A3E0010A665 /* NewTrackerColorViewCell.swift */; };
 		F362C9552AA248A20010A665 /* StoreUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C9542AA248A20010A665 /* StoreUpdate.swift */; };
+		F362C9572AA258FA0010A665 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C9562AA258FA0010A665 /* PaddingLabel.swift */; };
+		F362C9592AA4CDC10010A665 /* NewTrackerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F362C9582AA4CDC10010A665 /* NewTrackerModel.swift */; };
 		F37798C42A80095B00BD9188 /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37798C32A80095B00BD9188 /* TrackerCategory.swift */; };
 		F37798C62A80096600BD9188 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37798C52A80096600BD9188 /* TrackerRecord.swift */; };
 		F37798C92A8159C000BD9188 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37798C82A8159C000BD9188 /* Date+Extensions.swift */; };
@@ -157,9 +159,11 @@
 		F362C9462AA0C4150010A665 /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		F362C9482AA0CB5B0010A665 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		F362C94B2AA113290010A665 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
-		F362C94D2AA117C60010A665 /* NewTrackerViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrackerViewPresenter.swift; sourceTree = "<group>"; };
+		F362C94D2AA117C60010A665 /* NewTrackerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrackerPresenter.swift; sourceTree = "<group>"; };
 		F362C9502AA12A3E0010A665 /* NewTrackerColorViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrackerColorViewCell.swift; sourceTree = "<group>"; };
 		F362C9542AA248A20010A665 /* StoreUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUpdate.swift; sourceTree = "<group>"; };
+		F362C9562AA258FA0010A665 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		F362C9582AA4CDC10010A665 /* NewTrackerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrackerModel.swift; sourceTree = "<group>"; };
 		F37798C32A80095B00BD9188 /* TrackerCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		F37798C52A80096600BD9188 /* TrackerRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 		F37798C82A8159C000BD9188 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -350,7 +354,8 @@
 				F362C94F2AA12A210010A665 /* Cells */,
 				F3579D462A7A783500D1EFA2 /* Views */,
 				F3579D362A7847F100D1EFA2 /* NewTrackerViewController.swift */,
-				F362C94D2AA117C60010A665 /* NewTrackerViewPresenter.swift */,
+				F362C94D2AA117C60010A665 /* NewTrackerPresenter.swift */,
+				F362C9582AA4CDC10010A665 /* NewTrackerModel.swift */,
 			);
 			path = NewTracker;
 			sourceTree = "<group>";
@@ -385,6 +390,7 @@
 				F3579D732A7C3FEE00D1EFA2 /* BaseSectionTitleView.swift */,
 				F37798D62A82BCDC00BD9188 /* BaseButton.swift */,
 				F3579D3A2A78666B00D1EFA2 /* TextField.swift */,
+				F362C9562AA258FA0010A665 /* PaddingLabel.swift */,
 				F37798CC2A8266F000BD9188 /* GlobalConstants.swift */,
 			);
 			path = Base;
@@ -632,6 +638,7 @@
 				F3E815742A77D532000BE1DE /* TabBarController.swift in Sources */,
 				F3579D352A783D7A00D1EFA2 /* CreateTrackerView.swift in Sources */,
 				F3579D512A7A7C1700D1EFA2 /* ScheduleCell.swift in Sources */,
+				F362C9572AA258FA0010A665 /* PaddingLabel.swift in Sources */,
 				F32A88242A8E4895002FFC43 /* TrackersService.swift in Sources */,
 				F3579D392A78502600D1EFA2 /* NewEventView.swift in Sources */,
 				F3579D6E2A7BF37800D1EFA2 /* NewTrackerEmojiViewCell.swift in Sources */,
@@ -677,9 +684,10 @@
 				F3579D482A7A784300D1EFA2 /* NewTrackerBaseView.swift in Sources */,
 				F3E815712A77C9A4000BE1DE /* UIImage+Extensions.swift in Sources */,
 				F32A87F02A8B8841002FFC43 /* TrackerCategoryStore.swift in Sources */,
-				F362C94E2AA117C60010A665 /* NewTrackerViewPresenter.swift in Sources */,
+				F362C94E2AA117C60010A665 /* NewTrackerPresenter.swift in Sources */,
 				F37798C92A8159C000BD9188 /* Date+Extensions.swift in Sources */,
 				F37798C62A80096600BD9188 /* TrackerRecord.swift in Sources */,
+				F362C9592AA4CDC10010A665 /* NewTrackerModel.swift in Sources */,
 				F34FC9E52A83E11100CD3D51 /* Array+Extensions.swift in Sources */,
 				F32A87F22A8B8933002FFC43 /* TrackerRecordStore.swift in Sources */,
 				F362C9552AA248A20010A665 /* StoreUpdate.swift in Sources */,

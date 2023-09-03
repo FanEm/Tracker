@@ -26,7 +26,7 @@ final class OnboardingPageViewController: UIPageViewController {
 
         pageControl.currentPageIndicatorTintColor = .trPermBlack
         pageControl.pageIndicatorTintColor = .trPermBlack.withAlphaComponent(0.3)
-
+        pageControl.isUserInteractionEnabled = false
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
@@ -59,11 +59,11 @@ final class OnboardingPageViewController: UIPageViewController {
             setViewControllers([first], direction: .forward, animated: true)
         }
 
-        setUpUI()
+        setupUI()
     }
 
     // MARK: - Private Methods
-    private func setUpUI() {
+    private func setupUI() {
         view.addSubview(pageControl)
 
         NSLayoutConstraint.activate([

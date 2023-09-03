@@ -32,6 +32,11 @@ class NewTrackerBaseView: UIView {
             static let leadingAndTrailingInsets: CGFloat = 0
             static let itemSize = CGSize(width: 52, height: 52)
             static let sectionInset = UIEdgeInsets(top: 24, left: 18, bottom: 24, right: 18)
+            static let sectionTitleHeight: CGFloat = 23
+            static let footerHeight: CGFloat = 90
+            static let eventHeaderHeight: CGFloat = 238
+            static let habitHeaderHeight: CGFloat = 313
+            static let errorLabelHeight: CGFloat = 22
         }
     }
 
@@ -68,6 +73,21 @@ class NewTrackerBaseView: UIView {
         return collectionView
     }()
 
+    private var isErrorLabelHidden = true
+    private var headerHeight: CGFloat {
+        var height: CGFloat
+        switch tableViewCells.count {
+        case 1:
+            height = Constants.CollectionView.eventHeaderHeight
+        case 2:
+            height = Constants.CollectionView.habitHeaderHeight
+        default:
+            fatalError("Expected 1 or 2 cells")
+        }
+        if !isErrorLabelHidden { height += Constants.CollectionView.errorLabelHeight }
+        return height
+    }
+
     private let emojies = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
         "😇", "😡", "🥶", "🤔", "🙌", "🍔",
@@ -80,7 +100,6 @@ class NewTrackerBaseView: UIView {
         "#F6C48B", "#7994F5", "#832CF1", "#AD56DA", "#8D72E6", "#2FD058"
     ]
 
-    
     // MARK: - Initializers
     init(tableViewCells: [NewTrackerCellType]) {
         self.tableViewCells = tableViewCells
@@ -94,6 +113,12 @@ class NewTrackerBaseView: UIView {
         collectionView.delegate = self
 
         activateConstraints()
+        createErrorLabelObserver()
+        registerKeyboardObserver()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     required init?(coder: NSCoder) {
@@ -125,6 +150,46 @@ class NewTrackerBaseView: UIView {
             )
         ])
     }
+    
+    private func createErrorLabelObserver() {
+        return NotificationCenter.default.addObserver(self,
+                                                      selector: #selector(invalidateLayout(notification:)),
+                                                      name: .didErrorLabelChangeState,
+                                                      object: nil)
+    }
+    
+    
+    func registerKeyboardObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        let userInfo: NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        collectionView.contentInset = contentInsets
+        collectionView.scrollIndicatorInsets = contentInsets
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        collectionView.contentInset = .zero
+        collectionView.scrollIndicatorInsets = .zero
+    }
+
+    @objc private func invalidateLayout(notification: Notification) {
+        guard let isHidden = notification.object as? Bool else { return }
+        isErrorLabelHidden = isHidden
+        self.collectionView.collectionViewLayout.invalidateLayout()
+    }
+
 }
 
 
@@ -244,7 +309,7 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
                 for: indexPath
             ) as? NewTrackerFooterView else { return reusableView }
             footerView.delegate = newTrackerViewController
-            newTrackerPresenter?.checkIfAllFieldsFilled()
+            newTrackerPresenter?.newTrackerModel.checkIfAllFieldsFilled()
             return footerView
         }
         return reusableView
@@ -291,11 +356,17 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        getReferenceSize(
-            collectionView: collectionView,
-            section: section,
-            kind: UICollectionView.elementKindSectionHeader
-        )
+        switch section {
+        case 0:
+            return CGSize(width: collectionView.frame.width, height: headerHeight)
+        case 1, 2:
+            return CGSize(
+                width: collectionView.frame.width,
+                height: Constants.CollectionView.sectionTitleHeight
+            )
+        default:
+            return .zero
+        }
     }
     
     func collectionView(
@@ -303,25 +374,15 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForFooterInSection section: Int
     ) -> CGSize {
-        getReferenceSize(
-            collectionView: collectionView,
-            section: section,
-            kind: UICollectionView.elementKindSectionFooter
-        )
+        switch section {
+        case 3:
+            return CGSize(
+                width: collectionView.frame.width,
+                height: Constants.CollectionView.footerHeight
+            )
+        default:
+            return .zero
+        }
     }
-    
-    func getReferenceSize(collectionView: UICollectionView, section: Int, kind: String) -> CGSize {
-        let indexPath = IndexPath(row: 0, section: section)
-        let view = self.collectionView(
-            collectionView,
-            viewForSupplementaryElementOfKind: kind,
-            at: indexPath
-        )
-        return view.systemLayoutSizeFitting(
-            CGSize(width: collectionView.frame.width,
-                   height: UIView.layoutFittingExpandedSize.height),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-    }
+
 }

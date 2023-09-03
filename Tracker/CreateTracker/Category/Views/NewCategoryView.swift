@@ -43,7 +43,7 @@ final class NewCategoryView: UIView {
             static let trailingAndLeadingInsets: CGFloat = 16
         }
     }
-    
+
     private var title: UILabel = {
         let label = UILabel()
         label.text = "New category".localized()

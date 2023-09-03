@@ -44,6 +44,9 @@ final class NewTrackerHeaderView: UICollectionReusableView {
             static let topInset: CGFloat = 24
             static let height: CGFloat = 75
         }
+        enum ErrorLabel {
+            static let height: CGFloat = 30
+        }
         enum TableView {
             static let topInset: CGFloat = 24
             static let bottomInset: CGFloat = 32
@@ -63,25 +66,39 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         return textField
     }()
 
+    private var errorLabel: PaddingLabel = {
+        let label = PaddingLabel()
+        label.text = "The limit is 38 characters".localized()
+        label.font = GlobalConstants.Font.sfPro17
+        label.isHidden = true
+        label.textAlignment = .center
+        label.textColor = .trRed
+        label.numberOfLines = 1
+        return label
+    }()
+
     private lazy var tableViewHeightAnchor = {
         self.tableView.heightAnchor.constraint(equalToConstant: 0)
     }()
 
+    private lazy var labelHeightAnchor = {
+        self.errorLabel.heightAnchor.constraint(equalToConstant: 0)
+    }()
 
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .trWhite
-        
+
         addSubview(textField)
+        addSubview(errorLabel)
         addSubview(tableView)
-        
+
         tableView.dataSource = self
         tableView.delegate = self
         textField.delegate = self
-        
+
         createDidScheduleOrCategoryChosenObserver()
-        
         activateConstraints()
     }
     
@@ -107,6 +124,12 @@ final class NewTrackerHeaderView: UICollectionReusableView {
             textField.heightAnchor.constraint(
                 equalToConstant: Constants.TextField.height
             ),
+
+            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            trailingAnchor.constraint(equalTo: errorLabel.trailingAnchor),
+            errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor),
+            labelHeightAnchor,
+            
             tableView.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
                 constant: Constants.leadingAndTrailingInsets
@@ -116,7 +139,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
                 constant: Constants.leadingAndTrailingInsets
             ),
             tableView.topAnchor.constraint(
-                equalTo: textField.bottomAnchor,
+                equalTo: errorLabel.bottomAnchor,
                 constant: Constants.TableView.topInset
             ),
             tableViewHeightAnchor,
@@ -138,17 +161,17 @@ final class NewTrackerHeaderView: UICollectionReusableView {
                                                       object: nil)
     }
 
-    private func getSubLabel(presenter: NewTrackerViewPresenterProtocol, cellType: NewTrackerCellType) -> String? {
+    private func getSubLabel(model: NewTrackerModel, cellType: NewTrackerCellType) -> String? {
         var subLabel: String?
-        switch (presenter.type, cellType)  {
+        switch (model.type, cellType)  {
         case (.event, .category):
-            subLabel = presenter.category?.name
+            subLabel = model.category?.name
         case (.event, .schedule):
             subLabel = nil
         case (.habit, .category):
-            subLabel = presenter.category?.name
+            subLabel = model.category?.name
         case (.habit, .schedule):
-            subLabel = subLabelForSchedule(presenter.schedule)
+            subLabel = subLabelForSchedule(model.schedule)
         }
         return subLabel
     }
@@ -163,13 +186,32 @@ final class NewTrackerHeaderView: UICollectionReusableView {
             .reorder(by: allWeekDays.map { $0.abbreviatedName })
             .joined(separator: ", ")
     }
+    
+    private func showErrorLabelIfNeeded(text: String?) {
+        guard let text else { return }
+        let isHidden = text.count <= GlobalConstants.TextField.maxLength
+        guard errorLabel.isHidden != isHidden else { return }
+        labelHeightAnchor.constant = isHidden ? 0 : Constants.ErrorLabel.height
+        UIView.transition(
+            with: self.errorLabel,
+            duration: 0.3,
+            options: .transitionCrossDissolve
+        ) { [weak self] in
+            guard let self else { return }
+            self.layoutIfNeeded()
+            self.errorLabel.isHidden = isHidden
+        }        
+        NotificationCenter.default.post(name: .didErrorLabelChangeState, object: isHidden)
+    }
 
     @objc private func reloadTableView() {
         tableView.reloadData()
     }
 
     @objc private func textFieldChanged(_ textField: UITextField) {
-        delegate?.didChangedTextField(text: textField.text)
+        let text = textField.text
+        delegate?.didChangedTextField(text: text)
+        showErrorLabelIfNeeded(text: text)
     }
 
 }
@@ -192,8 +234,8 @@ extension NewTrackerHeaderView: UITableViewDataSource {
         let label = cellType.name
         var subLabel: String? = nil
         if let newTrackerViewController = parentViewController as? NewTrackerViewController,
-           let presenter = newTrackerViewController.presenter {
-            subLabel = getSubLabel(presenter: presenter, cellType: cellType)
+           let model = newTrackerViewController.presenter?.newTrackerModel {
+            subLabel = getSubLabel(model: model, cellType: cellType)
         }
         subtitleTableViewCell.configCell(label: label, subLabel: subLabel)
         subtitleTableViewCell.accessoryType = .disclosureIndicator
@@ -213,12 +255,12 @@ extension NewTrackerHeaderView: UITableViewDelegate {
             let categoryViewModel = CategoryViewModel()
             let viewController = CategoryViewController(categoryViewModel: categoryViewModel)
             viewController.delegate = newTrackerPresenter as? any CategoryViewControllerDelegate
-            categoryViewModel.selectedCategory = newTrackerPresenter?.category
+            categoryViewModel.selectedCategory = newTrackerPresenter?.newTrackerModel.category
             parentViewController.present(viewController, animated: true)
         case .schedule:
             let viewController = ScheduleViewController()
             viewController.delegate = newTrackerPresenter as? any ScheduleViewControllerDelegate
-            viewController.schedule = newTrackerPresenter?.schedule ?? []
+            viewController.schedule = newTrackerPresenter?.newTrackerModel.schedule ?? []
             parentViewController.present(viewController, animated: true)
         }
     }
