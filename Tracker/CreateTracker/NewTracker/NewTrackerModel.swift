@@ -11,6 +11,7 @@ struct NewTrackerModel {
 
     // MARK: - Public Properties
     var type: NewTrackerType
+    var id: UUID = UUID()
     var name: String? = nil {
         didSet {
             checkIfAllFieldsFilled()
@@ -47,13 +48,14 @@ struct NewTrackerModel {
 
     // MARK: - Public Methods
     func buildTracker() -> Tracker {
-        guard let name, let color, let emoji else {
+        guard let name, let color, let emoji, let category else {
             fatalError("""
             Some of the params are nil.
             Params:
                 name - \(String(describing: name)),
                 color - \(String(describing: color)),
-                emoji - \(String(describing: emoji))
+                emoji - \(String(describing: emoji)),
+                category - \(String(describing: category))
             """)
         }
         let trackerSchedule: Set<WeekDay>
@@ -62,11 +64,15 @@ struct NewTrackerModel {
             case .event: trackerSchedule = Set(WeekDay.allCases)
         }
         return Tracker(
-            id: UUID(),
+            id: id,
             name: name,
             color: color,
             emoji: emoji,
-            schedule: trackerSchedule
+            schedule: trackerSchedule,
+            isPinned: false,
+            type: type,
+            category: category,
+            previousCategoryId: nil
         )
     }
 

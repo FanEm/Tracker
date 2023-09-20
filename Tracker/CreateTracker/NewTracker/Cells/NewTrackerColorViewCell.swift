@@ -78,4 +78,5 @@ final class NewTrackerColorViewCell: UICollectionViewCell {
     private func deselectCell() {
         layer.borderWidth = 0
     }
+
 }

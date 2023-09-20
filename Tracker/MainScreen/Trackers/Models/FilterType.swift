@@ -6,24 +6,19 @@
 import Foundation
 
 // MARK: - FilterType
-enum FilterType: String, Codable {
+@objc
+enum FilterType: Int, Codable {
     case all
     case today
     case completed
-    case inProgress
+    case incompleted
     
     var name: String {
-        var name: String
         switch self {
-        case .all:
-            name = "All trackers"
-        case .today:
-            name = "Trackers for today"
-        case .completed:
-            name = "Сompleted"
-        case .inProgress:
-            name = "Not completed"
+        case .all: return L.Filters.all
+        case .today: return L.Filters.today
+        case .completed: return L.Filters.completed
+        case .incompleted: return L.Filters.incompleted
         }
-        return name.localized()
     }
 }

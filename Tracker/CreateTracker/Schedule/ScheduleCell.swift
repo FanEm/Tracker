@@ -5,10 +5,12 @@
 
 import UIKit
 
+
 // MARK: - ScheduleCellDelegate
 protocol ScheduleCellDelegate: AnyObject {
     func didSwitchChanged(to isOn: Bool, forCellAt index: Int)
 }
+
 
 // MARK: - ScheduleCell
 final class ScheduleCell: TitleTableViewCell {
@@ -46,4 +48,5 @@ final class ScheduleCell: TitleTableViewCell {
     @objc private func switchChanged(_ sender: UISwitch) {
         delegate?.didSwitchChanged(to: sender.isOn, forCellAt: sender.tag)
     }
+
 }

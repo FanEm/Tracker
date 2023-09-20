@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - TrackerCollectionViewCellDelegate
 protocol TrackerCollectionViewCellDelegate: AnyObject {
     func didTapOnQuantityButton(_ cell: TrackerCollectionViewCell)
@@ -23,7 +22,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     var isTrackerCompleted: Bool = false
     var doneCounter: Int = 0 {
         didSet {
-            self.quantityLabel.text = "Days".localizedWithFormat(args: doneCounter)
+            self.quantityLabel.text = L.Trackers.Tracker.days(doneCounter)
         }
     }
 
@@ -219,13 +218,18 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.text = tracker.name
     
         if currentDate > Date().stripTime() {
-            setImageForButton(image: .Trackers.plusButton, color: .trGray)
+            setImageForButton(
+                image: A.Icons.Trackers.Tracker.plus.image,
+                color: .trGray
+            )
             quantityButton.isEnabled = false
             return
         }
 
         quantityButton.isEnabled = true
-        let image: UIImage = isTrackerCompleted ? .Trackers.minusButton : .Trackers.plusButton
+        let image: UIImage = isTrackerCompleted
+                             ? A.Icons.Trackers.Tracker.minus.image
+                             : A.Icons.Trackers.Tracker.plus.image
         setImageForButton(image: image, color: color)
     }
 
@@ -249,8 +253,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     @objc private func tapOnQuantityButton() {
         guard let tracker else { return }
         let color = UIColor(hexString: tracker.color)
-        let image: UIImage = isTrackerCompleted ? .Trackers.plusButton : .Trackers.minusButton
+        let image: UIImage = isTrackerCompleted
+                             ? A.Icons.Trackers.Tracker.plus.image
+                             : A.Icons.Trackers.Tracker.minus.image
         setImageForButton(image: image, color: color)
         delegate?.didTapOnQuantityButton(self)
     }
+
 }

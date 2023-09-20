@@ -20,7 +20,7 @@ final class FiltersView: ViewWithTableBaseView {
 
     // MARK: - Private Methods
     private func setpUpUI() {
-        title.text = "Filters".localized()
+        title.text = L.Filters.title
         tableView.register(
             TitleTableViewCell.self,
             forCellReuseIdentifier: TitleTableViewCell.reuseIdentifier

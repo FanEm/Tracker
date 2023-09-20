@@ -5,6 +5,7 @@
 
 import UIKit
 
+
 // MARK: - CreateTrackerViewController
 final class CreateTrackerViewController: UIViewController {
 
@@ -33,8 +34,10 @@ final class CreateTrackerViewController: UIViewController {
 
 }
 
+
 // MARK: - CreateTrackerViewDelegate
 extension CreateTrackerViewController: CreateTrackerViewDelegate {
+
     func didTapHabitButton() {
         presentNewTrackerViewController(type: .habit)
     }
@@ -42,4 +45,5 @@ extension CreateTrackerViewController: CreateTrackerViewDelegate {
     func didTapEventButton() {
         presentNewTrackerViewController(type: .event)
     }
+
 }

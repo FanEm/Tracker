@@ -5,6 +5,7 @@
 
 import UIKit
 
+
 // MARK: - NewTrackerEmojiViewCell
 final class NewTrackerEmojiViewCell: UICollectionViewCell {
 
@@ -64,4 +65,5 @@ final class NewTrackerEmojiViewCell: UICollectionViewCell {
         backgroundColor = .trWhite
         layer.cornerRadius = 0
     }
+
 }

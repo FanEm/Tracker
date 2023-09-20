@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Days</key>
+	<key>trackers.tracker.days</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@VARIABLE@</string>
@@ -16,14 +16,34 @@
 			<string>%d дней</string>
 			<key>one</key>
 			<string>%d день</string>
-			<key>two</key>
-			<string>%d дня</string>
 			<key>few</key>
 			<string>%d дня</string>
 			<key>many</key>
 			<string>%d дней</string>
 			<key>other</key>
 			<string>%d дней</string>
+		</dict>
+	</dict>
+	<key>newTracker.textField.charLimit</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Ограничение %d символов</string>
+			<key>one</key>
+			<string>Ограничение %d символ</string>
+			<key>few</key>
+			<string>Ограничение %d символа</string>
+			<key>many</key>
+			<string>Ограничение %d символов</string>
+			<key>other</key>
+			<string>Ограничение %d символов</string>
 		</dict>
 	</dict>
 </dict>

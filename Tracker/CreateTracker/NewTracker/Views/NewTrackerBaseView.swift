@@ -5,11 +5,13 @@
 
 import UIKit
 
+
 // MARK: - NewTrackerBaseViewDelegate
 protocol NewTrackerBaseViewDelegate: AnyObject {
     func didTapOnColor(_ hexString: String)
     func didTapOnEmoji(_ emoji: String)
 }
+
 
 // MARK: - NewTrackerBaseView
 class NewTrackerBaseView: UIView {
@@ -36,7 +38,7 @@ class NewTrackerBaseView: UIView {
             static let footerHeight: CGFloat = 90
             static let eventHeaderHeight: CGFloat = 238
             static let habitHeaderHeight: CGFloat = 313
-            static let errorLabelHeight: CGFloat = 22
+            static let errorLabelHeight: CGFloat = 30
         }
     }
 
@@ -45,6 +47,7 @@ class NewTrackerBaseView: UIView {
             frame: .zero,
             collectionViewLayout: UICollectionViewFlowLayout()
         )
+        collectionView.backgroundColor = .trWhite
         collectionView.register(
             NewTrackerEmojiViewCell.self,
             forCellWithReuseIdentifier: NewTrackerEmojiViewCell.reuseIdentifier
@@ -113,7 +116,7 @@ class NewTrackerBaseView: UIView {
         collectionView.delegate = self
 
         activateConstraints()
-        createErrorLabelObserver()
+        registerErrorLabelObserver()
         registerKeyboardObserver()
     }
 
@@ -150,16 +153,15 @@ class NewTrackerBaseView: UIView {
             )
         ])
     }
-    
-    private func createErrorLabelObserver() {
+
+    private func registerErrorLabelObserver() {
         return NotificationCenter.default.addObserver(self,
                                                       selector: #selector(invalidateLayout(notification:)),
                                                       name: .didErrorLabelChangeState,
                                                       object: nil)
     }
-    
-    
-    func registerKeyboardObserver() {
+
+    private func registerKeyboardObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(notification:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -170,16 +172,17 @@ class NewTrackerBaseView: UIView {
                                                object: nil)
     }
 
-    @objc func keyboardWillShow(notification: NSNotification) {
-        let userInfo: NSDictionary = notification.userInfo! as NSDictionary
-        let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo: NSDictionary = notification.userInfo as? NSDictionary,
+              let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+        else { return }
         let keyboardSize = keyboardInfo.cgRectValue.size
         let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
         collectionView.contentInset = contentInsets
         collectionView.scrollIndicatorInsets = contentInsets
     }
 
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(notification: NSNotification) {
         collectionView.contentInset = .zero
         collectionView.scrollIndicatorInsets = .zero
     }
@@ -187,7 +190,13 @@ class NewTrackerBaseView: UIView {
     @objc private func invalidateLayout(notification: Notification) {
         guard let isHidden = notification.object as? Bool else { return }
         isErrorLabelHidden = isHidden
-        self.collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+
+    private func selectCell(at indexPath: IndexPath, shouldSelect: Bool) {
+        if shouldSelect {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+        }
     }
 
 }
@@ -195,6 +204,7 @@ class NewTrackerBaseView: UIView {
 
 // MARK: - UICollectionViewDataSource
 extension NewTrackerBaseView: UICollectionViewDataSource {
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -213,20 +223,28 @@ extension NewTrackerBaseView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
+        let newTrackerViewController = parentViewController as? NewTrackerViewController
+        let newTrackerPresenter = newTrackerViewController?.presenter
         switch indexPath.section {
         case 1:
             guard let emojiCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NewTrackerEmojiViewCell.reuseIdentifier,
                 for: indexPath
             ) as? NewTrackerEmojiViewCell else { break }
-            emojiCell.configCell(emoji: emojies[indexPath.row])
+            let emoji = emojies[indexPath.row]
+            let shouldSelect = emoji == newTrackerPresenter?.newTrackerModel.emoji
+            emojiCell.configCell(emoji: emoji)
+            selectCell(at: indexPath, shouldSelect: shouldSelect)
             return emojiCell
         case 2:
             guard let colorCell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: NewTrackerColorViewCell.reuseIdentifier,
                 for: indexPath
             ) as? NewTrackerColorViewCell else { break }
-            colorCell.configCell(hexString: hexStrings[indexPath.row])
+            let hexString = hexStrings[indexPath.row]
+            let shouldSelect = hexString == newTrackerPresenter?.newTrackerModel.color
+            colorCell.configCell(hexString: hexString)
+            selectCell(at: indexPath, shouldSelect: shouldSelect)
             return colorCell
         default:
             break
@@ -237,10 +255,12 @@ extension NewTrackerBaseView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
     }
+
 }
 
 // MARK: - UICollectionViewDelegate
 extension NewTrackerBaseView: UICollectionViewDelegate {
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
@@ -251,19 +271,19 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
             return
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         collectionView.indexPathsForSelectedItems?
             .filter { $0.section == indexPath.section }
             .forEach { collectionView.deselectItem(at: $0, animated: false) }
         return true
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
         guard let item = collectionView.cellForItem(at: indexPath) else { return false }
         return !item.isSelected
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -286,14 +306,17 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
                     withReuseIdentifier: NewTrackerHeaderView.reuseIdentifier,
                     for: indexPath
                 ) as? NewTrackerHeaderView else { break }
-                headerView.delegate = newTrackerPresenter as? any NewTrackerHeaderViewDelegate
-                headerView.tableViewCells = tableViewCells
+                headerView.configure(
+                    delegate: newTrackerPresenter as? any NewTrackerHeaderViewDelegate,
+                    textFieldText: newTrackerPresenter?.newTrackerModel.name ?? "",
+                    tableViewCells: tableViewCells
+                )
                 return headerView
             case 1:
-                sectionTitleView.titleLabel.text = "Emoji".localized()
+                sectionTitleView.titleLabel.text = L.NewTracker.emoji
                 return sectionTitleView
             case 2:
-                sectionTitleView.titleLabel.text = "Color".localized()
+                sectionTitleView.titleLabel.text = L.NewTracker.color
                 return sectionTitleView
             default:
                 break
@@ -314,10 +337,13 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
         }
         return reusableView
     }
+
 }
+
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -325,7 +351,7 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         return Constants.CollectionView.itemSize
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -333,7 +359,7 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat {
         return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         switch section {
         case 1, 2:
@@ -350,7 +376,7 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat {
         return 0
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -368,7 +394,7 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
             return .zero
         }
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-import Foundation
 import UIKit
 
 
@@ -14,15 +13,16 @@ protocol TrackersServiceProtocol {
 
     func numberOfItemsInSection(_ section: Int) -> Int
     func tracker(at indexPath: IndexPath) -> Tracker?
+    func deleteTracker(at indexPath: IndexPath)
+    func editTracker(at indexPath: IndexPath, newTracker: Tracker)
+    func pinTracker(at indexPath: IndexPath)
+    func unpinTracker(at indexPath: IndexPath)
     func categoryTitle(at indexPath: IndexPath) -> String?
-    func add(tracker: Tracker, for categoryName: String)
-    func markTrackerAsCompleted(trackerId: UUID, date: Date)
-    func markTrackerAsNotCompleted(trackerId: UUID, date: Date)
+    func add(tracker: Tracker)
     func fetchTrackers(weekDay: WeekDay)
     func fetchTrackers(searchText: String, weekDay: WeekDay)
-    func records(date: Date) -> [TrackerRecord]
-    func record(with trackerId: UUID, date: Date) -> TrackerRecord?
-    func recordsCount(with trackerId: UUID) -> Int
+    func fetchCompletedTrackers(for date: Date)
+    func fetchIncompletedTrackers(for date: Date)
 }
 
 
@@ -77,16 +77,24 @@ extension TrackersService: TrackersServiceProtocol {
         dataProvider?.categoryTitle(at: indexPath)
     }
 
-    func add(tracker: Tracker, for categoryName: String) {
-        dataProvider?.add(tracker: tracker, for: categoryName)
+    func add(tracker: Tracker) {
+        dataProvider?.add(tracker: tracker)
     }
-
-    func markTrackerAsCompleted(trackerId: UUID, date: Date) {
-        dataProvider?.markTrackerAsCompleted(trackerId: trackerId, date: date)
+    
+    func editTracker(at indexPath: IndexPath, newTracker: Tracker) {
+        dataProvider?.editTracker(at: indexPath, newTracker: newTracker)
     }
-
-    func markTrackerAsNotCompleted(trackerId: UUID, date: Date) {
-        dataProvider?.markTrackerAsNotCompleted(trackerId: trackerId, date: date)
+    
+    func pinTracker(at indexPath: IndexPath) {
+        dataProvider?.pinTracker(at: indexPath)
+    }
+    
+    func unpinTracker(at indexPath: IndexPath) {
+        dataProvider?.unpinTracker(at: indexPath)
+    }
+    
+    func deleteTracker(at indexPath: IndexPath) {
+        dataProvider?.deleteTracker(at: indexPath)
     }
 
     func fetchTrackers(weekDay: WeekDay) {
@@ -97,18 +105,12 @@ extension TrackersService: TrackersServiceProtocol {
         dataProvider?.fetchTrackers(searchText: searchText, weekDay: weekDay)
     }
 
-    func records(date: Date) -> [TrackerRecord] {
-        let trackerRecordsCoreData = dataProvider?.records(date: date) ?? []
-        return trackerRecordsCoreData.map { TrackerRecord(trackerRecordCoreData: $0) }
+    func fetchIncompletedTrackers(for date: Date) {
+        dataProvider?.fetchIncompletedTrackers(for: date)
     }
 
-    func record(with trackerId: UUID, date: Date) -> TrackerRecord? {
-        guard let trackerRecordCoreData = dataProvider?.record(with: trackerId, date: date) else { return nil }
-        return TrackerRecord(trackerRecordCoreData: trackerRecordCoreData)
-    }
-
-    func recordsCount(with trackerId: UUID) -> Int {
-        dataProvider?.recordsCount(with: trackerId) ?? 0
+    func fetchCompletedTrackers(for date: Date) {
+        dataProvider?.fetchCompletedTrackers(for: date)
     }
 
 }

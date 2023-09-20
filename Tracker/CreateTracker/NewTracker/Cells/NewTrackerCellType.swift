@@ -9,6 +9,9 @@ enum NewTrackerCellType: String {
     case schedule
     
     var name: String {
-        self.rawValue.capitalized.localized()
+        switch self {
+        case .category: return L.Category.title
+        case .schedule: return L.Schedule.title
+        }
     }
 }

@@ -25,15 +25,11 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     }
 
     var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .trWhite
+        let tableView = BaseTableView()
         tableView.register(
             SubtitleTableViewCell.self,
             forCellReuseIdentifier: SubtitleTableViewCell.reuseIdentifier
         )
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .trGray
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
@@ -56,19 +52,20 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     private lazy var textField: TextField = {
         let textField = TextField()
         textField.attributedPlaceholder = NSAttributedString(
-            string: "Enter tracker name".localized(),
+            string: L.NewTracker.TextField.placeholder,
             attributes: [
                 .foregroundColor: UIColor.trGray,
                 .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
             ]
         )
         textField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        textField.becomeFirstResponder()
         return textField
     }()
 
     private var errorLabel: PaddingLabel = {
         let label = PaddingLabel()
-        label.text = "The limit is 38 characters".localized()
+        label.text = L.NewTracker.TextField.charLimit(GlobalConstants.TextField.maxLength)
         label.font = GlobalConstants.Font.sfPro17
         label.isHidden = true
         label.textAlignment = .center
@@ -98,12 +95,23 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         tableView.delegate = self
         textField.delegate = self
 
-        createDidScheduleOrCategoryChosenObserver()
+        registerDidScheduleOrCategoryChosenObserver()
         activateConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Public Methods
+    func configure(
+        delegate: NewTrackerHeaderViewDelegate?,
+        textFieldText: String,
+        tableViewCells: [NewTrackerCellType]
+    ) {
+        self.delegate = delegate
+        self.tableViewCells = tableViewCells
+        textField.text = textFieldText
     }
 
     // MARK: - Private Methods
@@ -152,9 +160,10 @@ final class NewTrackerHeaderView: UICollectionReusableView {
 
     private func layoutTableViewHeight() {
         tableViewHeightAnchor.constant = GlobalConstants.TableViewCell.height * CGFloat(tableViewCells.count)
+        tableView.reloadData()
     }
 
-    private func createDidScheduleOrCategoryChosenObserver() {
+    private func registerDidScheduleOrCategoryChosenObserver() {
         return NotificationCenter.default.addObserver(self,
                                                       selector: #selector(reloadTableView),
                                                       name: .didScheduleOrCategoryChosen,
@@ -179,7 +188,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     private func subLabelForSchedule(_ schedule: Set<WeekDay>) -> String {
         let allWeekDays = WeekDay.allCases
         if schedule == Set(allWeekDays) {
-            return "Every day".localized()
+            return L.WeekDay.everyDay
         }
         return schedule
             .map { $0.abbreviatedName }
@@ -192,15 +201,11 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         let isHidden = text.count <= GlobalConstants.TextField.maxLength
         guard errorLabel.isHidden != isHidden else { return }
         labelHeightAnchor.constant = isHidden ? 0 : Constants.ErrorLabel.height
-        UIView.transition(
-            with: self.errorLabel,
-            duration: 0.3,
-            options: .transitionCrossDissolve
-        ) { [weak self] in
+        UIView.transition(with: errorLabel, duration: 0.3) { [weak self] in
             guard let self else { return }
             self.layoutIfNeeded()
             self.errorLabel.isHidden = isHidden
-        }        
+        }
         NotificationCenter.default.post(name: .didErrorLabelChangeState, object: isHidden)
     }
 
@@ -218,6 +223,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
 
 // MARK: - UITableViewDataSource
 extension NewTrackerHeaderView: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableViewCells.count
     }
@@ -242,10 +248,12 @@ extension NewTrackerHeaderView: UITableViewDataSource {
         tableView.hideLastSeparator(cell: subtitleTableViewCell, indexPath: indexPath)
         return subtitleTableViewCell
     }
+
 }
 
 // MARK: - UITableViewDelegate
 extension NewTrackerHeaderView: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let parentViewController else { return }
         let newTrackerViewController = parentViewController as? NewTrackerViewController

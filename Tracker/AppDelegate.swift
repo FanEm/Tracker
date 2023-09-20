@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import YandexMobileMetrica
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -12,8 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var dataStore = DataStore()
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        AnalyticsService.activate()
+        CategoryService.shared.createPinCategoryIfNeeded()
         return true
     }
 

@@ -5,10 +5,12 @@
 
 import UIKit
 
+
 // MARK: - ScheduleViewControllerDelegate
 protocol ScheduleViewControllerDelegate: AnyObject {
     func didTapDoneButton(schedule: Set<WeekDay>)
 }
+
 
 // MARK: - ScheduleViewController
 final class ScheduleViewController: UIViewController {
@@ -40,10 +42,12 @@ final class ScheduleViewController: UIViewController {
         NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)
         dismiss(animated: true)
     }
+
 }
 
 // MARK: - UITableViewDataSource
 extension ScheduleViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weekDays.count
     }
@@ -62,17 +66,23 @@ extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         GlobalConstants.TableViewCell.height
     }
+
 }
+
 
 // MARK: - UITableViewDelegate
 extension ScheduleViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
     }
+
 }
+
 
 // MARK: - ScheduleCellDelegate
 extension ScheduleViewController: ScheduleCellDelegate {
+
     func didSwitchChanged(to isOn: Bool, forCellAt index: Int) {
         if isOn {
             schedule.insert(weekDays[index])
@@ -80,4 +90,5 @@ extension ScheduleViewController: ScheduleCellDelegate {
             schedule.remove(weekDays[index])
         }
     }
+
 }

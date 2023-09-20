@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-import Foundation
 import UIKit
 
 

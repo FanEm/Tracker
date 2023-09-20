@@ -17,17 +17,8 @@ class ViewWithTableBaseView: UIView {
         return label
     }()
 
-    var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .trWhite
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .trGray
-        tableView.showsVerticalScrollIndicator = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-
-    var button: UIButton = BaseButton()
+    var tableView = BaseTableView()
+    var button = BaseButton()
 
     // MARK: - Private Properties
     private enum Constants {

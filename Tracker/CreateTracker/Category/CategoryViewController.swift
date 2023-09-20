@@ -8,7 +8,7 @@ import UIKit
 
 // MARK: - CategoryViewControllerDelegate
 protocol CategoryViewControllerDelegate: AnyObject {
-    func didTapOnCategory(_ category: Category)
+    func didTapOnCategory(_ category: Category?)
 }
 
 
@@ -62,15 +62,49 @@ final class CategoryViewController: UIViewController {
         })
     }
 
+    private func edit(indexPath: IndexPath) {
+        guard let category = categoryViewModel.category(at: indexPath) else { return }
+
+        let viewController = NewCategoryViewController(
+            categoryViewModel: categoryViewModel,
+            mode: .edit(name: category.name, indexPath: indexPath)
+        )
+        viewController.delegate = self
+        present(viewController, animated: true)
+    }
+
+    private func delete(indexPath: IndexPath) {       
+        AlertPresenter.show(in: self, model: .categoryDeleteConfirmation { [weak self] in
+            guard let self,
+                  let category = self.categoryViewModel.category(at: indexPath)
+            else { return }
+            if self.categoryViewModel.isCategorySelected(category) {
+                self.selectCategory(nil)
+            }
+            self.categoryViewModel.deleteCategory(at: indexPath)
+        })
+    }
+
+    private func selectCategory(_ category: Category?) {
+        self.categoryViewModel.selectedCategory = category
+        self.delegate?.didTapOnCategory(category)
+        NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)
+    }
+
     @objc private func onTap() {
-        let viewController = NewCategoryViewController(categoryViewModel: categoryViewModel)
+        let viewController = NewCategoryViewController(
+            categoryViewModel: categoryViewModel,
+            mode: .new
+        )
         present(viewController, animated: true)
     }
 
 }
 
+
 // MARK: - UITableViewDataSource
 extension CategoryViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categoryViewModel.numberOfCategories
     }
@@ -88,18 +122,40 @@ extension CategoryViewController: UITableViewDataSource {
         tableView.hideLastSeparator(cell: сategoryCell, indexPath: indexPath)
         return сategoryCell
     }
+
 }
+
 
 // MARK: - UITableViewDelegate
 extension CategoryViewController: UITableViewDelegate {
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let category = categoryViewModel.category(at: indexPath) else { return }
         categoryViewModel.configCell(in: tableView, at: indexPath)
-        categoryViewModel.selectedCategory = category
-        delegate?.didTapOnCategory(category)
-        NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)
-
+        selectCategory(category)
         dismiss(animated: true)
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        contextMenuConfigurationForRowAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        guard
+            let category = categoryViewModel.category(at: indexPath),
+            !categoryViewModel.isCategorySelected(category)
+        else { return nil }
+        
+        return UIContextMenuConfiguration(actionProvider: { actions in
+            UIMenu(children: [
+                UIAction(title: L.ContextMenu.edit) { [weak self] _ in
+                    self?.edit(indexPath: indexPath)
+                },
+                UIAction(title: L.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
+                    self?.delete(indexPath: indexPath)
+                },
+            ])
+        })
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -109,4 +165,17 @@ extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         GlobalConstants.TableViewCell.height
     }
+
+}
+
+
+// MARK: - NewCategoryViewControllerDelegate
+extension CategoryViewController: NewCategoryViewControllerDelegate {
+
+    func categoryWasRenamed(category: Category, newName: String) {
+        if self.categoryViewModel.isCategorySelected(category) {
+            self.selectCategory(Category(id: category.id, name: newName))
+        }
+    }
+
 }

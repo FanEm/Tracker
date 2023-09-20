@@ -5,11 +5,13 @@
 
 import UIKit
 
+
 // MARK: - CreateTrackerViewDelegate
 protocol CreateTrackerViewDelegate: AnyObject {
     func didTapHabitButton()
     func didTapEventButton()
 }
+
 
 // MARK: - CreateTrackerView
 final class CreateTrackerView: UIView {
@@ -26,21 +28,21 @@ final class CreateTrackerView: UIView {
 
     private lazy var habitButton: UIButton = {
         let button = BaseButton()
-        button.setTitle("Habit".localized(), for: .normal)
+        button.setTitle(L.CreateTracker.habit, for: .normal)
         button.addTarget(self, action: #selector(tapOnHabitButton), for: .touchUpInside)
         return button
     }()
 
     private lazy var eventButton: UIButton = {
         let button = BaseButton()
-        button.setTitle("Event".localized(), for: .normal)
+        button.setTitle(L.CreateTracker.event, for: .normal)
         button.addTarget(self, action: #selector(tapOnEventButton), for: .touchUpInside)
         return button
     }()
 
     private var title: UILabel = {
         let label = UILabel()
-        label.text = "Create tracker".localized()
+        label.text = L.CreateTracker.title
         label.font = GlobalConstants.Font.sfPro16
         label.textColor = .trBlack
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -104,4 +106,5 @@ final class CreateTrackerView: UIView {
     @objc private func tapOnEventButton() {
         self.delegate?.didTapEventButton()
     }
+
 }

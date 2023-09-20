@@ -17,8 +17,13 @@ protocol CategoryDataProviderProtocol {
     var categories: [TrackerCategoryCoreData] { get }
     var numberOfCategories: Int { get }
 
-    func add(categoryName: String)
+    func add(category: Category)
+    func renameCategory(at indexPath: IndexPath, to newName: String)
+    func renameCategory(_ category: TrackerCategoryCoreData, to newName: String)
     func category(at indexPath: IndexPath) -> TrackerCategoryCoreData?
+    func category(with type: CategoryType) -> TrackerCategoryCoreData?
+    func category(with id: UUID) -> TrackerCategoryCoreData?
+    func deleteCategory(at indexPath: IndexPath)
     func fetchCategories()
 }
 
@@ -41,6 +46,10 @@ final class CategoryDataProvider: NSObject {
         let sortDescriptors = [
             NSSortDescriptor(key: #keyPath(TrackerCategoryCoreData.name), ascending: true)
         ]
+        let predicate = NSPredicate(
+            format: "%K == %@", #keyPath(TrackerCategoryCoreData.type), NSNumber(value: CategoryType.user.rawValue)
+        )
+        request.predicate = predicate
         request.sortDescriptors = sortDescriptors
         
         let fetchedResultsController = NSFetchedResultsController(
@@ -60,6 +69,7 @@ final class CategoryDataProvider: NSObject {
         self.context = dataStore.context
         self.dataStore = dataStore
     }
+
 }
 
 
@@ -76,12 +86,38 @@ extension CategoryDataProvider: CategoryDataProviderProtocol {
     }
 
     // MARK: - Public Methods
-    func add(categoryName: String) {
-        dataStore.trackerCategoryStore.add(categoryName)
+    func add(category: Category) {
+        dataStore.trackerCategoryStore.add(category)
+    }
+
+    func renameCategory(at indexPath: IndexPath, to newName: String) {
+        let category = fetchedResultsController.object(at: indexPath)
+        dataStore.trackerCategoryStore.rename(category, to: newName)
+    }
+
+    func renameCategory(_ category: TrackerCategoryCoreData, to newName: String) {
+        dataStore.trackerCategoryStore.rename(category, to: newName)
     }
 
     func category(at indexPath: IndexPath) -> TrackerCategoryCoreData? {
         fetchedResultsController.object(at: indexPath)
+    }
+
+    func category(with type: CategoryType) -> TrackerCategoryCoreData? {
+        dataStore.trackerCategoryStore.category(with: type)
+    }
+
+    func category(with id: UUID) -> TrackerCategoryCoreData? {
+        dataStore.trackerCategoryStore.category(with: id)
+    }
+
+    func deleteCategory(at indexPath: IndexPath) {
+        let category = fetchedResultsController.object(at: indexPath)
+        let pinnedTrackers = dataStore.trackerStore.trackers(with: category.id)
+        for pinnedTracker in pinnedTrackers {
+            dataStore.trackerStore.delete(pinnedTracker)
+        }
+        dataStore.trackerCategoryStore.delete(category)
     }
 
     func fetchCategories() {

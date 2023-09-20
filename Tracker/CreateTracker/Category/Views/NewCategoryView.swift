@@ -5,57 +5,91 @@
 
 import UIKit
 
+
 // MARK: - NewCategoryView
 final class NewCategoryView: UIView {
 
     // MARK: - Public Properties
+    let mode: NewCategoryMode
+
     lazy var textField: TextField = {
         let textField = TextField()
         textField.attributedPlaceholder = NSAttributedString(
-            string: "Enter category name".localized(),
+            string: L.NewCategory.TextField.placeholder,
             attributes: [
                 .foregroundColor: UIColor.trGray,
                 .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
             ]
         )
         textField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+        textField.text = textFieldText
+        textField.becomeFirstResponder()
         return textField
     }()
 
     lazy var button: UIButton = {
         let button = BaseButton()
         button.setTitleColor(.trPermWhite, for: .normal)
-        button.setTitle("Done".localized(), for: .normal)
+        button.setTitle(L.NewCategory.Button.done, for: .normal)
         button.backgroundColor = .trGray
         button.isEnabled = false
         return button
     }()
 
+    var indexPath: IndexPath? {
+        switch mode {
+        case .edit(_, let indexPath): return indexPath
+        case .new: return nil
+        }
+    }
+    
+    lazy var buttonBottomAnchor = {
+        self.safeAreaLayoutGuide.bottomAnchor.constraint(
+            equalTo: self.button.bottomAnchor,
+            constant: GlobalConstants.Button.bottomInset
+        )
+    }()
+
     // MARK: - Private Properties
     private enum Constants {
         enum Button {
-            static let bottomInset: CGFloat = 16
             static let trailingAndLeadingInsets: CGFloat = 20
         }
         enum TextField {
             static let height: CGFloat = 75
             static let topInset: CGFloat = 24
             static let trailingAndLeadingInsets: CGFloat = 16
+            static let maxLength: Int = 50
         }
     }
 
-    private var title: UILabel = {
+    private lazy var title: UILabel = {
         let label = UILabel()
-        label.text = "New category".localized()
+        label.text = titleText
         label.font = GlobalConstants.Font.sfPro16
         label.textColor = .trBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
+    private var titleText: String {
+        switch mode {
+        case .edit: return L.NewCategory.Edit.title
+        case .new: return L.NewCategory.Create.title
+        }
+    }
+
+    private var textFieldText: String {
+        switch mode {
+        case .edit(let name, _): return name
+        case .new: return ""
+        }
+    }
+
     // MARK: - Initializers
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(mode: NewCategoryMode) {
+        self.mode = mode
+        super.init(frame: .zero)
         backgroundColor = .trWhite
         addSubview(title)
         addSubview(textField)
@@ -71,12 +105,26 @@ final class NewCategoryView: UIView {
     @objc private func changeButtonState(isEnabled: Bool) {
         button.isEnabled = isEnabled
         button.backgroundColor = isEnabled ? .trBlack : .trGray
-        button.setTitleColor(isEnabled ? .trWhite : .trPermWhite , for: .normal)
+        button.setTitleColor(isEnabled ? .trWhite : .trPermWhite, for: .normal)
     }
 
     @objc private func textFieldChanged(_ textField: UITextField) {
-        let isEnabled = textField.text != nil && !textField.text!.isEmpty
+        var isEnabled = textField.text != nil && !textField.text!.isEmpty
+
+        trimExtraCharacters(textField: textField)
+
+        switch mode {
+        case .new: break
+        case .edit(let name, _):
+            isEnabled = isEnabled && textField.text != name
+        }
         changeButtonState(isEnabled: isEnabled)
+    }
+
+    private func trimExtraCharacters(textField: UITextField, maxLength: Int = Constants.TextField.maxLength) {
+        if textField.text != nil, textField.text!.count > maxLength {
+            textField.text = textField.text!.substring(to: maxLength)
+        }
     }
 
     private func activateConstraints() {
@@ -111,10 +159,8 @@ final class NewCategoryView: UIView {
                 equalTo: button.trailingAnchor,
                 constant: Constants.Button.trailingAndLeadingInsets
             ),
-            safeAreaLayoutGuide.bottomAnchor.constraint(
-                equalTo: button.bottomAnchor,
-                constant: Constants.Button.bottomInset
-            )
+            buttonBottomAnchor
         ])
     }
+
 }

@@ -24,9 +24,9 @@ final class NewTrackerViewController: UIViewController, NewTrackerViewController
         guard let presenter else { fatalError("Presenter is nil") }
         switch presenter.newTrackerModel.type {
         case .habit:
-            view = NewHabitView()
+            view = NewHabitView(mode: presenter.mode)
         case .event:
-            view = NewEventView()
+            view = NewEventView(mode: presenter.mode)
         }
     }
 
@@ -56,7 +56,7 @@ extension NewTrackerViewController: NewTrackerFooterViewDelegate {
     }
 
     func didTapCreateButton() {
-        presenter?.addTracker()
+        presenter?.addOrEditTracker()
         NotificationCenter.default.post(name: .didNewTrackerCreated, object: nil)
         closePresentingController()
     }

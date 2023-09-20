@@ -13,7 +13,9 @@ final class TrackerCategoryCoreData: NSManagedObject {
         return NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
     }
 
+    @NSManaged public var id: UUID
     @NSManaged public var name: String
+    @NSManaged public var type: Int16
     @NSManaged public var trackers: NSSet
 
 }

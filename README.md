@@ -1,5 +1,9 @@
 # ТЗ мобильного приложения для трекинга привычек
 
+# Установка
+
+Перед первым запуском необходимо вызвать команду `pod install`
+
 # Ссылки
 
 [Дизайн Figma](https://www.figma.com/file/owAO4CAPTJdpM1BZU5JHv7/Tracker-(YP)?t=SZDLmkWeOPX4y6mp-0)
