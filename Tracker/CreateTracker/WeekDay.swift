@@ -16,18 +16,26 @@ enum WeekDay: String, Codable, CaseIterable {
     case sunday
 
     var name: String {
-        self.rawValue.capitalized.localized()
+        switch self {
+        case .monday:    return L.WeekDay.monday
+        case .tuesday:   return L.WeekDay.tuesday
+        case .wednesday: return L.WeekDay.wednesday
+        case .thursday:  return L.WeekDay.thursday
+        case .friday:    return L.WeekDay.friday
+        case .saturday:  return L.WeekDay.saturday
+        case .sunday:    return L.WeekDay.sunday
+        }
     }
 
     var abbreviatedName: String {
         switch self {
-        case .monday:    return "Mo".localized()
-        case .tuesday:   return "Tu".localized()
-        case .wednesday: return "We".localized()
-        case .thursday:  return "Th".localized()
-        case .friday:    return "Fr".localized()
-        case .saturday:  return "Sa".localized()
-        case .sunday:    return "Su".localized()
+        case .monday:    return L.WeekDay.mo
+        case .tuesday:   return L.WeekDay.tu
+        case .wednesday: return L.WeekDay.we
+        case .thursday:  return L.WeekDay.th
+        case .friday:    return L.WeekDay.fr
+        case .saturday:  return L.WeekDay.sa
+        case .sunday:    return L.WeekDay.su
         }
     }
 }

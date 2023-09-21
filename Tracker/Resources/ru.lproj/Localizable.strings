@@ -4,96 +4,83 @@
 
 */
 
-"Trackers" = "Трекеры";
 
-"Statistics" = "Статистика";
+"alert.ok" = "ОК";
+"alert.cancel" = "Отменить";
+"alert.delete" = "Удалить";
 
-"Search" = "Поиск";
+"contextMenu.pin" = "Закрепить";
+"contextMenu.unpin" = "Открепить";
+"contextMenu.edit" = "Редактировать";
+"contextMenu.delete" = "Удалить";
 
-"There is nothing to analyze yet" = "Анализировать пока нечего";
+"statistics.title" = "Статистика";
+"statistics.placeholder" = "Анализировать пока нечего";
+"statistics.completed" = "Трекеров завершено";
+"statistics.bestPeriod" = "Лучший период";
+"statistics.average" = "Среднее значение";
+"statistics.perfectDays" = "Идеальные дни";
 
-"What will we track" = "Что будем отслеживать?";
+"trackers.title" = "Трекеры";
+"trackers.placeholder" = "Что будем отслеживать?";
+"trackers.search.placeholder" = "Ничего не найдено";
+"trackers.searchBar.placeholder" = "Поиск";
+"trackers.alert.delete.title" = "Уверены, что хотите удалить трекер?";
 
-"Nothing found" = "Ничего не найдено";
+"createTracker.title" = "Создание трекера";
+"createTracker.event" = "Нерегулярное событие";
+"createTracker.habit" = "Привычка";
 
-"Habits and events can be combined in meaning" = "Привычки и события можно\nобъединить по смыслу";
+"newTracker.textField.placeholder" = "Введите название трекера";
+"newTracker.emoji" = "Emoji";
+"newTracker.color" = "Цвет";
+"newTracker.button.cancel" = "Отменить";
+"newTracker.button.create" = "Создать";
+"newTracker.habit.create" = "Новая привычка";
+"newTracker.habit.edit" = "Редактирование привычки";
+"newTracker.event.create" = "Новое нерегулярное событие";
+"newTracker.event.edit" = "Редактирование нерегулярного события";
 
-"Event" = "Нерегулярное событие";
+"schedule.title" = "Расписание";
+"schedule.button.done" = "Готово";
 
-"Habit" = "Привычка";
+"category.title" = "Категория";
+"category.placeholder" = "Привычки и события можно\nобъединить по смыслу";
+"category.button.add" = "Добавить категорию";
+"category.alert.delete.title" = "Эта категория точно не нужна?";
+"category.alert.delete.subtitle" = "Все трекеры из этой категории будут удалены";
+"category.pinned" = "Закрепленные";
 
-"Create tracker" = "Создание трекера";
+"newCategory.create.title" = "Новая категория";
+"newCategory.edit.title" = "Редактирование категории";
+"newCategory.textField.placeholder" = "Введите название категории";
+"newCategory.alert.title" = "Невозможно создать категорию";
+"newCategory.alert.subtitle" = "Категория с таким именем уже существует";
+"newCategory.button.done" = "Готово";
 
-"New habit" = "Новая привычка";
+"filters.title" = "Фильтры";
+"filters.all" = "Все трекеры";
+"filters.today" = "Трекеры на сегодня";
+"filters.completed" = "Завершенные";
+"filters.incompleted" = "Не завершенные";
 
-"New event" = "Новое нерегулярное событие";
+"onboarding.button" = "Вот это технологии!";
+"onboarding.page1" = "Отслеживайте только то, что хотите";
+"onboarding.page2" = "Даже если это не литры воды и йога";
 
-"Enter tracker name" = "Введите название трекера";
+"weekDay.everyDay" = "Каждый день";
+"weekDay.monday" = "Понедельник";
+"weekDay.tuesday" = "Вторник";
+"weekDay.wednesday" = "Среда";
+"weekDay.thursday" = "Четверг";
+"weekDay.friday" = "Пятница";
+"weekDay.saturday" = "Суббота";
+"weekDay.sunday" = "Воскресенье";
 
-"Cancel" = "Отменить";
-
-"Create" = "Создать";
-
-"Schedule" = "Расписание";
-
-"Category" = "Категория";
-
-"Add category" = "Добавить категорию";
-
-"New category" = "Новая категория";
-
-"Enter category name" = "Введите название категории";
-
-"Done" = "Готово";
-
-"Emoji" = "Emoji";
-
-"Color" = "Цвет";
-
-"Filters" = "Фильтры";
-
-"All trackers" = "Все трекеры";
-
-"Trackers for today" = "Трекеры на сегодня";
-
-"Сompleted" = "Завершенные";
-
-"Not completed" = "Не завершенные";
-
-"What a technology" = "Вот это технологии!";
-
-"Track only what you want" = "Отслеживайте только то, что хотите";
-
-"Even if it's not liters of water and yoga" = "Даже если это не литры воды и йога";
-
-"The limit is 38 characters" = "Ограничение 38 символов";
-
-"Every day" = "Каждый день";
-
-"Monday" = "Понедельник";
-
-"Tuesday" = "Вторник";
-
-"Wednesday" = "Среда";
-
-"Thursday" = "Четверг";
-
-"Friday" = "Пятница";
-
-"Saturday" = "Суббота";
-
-"Sunday" = "Воскресенье";
-
-"Mo" = "Пн";
-
-"Tu" = "Вт";
-
-"We" = "Ср";
-
-"Th" = "Чт";
-
-"Fr" = "Пт";
-
-"Sa" = "Сб";
-
-"Su" = "Вс";
+"weekDay.mo" = "Пн";
+"weekDay.tu" = "Вт";
+"weekDay.we" = "Ср";
+"weekDay.th" = "Чт";
+"weekDay.fr" = "Пт";
+"weekDay.sa" = "Сб";
+"weekDay.su" = "Вс";

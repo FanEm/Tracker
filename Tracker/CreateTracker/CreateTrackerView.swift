@@ -16,7 +16,7 @@ final class CreateTrackerView: UIView {
 
     // MARK: - Public Properties
     weak var delegate: CreateTrackerViewDelegate?
-    
+
     // MARK: - Private Properties
     private enum Constants {
         static let topInset: CGFloat = 250
@@ -26,21 +26,21 @@ final class CreateTrackerView: UIView {
 
     private lazy var habitButton: UIButton = {
         let button = BaseButton()
-        button.setTitle("Habit".localized(), for: .normal)
+        button.setTitle(L.CreateTracker.habit, for: .normal)
         button.addTarget(self, action: #selector(tapOnHabitButton), for: .touchUpInside)
         return button
     }()
 
     private lazy var eventButton: UIButton = {
         let button = BaseButton()
-        button.setTitle("Event".localized(), for: .normal)
+        button.setTitle(L.CreateTracker.event, for: .normal)
         button.addTarget(self, action: #selector(tapOnEventButton), for: .touchUpInside)
         return button
     }()
 
     private var title: UILabel = {
         let label = UILabel()
-        label.text = "Create tracker".localized()
+        label.text = L.CreateTracker.title
         label.font = GlobalConstants.Font.sfPro16
         label.textColor = .trBlack
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -96,12 +96,13 @@ final class CreateTrackerView: UIView {
             )
         ])
     }
-    
+
     @objc private func tapOnHabitButton() {
         self.delegate?.didTapHabitButton()
     }
-    
+
     @objc private func tapOnEventButton() {
         self.delegate?.didTapEventButton()
     }
+
 }

@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - CategoryViewModel
 final class CategoryViewModel {
 
@@ -20,15 +19,16 @@ final class CategoryViewModel {
     var categoriesExist: Bool {
         numberOfCategories > 0
     }
-    
+
     var selectedCategory: Category?
 
     // MARK: - Private Properties
-    private let categoryService: CategoryServiceProtocol
+    private var categoryService: CategoryServiceProtocol
 
     // MARK: - Initializers
     init(categoryService: CategoryServiceProtocol) {
         self.categoryService = categoryService
+        self.categoryService.dataProviderDelegate = self
         fetchCategories()
     }
 
@@ -46,9 +46,20 @@ final class CategoryViewModel {
         categoryService.category(at: indexPath)
     }
 
-    func add(categoryName: String) {
-        categoryService.add(categoryName: categoryName)
-        categories = categoryService.categories
+    func add(category: Category) {
+        categoryService.add(category: category)
+    }
+
+    func isCategoryExists(categoryName: String) -> Bool {
+        !categories.filter({ $0.name == categoryName }).isEmpty
+    }
+
+    func renameCategory(at indexPath: IndexPath, to newName: String) {
+        categoryService.renameCategory(at: indexPath, to: newName)
+    }
+
+    func deleteCategory(at indexPath: IndexPath) {
+        categoryService.deleteCategory(at: indexPath)
     }
 
     func configCell(in tableView: UITableView, at indexPath: IndexPath) {
@@ -62,7 +73,6 @@ final class CategoryViewModel {
     }
 
 }
-
 
 // MARK: - CategoryDataProviderDelegate
 extension CategoryViewModel: CategoryDataProviderDelegate {

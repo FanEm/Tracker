@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-
 extension Array where Element: Equatable {
 
     func reorder(by preferredOrder: [Element]) -> [Element] {

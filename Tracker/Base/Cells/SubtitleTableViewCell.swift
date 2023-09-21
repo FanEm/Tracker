@@ -7,7 +7,7 @@ import UIKit
 
 // MARK: - SubtitleTableViewCell
 class SubtitleTableViewCell: UITableViewCell {
-    
+
     // MARK: - Public Properties
     static let reuseIdentifier = "SubtitleTableViewCell"
 
@@ -18,10 +18,10 @@ class SubtitleTableViewCell: UITableViewCell {
 
         backgroundColor = .trBackground
         separatorInset = GlobalConstants.TableViewCell.separatorInset
-        
+
         textLabel?.font = GlobalConstants.Font.sfPro17
         textLabel?.textColor = .trBlack
-        
+
         detailTextLabel?.font = GlobalConstants.Font.sfPro17
         detailTextLabel?.textColor = .trGray
     }
@@ -35,4 +35,5 @@ class SubtitleTableViewCell: UITableViewCell {
         textLabel?.text = label
         detailTextLabel?.text = subLabel
     }
+
 }

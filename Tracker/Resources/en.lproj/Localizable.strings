@@ -3,96 +3,83 @@
   Tracker
 */
 
-"Trackers" = "Trackers";
 
-"Statistics" = "Statistics";
+"alert.ok" = "OK";
+"alert.cancel" = "Cancel";
+"alert.delete" = "Delete";
 
-"Search" = "Search";
+"contextMenu.pin" = "Pin";
+"contextMenu.unpin" = "Unpin";
+"contextMenu.edit" = "Edit";
+"contextMenu.delete" = "Delete";
 
-"There is nothing to analyze yet" = "There is nothing to analyze yet";
+"statistics.title" = "Statistics";
+"statistics.placeholder" = "There is nothing to analyze yet";
+"statistics.completed" = "Trackers completed";
+"statistics.bestPeriod" = "Best period";
+"statistics.average" = "Average value";
+"statistics.perfectDays" = "Perfect days";
 
-"What will we track" = "What will we track?";
+"trackers.title" = "Trackers";
+"trackers.placeholder" = "What will we track?";
+"trackers.search.placeholder" = "Nothing found";
+"trackers.searchBar.placeholder" = "Search";
+"trackers.alert.delete.title" = "Are you sure you want to delete the tracker?";
 
-"Nothing found" = "Nothing found";
+"createTracker.title" = "Create tracker";
+"createTracker.event" = "Event";
+"createTracker.habit" = "Habit";
 
-"Habits and events can be combined in meaning" = "Habits and events can be\ncombined in meaning";
+"newTracker.textField.placeholder" = "Enter tracker name";
+"newTracker.emoji" = "Emoji";
+"newTracker.color" = "Color";
+"newTracker.button.cancel" = "Cancel";
+"newTracker.button.create" = "Create";
+"newTracker.habit.create" = "New habit";
+"newTracker.habit.edit" = "Edit habit";
+"newTracker.event.create" = "New event";
+"newTracker.event.edit" = "Edit event";
 
-"Event" = "Event";
+"schedule.title" = "Schedule";
+"schedule.button.done" = "Done";
 
-"Habit" = "Habit";
+"category.title" = "Category";
+"category.placeholder" = "Habits and events can be\ncombined in meaning";
+"category.button.add" = "Add category";
+"category.alert.delete.title" = "Are you sure you want to delete this category?";
+"category.alert.delete.subtitle" = "All trackers from this category will be deleted";
+"category.pinned" = "Pinned";
 
-"Create tracker" = "Create tracker";
+"newCategory.create.title" = "New category";
+"newCategory.edit.title" = "Edit category";
+"newCategory.textField.placeholder" = "Enter category name";
+"newCategory.alert.title" = "Unable to create a category";
+"newCategory.alert.subtitle" = "Category with that name already exists";
+"newCategory.button.done" = "Done";
 
-"New habit" = "New habit";
+"filters.title" = "Filters";
+"filters.all" = "All trackers";
+"filters.today" = "Trackers for today";
+"filters.completed" = "Сompleted";
+"filters.incompleted" = "Not completed";
 
-"New event" = "New event";
+"onboarding.button" = "What a technology!";
+"onboarding.page1" = "Track only what you want";
+"onboarding.page2" = "Even if it's not liters of water and yoga";
 
-"Enter tracker name" = "Enter tracker name";
+"weekDay.everyDay" = "Every day";
+"weekDay.monday" = "Monday";
+"weekDay.tuesday" = "Tuesday";
+"weekDay.wednesday" = "Wednesday";
+"weekDay.thursday" = "Thursday";
+"weekDay.friday" = "Friday";
+"weekDay.saturday" = "Saturday";
+"weekDay.sunday" = "Sunday";
 
-"Cancel" = "Cancel";
-
-"Create" = "Create";
-
-"Schedule" = "Schedule";
-
-"Category" = "Category";
-
-"Add category" = "Add category";
-
-"New category" = "New category";
-
-"Enter category name" = "Enter category name";
-
-"Done" = "Done";
-
-"Emoji" = "Emoji";
-
-"Color" = "Color";
-
-"Filters" = "Filters";
-
-"All trackers" = "All trackers";
-
-"Trackers for today" = "Trackers for today";
-
-"Сompleted" = "Сompleted";
-
-"Not completed" = "Not completed";
-
-"What a technology" = "What a technology!";
-
-"Track only what you want" = "Track only what you want";
-
-"Even if it's not liters of water and yoga" = "Even if it's not liters of water and yoga";
-
-"The limit is 38 characters" = "The limit is 38 characters";
-
-"Every day" = "Every day";
-
-"Monday" = "Monday";
-
-"Tuesday" = "Tuesday";
-
-"Wednesday" = "Wednesday";
-
-"Thursday" = "Thursday";
-
-"Friday" = "Friday";
-
-"Saturday" = "Saturday";
-
-"Sunday" = "Sunday";
-
-"Mo" = "Mo";
-
-"Tu" = "Tu";
-
-"We" = "We";
-
-"Th" = "Th";
-
-"Fr" = "Fr";
-
-"Sa" = "Sa";
-
-"Su" = "Su";
+"weekDay.mo" = "Mo";
+"weekDay.tu" = "Tu";
+"weekDay.we" = "We";
+"weekDay.th" = "Th";
+"weekDay.fr" = "Fr";
+"weekDay.sa" = "Sa";
+"weekDay.su" = "Su";

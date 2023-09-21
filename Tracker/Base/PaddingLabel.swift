@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - PaddingLabel
 final class PaddingLabel: UILabel {
 

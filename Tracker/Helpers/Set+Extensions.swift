@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-
 extension Set where Element == WeekDay {
 
     var toString: String {

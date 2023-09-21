@@ -6,6 +6,7 @@
 import Foundation
 
 extension Date {
+
     func stripTime() -> Date {
         var components = Calendar.current.dateComponents([.year, .month, .day], from: self)
         components.timeZone = NSTimeZone.system
@@ -14,8 +15,8 @@ extension Date {
         }
         return date
     }
-    
-    func dayOfTheWeek() -> WeekDay {
+
+    var dayOfTheWeek: WeekDay {
         var weekdays: [WeekDay] = WeekDay.allCases
         if let sunday = weekdays.popLast(), sunday == WeekDay.sunday {
             weekdays.insert(sunday, at: 0)
@@ -23,4 +24,5 @@ extension Date {
         let weekdayNumber = Calendar.current.component(.weekday, from: self)
         return weekdays[weekdayNumber - 1]
     }
+
 }

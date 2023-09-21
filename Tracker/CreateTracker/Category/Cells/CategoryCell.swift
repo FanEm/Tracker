@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - CategoryCell
 final class CategoryCell: TitleTableViewCell {
 

@@ -5,10 +5,10 @@
 
 import CoreData
 
-
 // MARK: - NSManagedObjectContext
 extension NSManagedObjectContext {
-    func saveContext() {        
+
+    func saveContext() {
         if self.hasChanges {
             do {
                 try self.save()
@@ -17,4 +17,5 @@ extension NSManagedObjectContext {
             }
         }
     }
+
 }

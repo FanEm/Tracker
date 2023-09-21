@@ -50,7 +50,7 @@ final class NewTrackerEmojiViewCell: UICollectionViewCell {
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 
@@ -64,4 +64,5 @@ final class NewTrackerEmojiViewCell: UICollectionViewCell {
         backgroundColor = .trWhite
         layer.cornerRadius = 0
     }
+
 }

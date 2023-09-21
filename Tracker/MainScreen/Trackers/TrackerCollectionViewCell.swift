@@ -5,12 +5,10 @@
 
 import UIKit
 
-
 // MARK: - TrackerCollectionViewCellDelegate
 protocol TrackerCollectionViewCellDelegate: AnyObject {
     func didTapOnQuantityButton(_ cell: TrackerCollectionViewCell)
 }
-
 
 // MARK: - TrackerCollectionViewCell
 final class TrackerCollectionViewCell: UICollectionViewCell {
@@ -18,12 +16,12 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Properties
     static let reuseIdentifier = "TrackerCollectionViewCell"
     weak var delegate: TrackerCollectionViewCellDelegate?
-    var tracker: Tracker? = nil
+    var tracker: Tracker?
     var currentDate: Date = Date().stripTime()
     var isTrackerCompleted: Bool = false
     var doneCounter: Int = 0 {
         didSet {
-            self.quantityLabel.text = "Days".localizedWithFormat(args: doneCounter)
+            self.quantityLabel.text = L.Trackers.Tracker.days(doneCounter)
         }
     }
 
@@ -80,7 +78,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private var quantityView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -107,19 +105,19 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         [
             cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cardView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            contentView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor)
         ]
     }
-    
+
     private var quantityViewConstraints: [NSLayoutConstraint] {
         [
             quantityView.topAnchor.constraint(equalTo: cardView.bottomAnchor),
             quantityView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: quantityView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: quantityView.bottomAnchor),
+            contentView.bottomAnchor.constraint(equalTo: quantityView.bottomAnchor)
         ]
     }
-    
+
     private var quantityLabelConstraints: [NSLayoutConstraint] {
         [
             quantityLabel.leadingAnchor.constraint(
@@ -134,10 +132,10 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
             quantityView.bottomAnchor.constraint(
                 equalTo: quantityLabel.bottomAnchor,
                 constant: Constants.QuantityLabel.bottomInset
-            ),
+            )
         ]
     }
-    
+
     private var quantityButtonConstraints: [NSLayoutConstraint] {
         [
             quantityButton.topAnchor.constraint(
@@ -151,10 +149,10 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
             quantityView.bottomAnchor.constraint(
                 equalTo: quantityButton.bottomAnchor,
                 constant: Constants.QuantityButton.bottomInset
-            ),
+            )
         ]
     }
-    
+
     private var emojiLabelConstraints: [NSLayoutConstraint] {
         [
             emojiLabel.leadingAnchor.constraint(
@@ -166,10 +164,10 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                 constant: Constants.Emoji.topInset
             ),
             emojiLabel.heightAnchor.constraint(equalToConstant: Constants.Emoji.heightAndWidth),
-            emojiLabel.widthAnchor.constraint(equalToConstant: Constants.Emoji.heightAndWidth),
+            emojiLabel.widthAnchor.constraint(equalToConstant: Constants.Emoji.heightAndWidth)
         ]
     }
-    
+
     private var labelConstraints: [NSLayoutConstraint] {
         [
             label.leadingAnchor.constraint(
@@ -217,15 +215,20 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         quantityButton.tintColor = color
         emojiLabel.text = tracker.emoji
         label.text = tracker.name
-    
+
         if currentDate > Date().stripTime() {
-            setImageForButton(image: .Trackers.plusButton, color: .trGray)
+            setImageForButton(
+                image: A.Icons.Trackers.Tracker.plus.image,
+                color: .trGray
+            )
             quantityButton.isEnabled = false
             return
         }
 
         quantityButton.isEnabled = true
-        let image: UIImage = isTrackerCompleted ? .Trackers.minusButton : .Trackers.plusButton
+        let image: UIImage = isTrackerCompleted
+                             ? A.Icons.Trackers.Tracker.minus.image
+                             : A.Icons.Trackers.Tracker.plus.image
         setImageForButton(image: image, color: color)
     }
 
@@ -249,8 +252,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     @objc private func tapOnQuantityButton() {
         guard let tracker else { return }
         let color = UIColor(hexString: tracker.color)
-        let image: UIImage = isTrackerCompleted ? .Trackers.plusButton : .Trackers.minusButton
+        let image: UIImage = isTrackerCompleted
+                             ? A.Icons.Trackers.Tracker.plus.image
+                             : A.Icons.Trackers.Tracker.minus.image
         setImageForButton(image: image, color: color)
         delegate?.didTapOnQuantityButton(self)
     }
+
 }

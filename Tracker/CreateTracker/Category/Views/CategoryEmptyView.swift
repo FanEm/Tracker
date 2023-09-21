@@ -7,11 +7,11 @@ import UIKit
 
 // MARK: - CategoryEmptyView
 final class CategoryEmptyView: EmptyView {
-    
+
     // MARK: - Public Properties
     var button: UIButton = {
         let button = BaseButton()
-        button.setTitle("Add category".localized(), for: .normal)
+        button.setTitle(L.Category.Button.add, for: .normal)
         return button
     }()
 
@@ -27,7 +27,7 @@ final class CategoryEmptyView: EmptyView {
         let label = UILabel()
         label.font = GlobalConstants.Font.sfPro16
         label.textColor = .trBlack
-        label.text = "Category".localized()
+        label.text = L.Category.title
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -52,7 +52,7 @@ final class CategoryEmptyView: EmptyView {
                 constant: GlobalConstants.Title.inset
             ),
             title.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
+
             button.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
                 constant: Constants.Button.trailingAndLeadingInsets
@@ -67,4 +67,5 @@ final class CategoryEmptyView: EmptyView {
             )
         ])
     }
+
 }

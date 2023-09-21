@@ -5,7 +5,6 @@
 
 import CoreData
 
-
 // MARK: - DataStoreProtocol
 protocol DataStoreProtocol: AnyObject {
     var context: NSManagedObjectContext { get }
@@ -13,7 +12,6 @@ protocol DataStoreProtocol: AnyObject {
     var trackerCategoryStore: TrackerCategoryStoreProtocol { get }
     var trackerRecordStore: TrackerRecordStoreProtocol { get }
 }
-
 
 // MARK: - DataStore
 final class DataStore: DataStoreProtocol {
@@ -32,10 +30,11 @@ final class DataStore: DataStoreProtocol {
                                 .appendingPathComponent("data-store.sqlite")
 
     // MARK: - Initializers
+    // swiftlint:disable force_try
     init() {
         let modelUrl = Bundle(for: DataStore.self).url(forResource: modelName, withExtension: "momd")
         let model = NSManagedObjectModel(contentsOf: modelUrl!)!
-        
+
         self.container = try! NSPersistentContainer.load(name: modelName, model: model, url: storeURL)
         self.context = container.newBackgroundContext()
         self.trackerStore = TrackerStore(context: context)

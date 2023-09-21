@@ -3,18 +3,17 @@
 //  Tracker
 //
 
-
 // MARK: - OnboardingPage
 enum OnboardingPage {
 
     static let first = OnboardingViewController(
-        image: .Onboarding.background1,
-        text: "Track only what you want".localized()
+        image: A.Images.Onboarding.page1.image,
+        text: L.Onboarding.page1
     )
 
     static let second = OnboardingViewController(
-        image: .Onboarding.background2,
-        text: "Even if it's not liters of water and yoga".localized()
+        image: A.Images.Onboarding.page2.image,
+        text: L.Onboarding.page2
     )
 
 }

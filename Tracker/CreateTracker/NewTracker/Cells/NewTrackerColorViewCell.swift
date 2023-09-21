@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - NewTrackerColorViewCell
 final class NewTrackerColorViewCell: UICollectionViewCell {
 
@@ -16,7 +15,7 @@ final class NewTrackerColorViewCell: UICollectionViewCell {
     private enum Constants {
         static let inset: CGFloat = 6
         static let cornerRadius: CGFloat = 8
-        
+
         enum SelectedCell {
             static let cornerRadius: CGFloat = 11
             static let borderWidth: CGFloat = 3
@@ -78,4 +77,5 @@ final class NewTrackerColorViewCell: UICollectionViewCell {
     private func deselectCell() {
         layer.borderWidth = 0
     }
+
 }

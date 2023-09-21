@@ -11,23 +11,23 @@ struct EmptyViewProps {
     let label: String
 
     static let category = EmptyViewProps(
-        image: .CreateTracker.Category.NewCategory.nothingToShow,
-        label: "Habits and events can be combined in meaning".localized()
+        image: A.Icons.Category.noCategories.image,
+        label: L.Category.placeholder
     )
 
     static let statistics = EmptyViewProps(
-        image: .Statistics.nothingToShow,
-        label: "There is nothing to analyze yet".localized()
+        image: A.Icons.Statistics.noStatistic.image,
+        label: L.Statistics.placeholder
     )
 
     static let trackers = EmptyViewProps(
-        image: .Trackers.nothingToShow,
-        label: "What will we track".localized()
+        image: A.Icons.Trackers.noTrackers.image,
+        label: L.Trackers.placeholder
     )
 
     static let search = EmptyViewProps(
-        image: .Trackers.nothingFound,
-        label: "Nothing found".localized()
+        image: A.Icons.Trackers.Search.nothingFound.image,
+        label: L.Trackers.Search.placeholder
     )
 }
 
@@ -83,7 +83,11 @@ class EmptyView: UIView {
             nothingToShowImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             nothingToShowImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             nothingToShowLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            nothingToShowLabel.topAnchor.constraint(equalTo: nothingToShowImageView.bottomAnchor, constant: Constants.labelInset)
+            nothingToShowLabel.topAnchor.constraint(
+                equalTo: nothingToShowImageView.bottomAnchor,
+                constant: Constants.labelInset
+            )
         ])
     }
+
 }

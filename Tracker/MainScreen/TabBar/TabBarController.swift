@@ -8,12 +8,14 @@ import UIKit
 // MARK: - TabBarController
 final class TabBarController: UITabBarController {
 
-    
     // MARK: - Private Properties
     private var trackersNavigationController: TrackersNavigationController {
         let navigationController = TrackersNavigationController()
         let viewController = TrackersViewController()
-        let presenter = TrackersPresenter(trackerService: TrackersService.shared)
+        let presenter = TrackersPresenter(
+            trackerService: TrackersService.shared,
+            recordService: RecordService.shared
+        )
         viewController.presenter = presenter
         presenter.view = viewController
 
@@ -21,24 +23,25 @@ final class TabBarController: UITabBarController {
 
         navigationController.tabBarItem = UITabBarItem(
             title: nil,
-            image: .Tabbar.trackers,
+            image: A.Icons.Tabbar.trackers.image,
             selectedImage: nil
         )
-        navigationController.title = "Trackers".localized()
+        navigationController.title = L.Trackers.title
         return navigationController
     }
 
     private var statisticsNavigationController: StatisticsNavigationController {
         let navigationController = StatisticsNavigationController()
-        let viewController =  StatisticsViewController()
+        let viewModel = StatisticsViewModel(recordService: RecordService.shared)
+        let viewController = StatisticsViewController(viewModel: viewModel)
         navigationController.viewControllers = [viewController]
 
         navigationController.tabBarItem = UITabBarItem(
             title: nil,
-            image: .Tabbar.statistics,
+            image: A.Icons.Tabbar.statistics.image,
             selectedImage: nil
         )
-        navigationController.title = "Statistics".localized()
+        navigationController.title = L.Statistics.title
         return navigationController
     }
 
@@ -46,24 +49,24 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setAppearance()
+        setupUI()
 
         self.viewControllers = [trackersNavigationController, statisticsNavigationController]
     }
 
     // MARK: - Public Methods
     func showOnboardingIfNeeded() {
-        let storage = Storage.shared
-        if !storage.wasOnboardingShown {
+        let userDefaults = UserDefaults.standard
+        if !userDefaults.wasOnboardingShown {
             let onboardingViewController = OnboardingPageViewController()
             onboardingViewController.modalPresentationStyle = .fullScreen
             present(onboardingViewController, animated: true)
-            storage.wasOnboardingShown = true
+            userDefaults.wasOnboardingShown = true
         }
     }
 
     // MARK: - Private Methods
-    private func setAppearance() {
+    private func setupUI() {
         tabBar.backgroundColor = .trWhite
         tabBar.barTintColor = .trWhite
         tabBar.tintColor = .trBlue
@@ -75,5 +78,5 @@ final class TabBarController: UITabBarController {
         tabBar.layer.shadowOffset = CGSize.zero
         tabBar.layer.shadowRadius = 0.5
     }
-}
 
+}

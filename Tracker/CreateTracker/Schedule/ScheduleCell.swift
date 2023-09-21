@@ -46,4 +46,5 @@ final class ScheduleCell: TitleTableViewCell {
     @objc private func switchChanged(_ sender: UISwitch) {
         delegate?.didSwitchChanged(to: sender.isOn, forCellAt: sender.tag)
     }
+
 }

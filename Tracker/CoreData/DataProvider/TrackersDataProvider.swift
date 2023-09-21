@@ -5,12 +5,10 @@
 
 import CoreData
 
-
 // MARK: - TrackersDataProviderDelegate
 protocol TrackersDataProviderDelegate: AnyObject {
     func didUpdate(_ update: StoreUpdate)
 }
-
 
 // MARK: - TrackersDataProviderProtocol
 protocol TrackersDataProviderProtocol {
@@ -19,16 +17,16 @@ protocol TrackersDataProviderProtocol {
     func numberOfItemsInSection(_ section: Int) -> Int
     func fetchTrackers(weekDay: WeekDay)
     func fetchTrackers(searchText: String, weekDay: WeekDay)
-    func record(with trackerId: UUID, date: Date) -> TrackerRecordCoreData?
-    func records(date: Date) -> [TrackerRecordCoreData]
-    func recordsCount(with trackerId: UUID) -> Int
+    func fetchCompletedTrackers(for date: Date)
+    func fetchIncompletedTrackers(for date: Date)
     func tracker(at indexPath: IndexPath) -> TrackerCoreData?
+    func deleteTracker(at indexPath: IndexPath)
+    func editTracker(at indexPath: IndexPath, newTracker: Tracker)
+    func pinTracker(at indexPath: IndexPath)
+    func unpinTracker(at indexPath: IndexPath)
     func categoryTitle(at indexPath: IndexPath) -> String
-    func add(tracker: Tracker, for categoryName: String)
-    func markTrackerAsCompleted(trackerId: UUID, date: Date)
-    func markTrackerAsNotCompleted(trackerId: UUID, date: Date)
+    func add(tracker: Tracker)
 }
-
 
 // MARK: - TrackersDataProvider
 final class TrackersDataProvider: NSObject {
@@ -39,32 +37,34 @@ final class TrackersDataProvider: NSObject {
     // MARK: - Private Properties
     private let context: NSManagedObjectContext
     private let dataStore: DataStore
-    
+
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
 
-    private var currentWeekDay = Date().dayOfTheWeek()
+    private var currentWeekDay = Date().dayOfTheWeek
 
     private lazy var fetchedResultsController: NSFetchedResultsController = {
         let request = NSFetchRequest<TrackerCoreData>(entityName: "TrackerCoreData")
         let sortDescriptors = [
+            NSSortDescriptor(key: #keyPath(TrackerCoreData.category.type), ascending: false),
             NSSortDescriptor(key: #keyPath(TrackerCoreData.category.name), ascending: true),
             NSSortDescriptor(key: #keyPath(TrackerCoreData.name), ascending: true)
         ]
         request.sortDescriptors = sortDescriptors
-        
+
         let predicate = NSPredicate(
-            format: "%K CONTAINS[cd] %@", #keyPath(TrackerCoreData.schedule), currentWeekDay.rawValue
+            format: "%K CONTAINS[cd] %@",
+            #keyPath(TrackerCoreData.schedule), currentWeekDay.rawValue
         )
         request.predicate = predicate
-        
+
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
             managedObjectContext: context,
             sectionNameKeyPath: #keyPath(TrackerCoreData.category.name),
             cacheName: nil
         )
-        
+
         fetchedResultsController.delegate = self
         try? fetchedResultsController.performFetch()
         return fetchedResultsController
@@ -76,7 +76,6 @@ final class TrackersDataProvider: NSObject {
         self.dataStore = dataStore
     }
 }
-
 
 // MARK: - TrackersDataProviderProtocol
 extension TrackersDataProvider: TrackersDataProviderProtocol {
@@ -98,6 +97,28 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
         try? fetchedResultsController.performFetch()
     }
 
+    func fetchCompletedTrackers(for date: Date) {
+        fetchedResultsController.fetchRequest.predicate = NSPredicate(
+            format: "%K CONTAINS[cd] %@ "
+            + "AND %K.@count > 0 "
+            + "AND SUBQUERY(records, $record, $record.date == %@).@count > 0",
+            #keyPath(TrackerCoreData.schedule), date.dayOfTheWeek.rawValue,
+            #keyPath(TrackerCoreData.records), date.stripTime() as NSDate
+        )
+        try? fetchedResultsController.performFetch()
+    }
+
+    func fetchIncompletedTrackers(for date: Date) {
+        fetchedResultsController.fetchRequest.predicate = NSPredicate(
+            format: "%K CONTAINS[cd] %@ "
+            + "AND %K.@count == 0 "
+            + "AND SUBQUERY(records, $record, $record.date == %@).@count == 0",
+            #keyPath(TrackerCoreData.schedule), date.dayOfTheWeek.rawValue,
+            #keyPath(TrackerCoreData.records), date.stripTime() as NSDate
+        )
+        try? fetchedResultsController.performFetch()
+    }
+
     func fetchTrackers(searchText: String, weekDay: WeekDay) {
         fetchedResultsController.fetchRequest.predicate = NSPredicate(
             format: "%K CONTAINS[cd] %@ AND %K CONTAINS[cd] %@",
@@ -105,18 +126,6 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
             #keyPath(TrackerCoreData.schedule), weekDay.rawValue
         )
         try? fetchedResultsController.performFetch()
-    }
-
-    func record(with trackerId: UUID, date: Date) -> TrackerRecordCoreData? {
-        dataStore.trackerRecordStore.record(with: trackerId, date: date as NSDate)
-    }
-
-    func records(date: Date) -> [TrackerRecordCoreData] {
-        dataStore.trackerRecordStore.records(for: date.stripTime() as NSDate)
-    }
-
-    func recordsCount(with trackerId: UUID) -> Int {
-        dataStore.trackerRecordStore.count(with: trackerId)
     }
 
     func tracker(at indexPath: IndexPath) -> TrackerCoreData? {
@@ -128,33 +137,58 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
         return trackerCoreData.category.name
     }
 
-    func add(tracker: Tracker, for categoryName: String) {
-        let trackerCoreData = TrackerCoreData(context: context)
-        trackerCoreData.name = tracker.name
-        trackerCoreData.emoji = tracker.emoji
-        trackerCoreData.color = tracker.color
-        trackerCoreData.id = tracker.id
-        trackerCoreData.schedule = tracker.schedule.toString
-
+    func add(tracker: Tracker) {
+        let categoryName = tracker.category.name
         guard let categoryCoreData = dataStore.trackerCategoryStore.category(with: categoryName) else {
             return
         }
-
-        dataStore.trackerStore.add(trackerCoreData, to: categoryCoreData)
+        dataStore.trackerStore.add(tracker, to: categoryCoreData)
     }
 
-    func markTrackerAsCompleted(trackerId: UUID, date: Date) {
-        dataStore.trackerRecordStore.add(trackerId: trackerId, date: date.stripTime())
-    }
+    func editTracker(at indexPath: IndexPath, newTracker: Tracker) {
+        let trackerCoreData = fetchedResultsController.object(at: indexPath)
+        let newCategoryId = newTracker.category.id
 
-    func markTrackerAsNotCompleted(trackerId: UUID, date: Date) {
-        guard let record = dataStore.trackerRecordStore.record(with: trackerId, date: date.stripTime() as NSDate)
+        guard newTracker != Tracker(trackerCoreData: trackerCoreData),
+              let newCategoryCoreData = dataStore.trackerCategoryStore.category(with: newCategoryId)
         else { return }
-        dataStore.trackerRecordStore.delete(record)
+
+        if trackerCoreData.isPinned {
+            dataStore.trackerStore.edit(
+                trackerCoreData,
+                newTracker: newTracker,
+                previousCategoryId: newCategoryId
+            )
+        } else {
+            dataStore.trackerStore.edit(
+                trackerCoreData,
+                newTracker: newTracker,
+                newCategory: newCategoryCoreData
+            )
+        }
+    }
+
+    func pinTracker(at indexPath: IndexPath) {
+        let trackerCoreData = fetchedResultsController.object(at: indexPath)
+        guard let pinCategoryCoreData = dataStore.trackerCategoryStore.category(with: .pin) else { return }
+
+        dataStore.trackerStore.pin(trackerCoreData, pinCategory: pinCategoryCoreData)
+    }
+
+    func unpinTracker(at indexPath: IndexPath) {
+        let trackerCoreData = fetchedResultsController.object(at: indexPath)
+        guard let previousCategoryId = trackerCoreData.previousCategoryId,
+              let previousCategory = dataStore.trackerCategoryStore.category(with: previousCategoryId)
+        else { return }
+        dataStore.trackerStore.unpin(trackerCoreData, previousCategory: previousCategory)
+    }
+
+    func deleteTracker(at indexPath: IndexPath) {
+        let trackerCoreData = fetchedResultsController.object(at: indexPath)
+        dataStore.trackerStore.delete(trackerCoreData)
     }
 
 }
-
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension TrackersDataProvider: NSFetchedResultsControllerDelegate {

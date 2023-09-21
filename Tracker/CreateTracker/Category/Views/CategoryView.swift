@@ -13,19 +13,19 @@ final class CategoryView: ViewWithTableBaseView {
         super.init(frame: frame)
         setpUpUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Private Methods
     private func setpUpUI() {
-        title.text = "Category".localized()
+        title.text = L.Category.title
         tableView.register(
             CategoryCell.self,
             forCellReuseIdentifier: CategoryCell.reuseId
         )
-        button.setTitle("Add category".localized(), for: .normal)
+        button.setTitle(L.Category.Button.add, for: .normal)
     }
-}
 
+}

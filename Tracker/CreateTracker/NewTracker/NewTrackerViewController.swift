@@ -5,12 +5,10 @@
 
 import UIKit
 
-
 // MARK: - NewTrackerViewControllerProtocol
 protocol NewTrackerViewControllerProtocol: AnyObject {
     var presenter: NewTrackerPresenterProtocol? { get set }
 }
-
 
 // MARK: - NewTrackerViewController
 final class NewTrackerViewController: UIViewController, NewTrackerViewControllerProtocol {
@@ -24,9 +22,9 @@ final class NewTrackerViewController: UIViewController, NewTrackerViewController
         guard let presenter else { fatalError("Presenter is nil") }
         switch presenter.newTrackerModel.type {
         case .habit:
-            view = NewHabitView()
+            view = NewHabitView(mode: presenter.mode)
         case .event:
-            view = NewEventView()
+            view = NewEventView(mode: presenter.mode)
         }
     }
 
@@ -47,7 +45,6 @@ final class NewTrackerViewController: UIViewController, NewTrackerViewController
 
 }
 
-
 // MARK: - NewTrackerFooterViewDelegate
 extension NewTrackerViewController: NewTrackerFooterViewDelegate {
 
@@ -56,7 +53,7 @@ extension NewTrackerViewController: NewTrackerFooterViewDelegate {
     }
 
     func didTapCreateButton() {
-        presenter?.addTracker()
+        presenter?.addOrEditTracker()
         NotificationCenter.default.post(name: .didNewTrackerCreated, object: nil)
         closePresentingController()
     }

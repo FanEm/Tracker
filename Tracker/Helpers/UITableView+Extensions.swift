@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 extension UITableView {
 
     /// Calculates the last cell index path if available
@@ -33,19 +32,27 @@ extension UITableView {
         cell.layer.masksToBounds = true
         if tableView.numberOfRows(inSection: indexPath.section) == 1 {
             cell.layer.cornerRadius = cornerRadius
+            cell.layer.maskedCorners = MaskedCorners.all
             return
         }
 
         switch indexPath.row {
         case 0:
             cell.layer.cornerRadius = cornerRadius
-            cell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            cell.layer.maskedCorners = MaskedCorners.top
         case tableView.numberOfRows(inSection: indexPath.section) - 1:
             cell.layer.cornerRadius = cornerRadius
-            cell.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            cell.layer.maskedCorners = MaskedCorners.bottom
         default:
             cell.layer.cornerRadius = 0
         }
+    }
+
+    private enum MaskedCorners {
+        static let top: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        static let bottom: CACornerMask = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        static let all: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner,
+                                        .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 
 }

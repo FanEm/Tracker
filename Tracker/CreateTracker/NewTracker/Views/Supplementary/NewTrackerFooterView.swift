@@ -35,7 +35,7 @@ final class NewTrackerFooterView: UICollectionReusableView {
         button.backgroundColor = .clear
         button.layer.borderWidth = Constants.Button.borderWidth
         button.layer.borderColor = UIColor.trRed.cgColor
-        button.setTitle("Cancel".localized(), for: .normal)
+        button.setTitle(L.NewTracker.Button.cancel, for: .normal)
         button.setTitleColor(.trRed, for: .normal)
         button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         return button
@@ -44,7 +44,7 @@ final class NewTrackerFooterView: UICollectionReusableView {
     private lazy var createButton: UIButton = {
         let button = BaseButton()
         button.backgroundColor = .trGray
-        button.setTitle("Create".localized(), for: .normal)
+        button.setTitle(L.NewTracker.Button.create, for: .normal)
         button.setTitleColor(.trPermWhite, for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(didTapCreateButton), for: .touchUpInside)
@@ -77,10 +77,12 @@ final class NewTrackerFooterView: UICollectionReusableView {
 
     // MARK: - Private Methods
     private func createAllFieldsFilledObserver() {
-        return NotificationCenter.default.addObserver(self,
-                                                      selector: #selector(changeCreateButtonState(notification:)),
-                                                      name: .didAllFieldsFilled,
-                                                      object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(changeCreateButtonState(notification:)),
+            name: .didAllFieldsFilled,
+            object: nil
+        )
     }
 
     private func activateConstraints() {
@@ -118,4 +120,5 @@ final class NewTrackerFooterView: UICollectionReusableView {
         createButton.backgroundColor = isEnabled ? .trBlack : .trGray
         createButton.setTitleColor(isEnabled ? .trWhite : .trPermWhite , for: .normal)
     }
+
 }

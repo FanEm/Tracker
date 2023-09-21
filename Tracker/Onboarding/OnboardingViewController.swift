@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - OnboardingViewController
 final class OnboardingViewController: UIViewController {
 
@@ -49,7 +48,7 @@ final class OnboardingViewController: UIViewController {
         let button = BaseButton()
         button.backgroundColor = .trPermBlack
         button.setTitleColor(.trPermWhite, for: .normal)
-        button.setTitle("What a technology".localized(), for: .normal)
+        button.setTitle(L.Onboarding.button, for: .normal)
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         return button
     }()

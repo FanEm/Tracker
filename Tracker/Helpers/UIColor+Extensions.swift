@@ -6,6 +6,7 @@
 import UIKit
 
 extension UIColor {
+
     static let trBlack = UIColor(named: "trBlack") ?? .black
     static let trPermBlack = UIColor(named: "trPermBlack") ?? .black
     static let trPermWhite = UIColor(named: "trPermWhite") ?? .white
@@ -17,7 +18,10 @@ extension UIColor {
     static let trDatePickerBtnBg = UIColor(named: "trDatePickerBtnBg") ?? .gray
     static let trBackground = UIColor(named: "trBackground") ?? .gray
     static let trTransperentWhite = UIColor(named: "trTransperentWhite") ?? .white
-    
+    static let trGradientBlue = UIColor(named: "trGradientBlue") ?? .blue
+    static let trGradientRed = UIColor(named: "trGradientRed") ?? .red
+    static let trGradientGreen = UIColor(named: "trGradientGreen") ?? .green
+
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()
@@ -40,5 +44,5 @@ extension UIColor {
             alpha: CGFloat(a) / 255
         )
     }
- }
 
+ }

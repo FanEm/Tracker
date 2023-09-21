@@ -31,7 +31,7 @@ final class BaseSectionTitleView: UICollectionReusableView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-    
+
         addSubview(titleLabel)
 
         activateConstraints()
@@ -56,4 +56,5 @@ final class BaseSectionTitleView: UICollectionReusableView {
             )
         ])
     }
+
 }

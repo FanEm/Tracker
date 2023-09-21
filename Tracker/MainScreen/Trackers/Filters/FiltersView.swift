@@ -13,14 +13,14 @@ final class FiltersView: ViewWithTableBaseView {
         super.init(frame: frame)
         setpUpUI()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Private Methods
     private func setpUpUI() {
-        title.text = "Filters".localized()
+        title.text = L.Filters.title
         tableView.register(
             TitleTableViewCell.self,
             forCellReuseIdentifier: TitleTableViewCell.reuseIdentifier
