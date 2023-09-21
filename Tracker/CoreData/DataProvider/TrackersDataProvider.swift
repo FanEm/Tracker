@@ -5,12 +5,10 @@
 
 import CoreData
 
-
 // MARK: - TrackersDataProviderDelegate
 protocol TrackersDataProviderDelegate: AnyObject {
     func didUpdate(_ update: StoreUpdate)
 }
-
 
 // MARK: - TrackersDataProviderProtocol
 protocol TrackersDataProviderProtocol {
@@ -30,7 +28,6 @@ protocol TrackersDataProviderProtocol {
     func add(tracker: Tracker)
 }
 
-
 // MARK: - TrackersDataProvider
 final class TrackersDataProvider: NSObject {
 
@@ -40,7 +37,7 @@ final class TrackersDataProvider: NSObject {
     // MARK: - Private Properties
     private let context: NSManagedObjectContext
     private let dataStore: DataStore
-    
+
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
 
@@ -54,20 +51,20 @@ final class TrackersDataProvider: NSObject {
             NSSortDescriptor(key: #keyPath(TrackerCoreData.name), ascending: true)
         ]
         request.sortDescriptors = sortDescriptors
-        
+
         let predicate = NSPredicate(
             format: "%K CONTAINS[cd] %@",
             #keyPath(TrackerCoreData.schedule), currentWeekDay.rawValue
         )
         request.predicate = predicate
-        
+
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
             managedObjectContext: context,
             sectionNameKeyPath: #keyPath(TrackerCoreData.category.name),
             cacheName: nil
         )
-        
+
         fetchedResultsController.delegate = self
         try? fetchedResultsController.performFetch()
         return fetchedResultsController
@@ -79,7 +76,6 @@ final class TrackersDataProvider: NSObject {
         self.dataStore = dataStore
     }
 }
-
 
 // MARK: - TrackersDataProviderProtocol
 extension TrackersDataProvider: TrackersDataProviderProtocol {
@@ -103,7 +99,9 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
 
     func fetchCompletedTrackers(for date: Date) {
         fetchedResultsController.fetchRequest.predicate = NSPredicate(
-            format: "%K CONTAINS[cd] %@ AND %K.@count > 0 AND SUBQUERY(records, $record, $record.date == %@).@count > 0",
+            format: "%K CONTAINS[cd] %@ "
+            + "AND %K.@count > 0 "
+            + "AND SUBQUERY(records, $record, $record.date == %@).@count > 0",
             #keyPath(TrackerCoreData.schedule), date.dayOfTheWeek.rawValue,
             #keyPath(TrackerCoreData.records), date.stripTime() as NSDate
         )
@@ -112,7 +110,9 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
 
     func fetchIncompletedTrackers(for date: Date) {
         fetchedResultsController.fetchRequest.predicate = NSPredicate(
-            format: "%K CONTAINS[cd] %@ AND %K.@count == 0 AND SUBQUERY(records, $record, $record.date == %@).@count == 0",
+            format: "%K CONTAINS[cd] %@ "
+            + "AND %K.@count == 0 "
+            + "AND SUBQUERY(records, $record, $record.date == %@).@count == 0",
             #keyPath(TrackerCoreData.schedule), date.dayOfTheWeek.rawValue,
             #keyPath(TrackerCoreData.records), date.stripTime() as NSDate
         )
@@ -152,7 +152,7 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
         guard newTracker != Tracker(trackerCoreData: trackerCoreData),
               let newCategoryCoreData = dataStore.trackerCategoryStore.category(with: newCategoryId)
         else { return }
-        
+
         if trackerCoreData.isPinned {
             dataStore.trackerStore.edit(
                 trackerCoreData,
@@ -167,7 +167,7 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
             )
         }
     }
-    
+
     func pinTracker(at indexPath: IndexPath) {
         let trackerCoreData = fetchedResultsController.object(at: indexPath)
         guard let pinCategoryCoreData = dataStore.trackerCategoryStore.category(with: .pin) else { return }
@@ -189,7 +189,6 @@ extension TrackersDataProvider: TrackersDataProviderProtocol {
     }
 
 }
-
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension TrackersDataProvider: NSFetchedResultsControllerDelegate {

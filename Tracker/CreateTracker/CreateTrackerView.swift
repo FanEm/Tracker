@@ -5,20 +5,18 @@
 
 import UIKit
 
-
 // MARK: - CreateTrackerViewDelegate
 protocol CreateTrackerViewDelegate: AnyObject {
     func didTapHabitButton()
     func didTapEventButton()
 }
 
-
 // MARK: - CreateTrackerView
 final class CreateTrackerView: UIView {
 
     // MARK: - Public Properties
     weak var delegate: CreateTrackerViewDelegate?
-    
+
     // MARK: - Private Properties
     private enum Constants {
         static let topInset: CGFloat = 250
@@ -98,11 +96,11 @@ final class CreateTrackerView: UIView {
             )
         ])
     }
-    
+
     @objc private func tapOnHabitButton() {
         self.delegate?.didTapHabitButton()
     }
-    
+
     @objc private func tapOnEventButton() {
         self.delegate?.didTapEventButton()
     }

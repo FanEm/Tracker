@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 // MARK: - UserDefaults
 extension UserDefaults {
 
@@ -38,4 +37,5 @@ extension UserDefaults {
             set(data, forKey: Keys.filter.rawValue)
         }
     }
+
 }

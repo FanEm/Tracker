@@ -15,7 +15,7 @@ extension Date {
         }
         return date
     }
-    
+
     var dayOfTheWeek: WeekDay {
         var weekdays: [WeekDay] = WeekDay.allCases
         if let sunday = weekdays.popLast(), sunday == WeekDay.sunday {

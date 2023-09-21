@@ -35,7 +35,7 @@ extension AnalyticsService {
     }
 
     func didCloseMainScreen() {
-        report(event: .openMain, params: EventParams(event: .close, screen: .main, item: nil))
+        report(event: .closeMain, params: EventParams(event: .close, screen: .main, item: nil))
     }
 
     func didClickAddTracker() {
@@ -47,25 +47,31 @@ extension AnalyticsService {
     }
 
     func didClickCompleteTracker() {
-        report(event: .clickCompleteTracker, params: EventParams(event: .click, screen: .main, item: .completeTracker))
+        report(
+            event: .clickCompleteTracker,
+            params: EventParams(event: .click, screen: .main, item: .completeTracker)
+        )
     }
-    
+
     func didClickIncompleteTracker() {
-        report(event: .clickIncompleteTracker, params: EventParams(event: .click, screen: .main, item: .incompleteTracker))
+        report(
+            event: .clickCompleteTracker,
+            params: EventParams(event: .click, screen: .main, item: .incompleteTracker)
+        )
     }
-    
+
     func didClickEditTracker() {
         report(event: .clickEditTracker, params: EventParams(event: .click, screen: .main, item: .edit))
     }
-    
+
     func didClickDeleteTracker() {
         report(event: .clickDeleteTracker, params: EventParams(event: .click, screen: .main, item: .delete))
     }
-    
+
     func didClickPinTracker() {
         report(event: .clickPinTracker, params: EventParams(event: .click, screen: .main, item: .pin))
     }
-    
+
     func didClickUnpinTracker() {
         report(event: .clickPinTracker, params: EventParams(event: .click, screen: .main, item: .unpin))
     }

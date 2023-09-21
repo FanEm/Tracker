@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-
 // MARK: - OnboardingPage
 enum OnboardingPage {
 

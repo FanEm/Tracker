@@ -7,7 +7,7 @@ import UIKit
 
 // MARK: - TabBarController
 final class TabBarController: UITabBarController {
-    
+
     // MARK: - Private Properties
     private var trackersNavigationController: TrackersNavigationController {
         let navigationController = TrackersNavigationController()

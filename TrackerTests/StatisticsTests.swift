@@ -7,38 +7,37 @@ import XCTest
 import SnapshotTesting
 @testable import Tracker
 
-
 // MARK: - StatisticsTests
 final class StatisticsTests: XCTestCase {
 
     // MARK: - Light mode
     func testLightStatisticsViewControllerEmpty() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             statisticsViewModelState: .empty
         )
-        assertSnapshots(matching: vc, as: image(mode: .light))
+        assertSnapshots(matching: viewContoller, as: image(mode: .light))
     }
 
     func testLightStatisticsViewControllerAll() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             statisticsViewModelState: .all(count: 2)
         )
-        assertSnapshots(matching: vc, as: image(mode: .light))
+        assertSnapshots(matching: viewContoller, as: image(mode: .light))
     }
 
     // MARK: - Dark mode
     func testDarkStatisticsViewControllerEmpty() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             statisticsViewModelState: .empty
         )
-        assertSnapshots(matching: vc, as: image(mode: .dark))
+        assertSnapshots(matching: viewContoller, as: image(mode: .dark))
     }
 
     func testDarkStatisticsViewControllerAll() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             statisticsViewModelState: .all(count: 2)
         )
-        assertSnapshots(matching: vc, as: image(mode: .dark))
+        assertSnapshots(matching: viewContoller, as: image(mode: .dark))
     }
 
     // MARK: - Private Methods

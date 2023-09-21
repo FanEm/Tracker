@@ -83,7 +83,11 @@ class EmptyView: UIView {
             nothingToShowImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             nothingToShowImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             nothingToShowLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            nothingToShowLabel.topAnchor.constraint(equalTo: nothingToShowImageView.bottomAnchor, constant: Constants.labelInset)
+            nothingToShowLabel.topAnchor.constraint(
+                equalTo: nothingToShowImageView.bottomAnchor,
+                constant: Constants.labelInset
+            )
         ])
     }
+
 }

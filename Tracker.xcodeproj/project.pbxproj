@@ -97,7 +97,6 @@
 		F37E75EE2AB0816D0091F228 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37E75ED2AB0816D0091F228 /* AnalyticsService.swift */; };
 		F37E75F62AB082950091F228 /* TrackersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37E75F52AB082950091F228 /* TrackersTests.swift */; };
 		F37E75FE2AB084EA0091F228 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = F37E75FD2AB084EA0091F228 /* SnapshotTesting */; };
-		F37E76022AB08C580091F228 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = F37E76012AB08C580091F228 /* swiftgen.yml */; };
 		F37E76042AB08E790091F228 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37E76032AB08E790091F228 /* Strings+Generated.swift */; };
 		F37E76062AB08EEE0091F228 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37E76052AB08EEE0091F228 /* XCAssets+Generated.swift */; };
 		F37E76082AB0AFE60091F228 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F37E76072AB0AFE60091F228 /* Colors.xcassets */; };
@@ -233,7 +232,6 @@
 		F37E75ED2AB0816D0091F228 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		F37E75F32AB082950091F228 /* TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37E75F52AB082950091F228 /* TrackersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersTests.swift; sourceTree = "<group>"; };
-		F37E76012AB08C580091F228 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		F37E76032AB08E790091F228 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
 		F37E76052AB08EEE0091F228 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
 		F37E76072AB0AFE60091F228 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -411,7 +409,6 @@
 				F33706CC2A72709300E6D128 /* SceneDelegate.swift */,
 				F33706D52A72709400E6D128 /* LaunchScreen.storyboard */,
 				F33706D82A72709400E6D128 /* Info.plist */,
-				F37E76012AB08C580091F228 /* swiftgen.yml */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -754,6 +751,7 @@
 			buildPhases = (
 				FBADE74C5181A635205BA548 /* [CP] Check Pods Manifest.lock */,
 				F37E76092AB0B3F90091F228 /* SwiftGen */,
+				F311AF392ABB635F00905C5C /* SwiftLint */,
 				F33706C32A72709300E6D128 /* Sources */,
 				F33706C42A72709300E6D128 /* Frameworks */,
 				F33706C52A72709300E6D128 /* Resources */,
@@ -841,7 +839,6 @@
 				F3579D272A780B7C00D1EFA2 /* Localizable.strings in Resources */,
 				F38A2B512AB07B050097C464 /* InfoPlist.strings in Resources */,
 				F33706D72A72709400E6D128 /* LaunchScreen.storyboard in Resources */,
-				F37E76022AB08C580091F228 /* swiftgen.yml in Resources */,
 				F33706D42A72709400E6D128 /* Assets.xcassets in Resources */,
 				F3E8157C2A77DD5A000BE1DE /* SF-Pro-Text-Regular.otf in Resources */,
 				F3E8157B2A77DD5A000BE1DE /* SF-Pro-Text-Bold.otf in Resources */,
@@ -898,8 +895,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F311AF392ABB635F00905C5C /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 		F37E76092AB0B3F90091F228 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -911,7 +928,6 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/swiftgen_result_file",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

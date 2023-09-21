@@ -3,22 +3,20 @@
 //  Tracker
 //
 
-
 // MARK: - EventParams
 struct EventParams {
     let event: EventType
     let screen: EventScreen
     let item: EventItem?
-    
+
     var toDict: [String: String] {
         [
             "event": event.rawValue,
             "screen": screen.rawValue,
             "item": item?.rawValue
-        ].compactMapValues{ $0 }
+        ].compactMapValues { $0 }
     }
 }
-
 
 // MARK: - EventType
 enum EventType: String {
@@ -26,7 +24,6 @@ enum EventType: String {
     case close
     case click
 }
-
 
 // MARK: - EventItem
 enum EventItem: String {
@@ -40,7 +37,6 @@ enum EventItem: String {
     case edit
     case delete
 }
-
 
 // MARK: - EventScreen
 enum EventScreen: String {

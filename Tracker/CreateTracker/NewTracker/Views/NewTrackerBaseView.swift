@@ -5,13 +5,11 @@
 
 import UIKit
 
-
 // MARK: - NewTrackerBaseViewDelegate
 protocol NewTrackerBaseViewDelegate: AnyObject {
     func didTapOnColor(_ hexString: String)
     func didTapOnEmoji(_ emoji: String)
 }
-
 
 // MARK: - NewTrackerBaseView
 class NewTrackerBaseView: UIView {
@@ -201,7 +199,6 @@ class NewTrackerBaseView: UIView {
 
 }
 
-
 // MARK: - UICollectionViewDataSource
 extension NewTrackerBaseView: UICollectionViewDataSource {
 
@@ -218,7 +215,7 @@ extension NewTrackerBaseView: UICollectionViewDataSource {
             return 0
         }
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -279,7 +276,10 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
         return true
     }
 
-    func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        shouldDeselectItemAt indexPath: IndexPath
+    ) -> Bool {
         guard let item = collectionView.cellForItem(at: indexPath) else { return false }
         return !item.isSelected
     }
@@ -324,8 +324,7 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
             return reusableView
         }
         if kind == UICollectionView.elementKindSectionFooter,
-            section == 3
-        {
+            section == 3 {
             guard let footerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: NewTrackerFooterView.reuseIdentifier,
@@ -339,7 +338,6 @@ extension NewTrackerBaseView: UICollectionViewDelegate {
     }
 
 }
-
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
@@ -360,7 +358,11 @@ extension NewTrackerBaseView: UICollectionViewDelegateFlowLayout {
         return 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
         switch section {
         case 1, 2:
             return Constants.CollectionView.sectionInset

@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - AlertModel
 struct AlertModel {
 
@@ -29,7 +28,11 @@ struct AlertModel {
         AlertModel(
             title: L.Category.Alert.Delete.title,
             message: L.Category.Alert.Delete.subtitle,
-            primaryButton: AlertButton(text: L.Alert.delete, style: .destructive, completion: primaryButtonCompletion),
+            primaryButton: AlertButton(
+                text: L.Alert.delete,
+                style: .destructive,
+                completion: primaryButtonCompletion
+            ),
             secondaryButton: AlertButton(text: L.Alert.cancel, style: .cancel, completion: {}),
             preferredStyle: .actionSheet
         )
@@ -39,7 +42,11 @@ struct AlertModel {
         AlertModel(
             title: L.Trackers.Alert.Delete.title,
             message: nil,
-            primaryButton: AlertButton(text: L.Alert.delete, style: .destructive, completion: primaryButtonCompletion),
+            primaryButton: AlertButton(
+                text: L.Alert.delete,
+                style: .destructive,
+                completion: primaryButtonCompletion
+            ),
             secondaryButton: AlertButton(text: L.Alert.cancel, style: .cancel, completion: {}),
             preferredStyle: .actionSheet
         )

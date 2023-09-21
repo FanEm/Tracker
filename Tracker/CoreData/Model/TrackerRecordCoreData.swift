@@ -5,7 +5,6 @@
 
 import CoreData
 
-
 // MARK: - TrackerRecordCoreData
 final class TrackerRecordCoreData: NSManagedObject, Identifiable {
 

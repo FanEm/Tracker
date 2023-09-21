@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - OnboardingPageViewController
 final class OnboardingPageViewController: UIPageViewController {
 
@@ -77,7 +76,6 @@ final class OnboardingPageViewController: UIPageViewController {
 
 }
 
-
 // MARK: - UIPageViewControllerDataSource
 extension OnboardingPageViewController: UIPageViewControllerDataSource {
 
@@ -114,7 +112,6 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
     }
 
 }
-
 
 // MARK: - UIPageViewControllerDelegate
 extension OnboardingPageViewController: UIPageViewControllerDelegate {

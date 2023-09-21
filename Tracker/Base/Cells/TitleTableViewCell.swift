@@ -18,7 +18,7 @@ class TitleTableViewCell: UITableViewCell {
 
         backgroundColor = .trBackground
         separatorInset = GlobalConstants.TableViewCell.separatorInset
-        
+
         textLabel?.font = GlobalConstants.Font.sfPro17
         textLabel?.textColor = .trBlack
     }
@@ -31,4 +31,5 @@ class TitleTableViewCell: UITableViewCell {
     func configCell(label: String) {
         textLabel?.text = label
     }
+
 }

@@ -3,11 +3,10 @@
 //  Tracker
 //
 
-
 @propertyWrapper
 final class Observable<Value> {
 
-    private var onChange: ((Value) -> Void)? = nil
+    private var onChange: ((Value) -> Void)?
 
     var wrappedValue: Value {
         didSet {

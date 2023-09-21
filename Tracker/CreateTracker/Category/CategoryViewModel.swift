@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - CategoryViewModel
 final class CategoryViewModel {
 
@@ -20,7 +19,7 @@ final class CategoryViewModel {
     var categoriesExist: Bool {
         numberOfCategories > 0
     }
-    
+
     var selectedCategory: Category?
 
     // MARK: - Private Properties
@@ -50,7 +49,7 @@ final class CategoryViewModel {
     func add(category: Category) {
         categoryService.add(category: category)
     }
-    
+
     func isCategoryExists(categoryName: String) -> Bool {
         !categories.filter({ $0.name == categoryName }).isEmpty
     }
@@ -74,7 +73,6 @@ final class CategoryViewModel {
     }
 
 }
-
 
 // MARK: - CategoryDataProviderDelegate
 extension CategoryViewModel: CategoryDataProviderDelegate {

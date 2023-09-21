@@ -6,7 +6,6 @@
 import Foundation
 @testable import Tracker
 
-
 // MARK: - FakeRecordService
 final class FakeRecordService: RecordServiceProtocol {
 
@@ -17,7 +16,7 @@ final class FakeRecordService: RecordServiceProtocol {
     }
     var dataProviderDelegate: TrackerRecordDataProviderDelegate?
     let numberOfRecords: Int = 0
-    
+
     // MARK: - Private Properties
     private let records: [TrackerRecord]
     private let state: State

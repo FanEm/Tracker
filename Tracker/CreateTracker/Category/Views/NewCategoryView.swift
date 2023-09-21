@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - NewCategoryView
 final class NewCategoryView: UIView {
 
@@ -42,7 +41,7 @@ final class NewCategoryView: UIView {
         case .new: return nil
         }
     }
-    
+
     lazy var buttonBottomAnchor = {
         self.safeAreaLayoutGuide.bottomAnchor.constraint(
             equalTo: self.button.bottomAnchor,

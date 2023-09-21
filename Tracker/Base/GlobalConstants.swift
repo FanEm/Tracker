@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - GlobalConstants
 enum GlobalConstants {
 

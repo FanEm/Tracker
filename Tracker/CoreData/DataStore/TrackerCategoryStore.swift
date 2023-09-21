@@ -5,7 +5,6 @@
 
 import CoreData
 
-
 // MARK: - TrackerCategoryStoreProtocol
 protocol TrackerCategoryStoreProtocol: AnyObject {
     var categories: [TrackerCategoryCoreData] { get }
@@ -18,7 +17,6 @@ protocol TrackerCategoryStoreProtocol: AnyObject {
     func category(with type: CategoryType) -> TrackerCategoryCoreData?
     func category(with id: UUID) -> TrackerCategoryCoreData?
 }
-
 
 // MARK: - TrackerCategoryStore
 final class TrackerCategoryStore: NSObject {
@@ -43,7 +41,6 @@ final class TrackerCategoryStore: NSObject {
 
 }
 
-
 // MARK: - TrackerCategoryStoreProtocol
 extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
 
@@ -51,7 +48,9 @@ extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
     var categories: [TrackerCategoryCoreData] {
         let request = TrackerCategoryCoreData.fetchRequest()
         let predicate = NSPredicate(
-            format: "%K == %@", #keyPath(TrackerCategoryCoreData.type), NSNumber(value: CategoryType.user.rawValue)
+            format: "%K == %@",
+            #keyPath(TrackerCategoryCoreData.type),
+            NSNumber(value: CategoryType.user.rawValue)
         )
         request.predicate = predicate
         let categories = try? context.fetch(request)
@@ -61,7 +60,9 @@ extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
     var numberOfCategories: Int {
         let request = TrackerCategoryCoreData.fetchRequest()
         let predicate = NSPredicate(
-            format: "%K == %@", #keyPath(TrackerCategoryCoreData.type), NSNumber(value: CategoryType.user.rawValue)
+            format: "%K == %@",
+            #keyPath(TrackerCategoryCoreData.type),
+            NSNumber(value: CategoryType.user.rawValue)
         )
         request.predicate = predicate
         request.resultType = .countResultType

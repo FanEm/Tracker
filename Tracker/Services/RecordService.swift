@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - RecordServiceProtocol
 protocol RecordServiceProtocol {
     var dataProviderDelegate: TrackerRecordDataProviderDelegate? { get set }
@@ -19,7 +18,6 @@ protocol RecordServiceProtocol {
 
     func fetchRecords()
 }
-
 
 // MARK: - RecordService
 final class RecordService {
@@ -40,6 +38,7 @@ final class RecordService {
         self.dataProvider = dataProvider
     }
 
+    // swiftlint:disable force_cast
     private convenience init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let dataStore = appDelegate.dataStore
@@ -47,7 +46,6 @@ final class RecordService {
     }
 
 }
-
 
 // MARK: - RecordServiceProtocol
 extension RecordService: RecordServiceProtocol {
@@ -72,14 +70,16 @@ extension RecordService: RecordServiceProtocol {
     }
 
     func record(with trackerId: UUID, date: Date) -> TrackerRecord? {
-        guard let trackerRecordCoreData = dataProvider?.record(with: trackerId, date: date) else { return nil }
+        guard let trackerRecordCoreData = dataProvider?.record(with: trackerId, date: date) else {
+            return nil
+        }
         return TrackerRecord(trackerRecordCoreData: trackerRecordCoreData)
     }
 
     func recordsCount(with trackerId: UUID) -> Int {
         dataProvider?.recordsCount(with: trackerId) ?? 0
     }
-    
+
     func fetchRecords() {
         dataProvider?.fetchRecords()
     }

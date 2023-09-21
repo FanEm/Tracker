@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - NewEventView
 final class NewEventView: NewTrackerBaseView {
 

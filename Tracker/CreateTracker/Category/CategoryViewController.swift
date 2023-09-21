@@ -5,12 +5,10 @@
 
 import UIKit
 
-
 // MARK: - CategoryViewControllerDelegate
 protocol CategoryViewControllerDelegate: AnyObject {
     func didTapOnCategory(_ category: Category?)
 }
-
 
 // MARK: - CategoryViewController
 final class CategoryViewController: UIViewController {
@@ -73,7 +71,7 @@ final class CategoryViewController: UIViewController {
         present(viewController, animated: true)
     }
 
-    private func delete(indexPath: IndexPath) {       
+    private func delete(indexPath: IndexPath) {
         AlertPresenter.show(in: self, model: .categoryDeleteConfirmation { [weak self] in
             guard let self,
                   let category = self.categoryViewModel.category(at: indexPath)
@@ -101,7 +99,6 @@ final class CategoryViewController: UIViewController {
 
 }
 
-
 // MARK: - UITableViewDataSource
 extension CategoryViewController: UITableViewDataSource {
 
@@ -125,7 +122,6 @@ extension CategoryViewController: UITableViewDataSource {
 
 }
 
-
 // MARK: - UITableViewDelegate
 extension CategoryViewController: UITableViewDelegate {
 
@@ -145,20 +141,24 @@ extension CategoryViewController: UITableViewDelegate {
             let category = categoryViewModel.category(at: indexPath),
             !categoryViewModel.isCategorySelected(category)
         else { return nil }
-        
-        return UIContextMenuConfiguration(actionProvider: { actions in
+
+        return UIContextMenuConfiguration(actionProvider: { _ in
             UIMenu(children: [
                 UIAction(title: L.ContextMenu.edit) { [weak self] _ in
                     self?.edit(indexPath: indexPath)
                 },
                 UIAction(title: L.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
                     self?.delete(indexPath: indexPath)
-                },
+                }
             ])
         })
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
         UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
     }
 
@@ -167,7 +167,6 @@ extension CategoryViewController: UITableViewDelegate {
     }
 
 }
-
 
 // MARK: - NewCategoryViewControllerDelegate
 extension CategoryViewController: NewCategoryViewControllerDelegate {

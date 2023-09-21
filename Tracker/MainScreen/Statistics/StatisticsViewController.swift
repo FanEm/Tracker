@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - StatisticsViewController
 final class StatisticsViewController: UIViewController {
 
@@ -59,16 +58,14 @@ final class StatisticsViewController: UIViewController {
     }
 
     private func setNeededView() {
-        view = viewModel.statistics.count == 0 ? emptyView : statisticsView
+        view = viewModel.statistics.isEmpty ? emptyView : statisticsView
     }
 
 }
 
-
 // MARK: - StatisticsNavigationController
 final class StatisticsNavigationController: UINavigationController {
 }
-
 
 // MARK: - UITableViewDelegate
 extension StatisticsViewController: UITableViewDelegate {
@@ -78,7 +75,6 @@ extension StatisticsViewController: UITableViewDelegate {
     }
 
 }
-
 
 // MARK: - UITableViewDataSource
 extension StatisticsViewController: UITableViewDataSource {

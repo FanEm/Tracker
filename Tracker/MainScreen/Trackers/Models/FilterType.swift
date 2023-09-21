@@ -12,7 +12,7 @@ enum FilterType: Int, Codable {
     case today
     case completed
     case incompleted
-    
+
     var name: String {
         switch self {
         case .all: return L.Filters.all

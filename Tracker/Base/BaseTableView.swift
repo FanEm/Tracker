@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - BaseTableView
 final class BaseTableView: UITableView {
 

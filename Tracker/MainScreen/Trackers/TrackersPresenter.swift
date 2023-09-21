@@ -10,7 +10,7 @@ protocol TrackersPresenterProtocol: AnyObject {
     var view: TrackersViewControllerProtocol? { get set }
     var analyticsService: AnalyticsService { get }
     var numberOfSections: Int { get }
-    
+
     func viewDidLoad()
     func fetchTrackers(date: Date)
     func fetchTrackers(searchText: String?)
@@ -23,13 +23,12 @@ protocol TrackersPresenterProtocol: AnyObject {
     func deleteTracker(at indexPath: IndexPath)
     func editTracker(at indexPath: IndexPath, newTracker: Tracker)
     func categoryTitle(at indexPath: IndexPath) -> String?
-    
+
     func isTrackerCompleted(_ tracker: Tracker) -> Bool
     func completeCounterForTracker(_ tracker: Tracker) -> Int
     func markTrackerAsNotCompleted(_ tracker: Tracker)
     func markTrackerAsCompleted(_ tracker: Tracker)
 }
-
 
 // MARK: - TrackersPresenterProtocol
 final class TrackersPresenter: TrackersPresenterProtocol {
@@ -85,7 +84,7 @@ final class TrackersPresenter: TrackersPresenterProtocol {
     func tracker(at indexPath: IndexPath) -> Tracker? {
         trackerService?.tracker(at: indexPath)
     }
-    
+
     func pinTracker(at indexPath: IndexPath) {
         trackerService?.pinTracker(at: indexPath)
         analyticsService.didClickPinTracker()
@@ -128,7 +127,6 @@ final class TrackersPresenter: TrackersPresenterProtocol {
     }
 
 }
-
 
 // MARK: - TrackersDataProviderDelegate
 extension TrackersPresenter: TrackersDataProviderDelegate {

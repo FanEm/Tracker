@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - CategoryView
 final class CategoryView: ViewWithTableBaseView {
 

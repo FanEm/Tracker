@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - CategoryServiceProtocol
 protocol CategoryServiceProtocol {
     var dataProviderDelegate: CategoryDataProviderDelegate? { get set }
@@ -20,7 +19,6 @@ protocol CategoryServiceProtocol {
     func fetchCategories()
     func createPinCategoryIfNeeded()
 }
-
 
 // MARK: - CategoryService
 final class CategoryService {
@@ -37,12 +35,12 @@ final class CategoryService {
     // MARK: - Private Properties
     private let dataProvider: CategoryDataProvider?
 
-
     // MARK: - Initializers
     private init(dataProvider: CategoryDataProvider?) {
         self.dataProvider = dataProvider
     }
 
+    // swiftlint:disable force_cast
     private convenience init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let dataStore = appDelegate.dataStore

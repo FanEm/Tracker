@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 // MARK: - NewTrackerMode
 enum NewTrackerMode {
     case new

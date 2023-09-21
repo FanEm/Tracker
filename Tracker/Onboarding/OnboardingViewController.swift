@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - OnboardingViewController
 final class OnboardingViewController: UIViewController {
 

@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - CategoryEmptyView
 final class CategoryEmptyView: EmptyView {
 
@@ -53,7 +52,7 @@ final class CategoryEmptyView: EmptyView {
                 constant: GlobalConstants.Title.inset
             ),
             title.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
+
             button.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
                 constant: Constants.Button.trailingAndLeadingInsets

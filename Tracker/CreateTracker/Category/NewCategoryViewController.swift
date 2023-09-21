@@ -5,12 +5,10 @@
 
 import UIKit
 
-
 // MARK: - NewCategoryViewControllerDelegate
 protocol NewCategoryViewControllerDelegate: AnyObject {
     func categoryWasRenamed(category: Category, newName: String)
 }
-
 
 // MARK: - NewCategoryViewController
 final class NewCategoryViewController: UIViewController {
@@ -42,6 +40,10 @@ final class NewCategoryViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     // MARK: - Overrides Methods
     override func loadView() {
         super.loadView()
@@ -53,12 +55,6 @@ final class NewCategoryViewController: UIViewController {
         newCategoryView.button.addTarget(self, action: targetAction, for: .touchUpInside)
         newCategoryView.textField.delegate = self
         registerKeyboardObserver()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - Private Methods
@@ -101,7 +97,7 @@ final class NewCategoryViewController: UIViewController {
     private func moveButtonWithKeyboard(willKeyboardShow: Bool, notification: NSNotification) {
         guard let userInfo: NSDictionary = notification.userInfo as? NSDictionary,
               let keyboardInfo = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
-              let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+              let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
         else { return }
         let keyboardSize = keyboardInfo.cgRectValue.size
 
@@ -109,7 +105,7 @@ final class NewCategoryViewController: UIViewController {
                                                            ? keyboardSize.height
                                                            : GlobalConstants.Button.bottomInset
 
-        UIView.transition(with: newCategoryView, duration: keyboardAnimationDuration) { [weak self] in
+        UIView.transition(with: newCategoryView, duration: animationDuration) { [weak self] in
             self?.newCategoryView.layoutIfNeeded()
         }
     }
@@ -130,7 +126,6 @@ final class NewCategoryViewController: UIViewController {
     }
 
 }
-
 
 // MARK: - UITextFieldDelegate
 extension NewCategoryViewController: UITextFieldDelegate {

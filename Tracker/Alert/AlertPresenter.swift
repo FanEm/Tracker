@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - AlertPresenter
 final class AlertPresenter {
 
@@ -17,14 +16,20 @@ final class AlertPresenter {
         )
 
         if let primaryButton = model.primaryButton {
-            let primaryButtonAction = UIAlertAction(title: primaryButton.text, style: primaryButton.style) { _ in
+            let primaryButtonAction = UIAlertAction(
+                title: primaryButton.text,
+                style: primaryButton.style
+            ) { _ in
                 primaryButton.completion()
             }
             alert.addAction(primaryButtonAction)
         }
 
         if let secondaryButton = model.secondaryButton {
-            let secondaryButtonAction = UIAlertAction(title: secondaryButton.text, style: secondaryButton.style) { _ in
+            let secondaryButtonAction = UIAlertAction(
+                title: secondaryButton.text,
+                style: secondaryButton.style
+            ) { _ in
                 secondaryButton.completion()
             }
             alert.addAction(secondaryButtonAction)

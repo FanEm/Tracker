@@ -5,12 +5,10 @@
 
 import UIKit
 
-
 // MARK: - ScheduleViewControllerDelegate
 protocol ScheduleViewControllerDelegate: AnyObject {
     func didTapDoneButton(schedule: Set<WeekDay>)
 }
-
 
 // MARK: - ScheduleViewController
 final class ScheduleViewController: UIViewController {
@@ -62,23 +60,25 @@ extension ScheduleViewController: UITableViewDataSource {
         tableView.hideLastSeparator(cell: scheduleCell, indexPath: indexPath)
         return scheduleCell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         GlobalConstants.TableViewCell.height
     }
 
 }
 
-
 // MARK: - UITableViewDelegate
 extension ScheduleViewController: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
         UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
     }
 
 }
-
 
 // MARK: - ScheduleCellDelegate
 extension ScheduleViewController: ScheduleCellDelegate {

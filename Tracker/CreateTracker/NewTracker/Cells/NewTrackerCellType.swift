@@ -7,7 +7,7 @@
 enum NewTrackerCellType: String {
     case category
     case schedule
-    
+
     var name: String {
         switch self {
         case .category: return L.Category.title

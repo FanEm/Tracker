@@ -5,14 +5,12 @@
 
 import UIKit
 
-
 // MARK: - TrackersViewControllerProtocol
 protocol TrackersViewControllerProtocol: AnyObject {
     var presenter: TrackersPresenterProtocol? { get set }
 
     func reloadCollectionView(searchText: String?)
 }
-
 
 // MARK: - TrackersViewController
 final class TrackersViewController: UIViewController, TrackersViewControllerProtocol {
@@ -230,18 +228,16 @@ final class TrackersViewController: UIViewController, TrackersViewControllerProt
         presenter?.analyticsService.didClickFilters()
         present(viewController, animated: true)
     }
-    
+
     @objc private func reloadCollectionView() {
         reloadCollectionView(searchText: nil)
     }
 
 }
 
-
 // MARK: - TrackersNavigationController
 final class TrackersNavigationController: UINavigationController {
 }
-
 
 // MARK: - UISearchResultsUpdating
 extension TrackersViewController: UISearchResultsUpdating {
@@ -252,11 +248,9 @@ extension TrackersViewController: UISearchResultsUpdating {
 
 }
 
-
 // MARK: - UISearchControllerDelegate
 extension TrackersViewController: UISearchControllerDelegate {
 }
-
 
 // MARK: - UISearchBarDelegate
 extension TrackersViewController: UISearchBarDelegate {
@@ -270,7 +264,6 @@ extension TrackersViewController: UISearchBarDelegate {
     }
 
 }
-
 
 // MARK: - UICollectionViewDataSource
 extension TrackersViewController: UICollectionViewDataSource {
@@ -310,7 +303,6 @@ extension TrackersViewController: UICollectionViewDataSource {
 
 }
 
-
 // MARK: - UICollectionViewDelegate
 extension TrackersViewController: UICollectionViewDelegate {
 
@@ -323,8 +315,7 @@ extension TrackersViewController: UICollectionViewDelegate {
            let sectionTitleView = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: BaseSectionTitleView.reuseIdentifier,
-            for: indexPath) as? BaseSectionTitleView
-        {
+            for: indexPath) as? BaseSectionTitleView {
             sectionTitleView.titleLabel.text = presenter?.categoryTitle(at: indexPath)
             return sectionTitleView
         }
@@ -345,7 +336,7 @@ extension TrackersViewController: UICollectionViewDelegate {
         }
         let pinUnpinAction = tracker.isPinned ? unpinAction : pinAction
 
-        return UIContextMenuConfiguration(actionProvider: { actions in
+        return UIContextMenuConfiguration(actionProvider: { _ in
             UIMenu(children: [
                 pinUnpinAction,
                 UIAction(title: L.ContextMenu.edit) { [weak self] _ in
@@ -353,13 +344,12 @@ extension TrackersViewController: UICollectionViewDelegate {
                 },
                 UIAction(title: L.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
                     self?.delete(indexPath: indexPath)
-                },
+                }
             ])
         })
     }
 
 }
-
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
@@ -410,7 +400,6 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 
 }
-
 
 // MARK: - TrackerCollectionViewCellDelegate
 extension TrackersViewController: TrackerCollectionViewCellDelegate {

@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - StatisticsTableViewCell
 final class StatisticsTableViewCell: UITableViewCell {
 
@@ -130,7 +129,7 @@ final class StatisticsTableViewCell: UITableViewCell {
                 equalTo: view.bottomAnchor,
                 constant: Constants.View.bottomInset
             ),
-            
+
             countLabel.topAnchor.constraint(
                 equalTo: view.topAnchor,
                 constant: Constants.Label.inset
@@ -155,7 +154,7 @@ final class StatisticsTableViewCell: UITableViewCell {
             view.bottomAnchor.constraint(
                 equalTo: titleLabel.bottomAnchor,
                 constant: Constants.Label.inset
-            ),
+            )
         ])
     }
 

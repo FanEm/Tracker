@@ -16,7 +16,6 @@ extension UIFont {
 
 }
 
-
 enum FontStyle: String {
     case regular = "Regular"
     case bold = "Bold"

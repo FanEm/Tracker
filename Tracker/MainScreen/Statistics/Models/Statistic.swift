@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-
 // MARK: - Statistic
 struct Statistic: Hashable {
     let type: StatisticType

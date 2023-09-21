@@ -45,7 +45,7 @@ final class TrackersView: UIView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         backgroundColor = .trWhite
         addSubview(collectionView)
         activateConstraints()

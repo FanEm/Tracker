@@ -5,13 +5,11 @@
 
 import Foundation
 
-
 // MARK: - StatisticsViewModelProtocol
 protocol StatisticsViewModelProtocol {
     var onStatisticsChange: (() -> Void)? { get set }
     var statistics: Set<Statistic> { get }
 }
-
 
 // MARK: - StatisticsViewModel
 final class StatisticsViewModel: StatisticsViewModelProtocol {
@@ -51,7 +49,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
         }
         addCompletedStatistic(numberOfRecords: numberOfRecords)
     }
-    
+
     private func addCompletedStatistic(numberOfRecords: Int) {
         guard numberOfRecords > 0 else { return }
 
@@ -73,7 +71,6 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     }
 
 }
-
 
 // MARK: - TrackerRecordDataProviderDelegate
 extension StatisticsViewModel: TrackerRecordDataProviderDelegate {

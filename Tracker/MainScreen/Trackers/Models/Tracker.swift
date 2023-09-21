@@ -17,7 +17,7 @@ struct Tracker: Codable {
     let type: NewTrackerType
     let category: Category
     let previousCategoryId: UUID?
-    
+
     init(
         id: UUID,
         name: String,
@@ -39,7 +39,7 @@ struct Tracker: Codable {
         self.category = category
         self.previousCategoryId = previousCategoryId
     }
-    
+
     init(trackerCoreData: TrackerCoreData) {
         self.id = trackerCoreData.id
         self.name = trackerCoreData.name
@@ -53,7 +53,6 @@ struct Tracker: Codable {
     }
 
 }
-
 
 // MARK: - Equatable
 extension Tracker: Equatable {
@@ -70,7 +69,6 @@ extension Tracker: Equatable {
     }
 
 }
-
 
 // MARK: - String extension
 fileprivate extension String {

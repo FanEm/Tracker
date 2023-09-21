@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-
 // MARK: - StatisticType
 enum StatisticType: Int {
     case bestPeriod

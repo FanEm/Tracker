@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - AlertButton
 struct AlertButton {
     let text: String

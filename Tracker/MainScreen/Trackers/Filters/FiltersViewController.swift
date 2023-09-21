@@ -43,7 +43,6 @@ final class FiltersViewController: UIViewController {
 
 }
 
-
 // MARK: - UITableViewDataSource
 extension FiltersViewController: UITableViewDataSource {
 
@@ -67,7 +66,6 @@ extension FiltersViewController: UITableViewDataSource {
 
 }
 
-
 // MARK: - UITableViewDelegate
 extension FiltersViewController: UITableViewDelegate {
 
@@ -76,10 +74,14 @@ extension FiltersViewController: UITableViewDelegate {
         dismiss(animated: true)
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
         UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         GlobalConstants.TableViewCell.height
     }

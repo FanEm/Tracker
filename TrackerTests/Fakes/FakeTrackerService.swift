@@ -6,7 +6,6 @@
 import Foundation
 @testable import Tracker
 
-
 // MARK: - FakeTrackerService
 final class FakeTrackerService: TrackersServiceProtocol {
 

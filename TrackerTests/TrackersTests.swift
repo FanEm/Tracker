@@ -7,58 +7,57 @@ import XCTest
 import SnapshotTesting
 @testable import Tracker
 
-
 // MARK: - TrackersTests
 final class TrackersTests: XCTestCase {
 
     // MARK: - Light mode
     func testLightTrackersViewControllerEmpty() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             trackerServiceState: .empty,
             recordServiceState: .noneDone
         )
-        assertSnapshots(matching: vc, as: image(mode: .light))
+        assertSnapshots(matching: viewContoller, as: image(mode: .light))
     }
 
     func testLightTrackersViewControllerOneSection() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             trackerServiceState: .notEmpty(numberOfSections: 1),
             recordServiceState: .allDone
         )
-        assertSnapshots(matching: vc, as: image(mode: .light))
+        assertSnapshots(matching: viewContoller, as: image(mode: .light))
     }
 
     func testLightTrackersViewControllerTwoSections() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             trackerServiceState: .notEmpty(numberOfSections: 2),
             recordServiceState: .noneDone
         )
-        assertSnapshots(matching: vc, as: image(mode: .light))
+        assertSnapshots(matching: viewContoller, as: image(mode: .light))
     }
 
     // MARK: - Dark mode
     func testDarkTrackersViewControllerEmpty() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             trackerServiceState: .empty,
             recordServiceState: .noneDone
         )
-        assertSnapshots(matching: vc, as: image(mode: .dark))
+        assertSnapshots(matching: viewContoller, as: image(mode: .dark))
     }
 
     func testDarkTrackersViewControllerOneSection() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             trackerServiceState: .notEmpty(numberOfSections: 1),
             recordServiceState: .allDone
         )
-        assertSnapshots(matching: vc, as: image(mode: .dark))
+        assertSnapshots(matching: viewContoller, as: image(mode: .dark))
     }
 
     func testDarkTrackersViewControllerTwoSections() throws {
-        let vc = initViewControllers(
+        let viewContoller = initViewControllers(
             trackerServiceState: .notEmpty(numberOfSections: 2),
             recordServiceState: .noneDone
         )
-        assertSnapshots(matching: vc, as: image(mode: .dark))
+        assertSnapshots(matching: viewContoller, as: image(mode: .dark))
     }
 
     // MARK: - Private Methods
@@ -79,7 +78,7 @@ final class TrackersTests: XCTestCase {
             )
         )
         trackersViewController.presenter = trackersPresenter
-        
+
         return trackersNavigationController
     }
 

@@ -6,10 +6,9 @@
 import Foundation
 @testable import Tracker
 
-
 // MARK: - FakeStatisticsViewModel
 final class FakeStatisticsViewModel: StatisticsViewModelProtocol {
-    
+
     // MARK: - Public Properties
     enum State {
         case empty

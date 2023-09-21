@@ -5,12 +5,10 @@
 
 import UIKit
 
-
 // MARK: - NewTrackerViewControllerProtocol
 protocol NewTrackerViewControllerProtocol: AnyObject {
     var presenter: NewTrackerPresenterProtocol? { get set }
 }
-
 
 // MARK: - NewTrackerViewController
 final class NewTrackerViewController: UIViewController, NewTrackerViewControllerProtocol {
@@ -46,7 +44,6 @@ final class NewTrackerViewController: UIViewController, NewTrackerViewController
     }
 
 }
-
 
 // MARK: - NewTrackerFooterViewDelegate
 extension NewTrackerViewController: NewTrackerFooterViewDelegate {

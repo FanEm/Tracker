@@ -5,12 +5,10 @@
 
 import UIKit
 
-
 // MARK: - NewTrackerHeaderViewDelegate
 protocol NewTrackerHeaderViewDelegate: AnyObject {
     func didChangedTextField(text: String?)
 }
-
 
 // MARK: - NewTrackerHeaderView
 final class NewTrackerHeaderView: UICollectionReusableView {
@@ -98,7 +96,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         registerDidScheduleOrCategoryChosenObserver()
         activateConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -137,7 +135,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
             trailingAnchor.constraint(equalTo: errorLabel.trailingAnchor),
             errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor),
             labelHeightAnchor,
-            
+
             tableView.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
                 constant: Constants.leadingAndTrailingInsets
@@ -172,7 +170,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
 
     private func getSubLabel(model: NewTrackerModel, cellType: NewTrackerCellType) -> String? {
         var subLabel: String?
-        switch (model.type, cellType)  {
+        switch (model.type, cellType) {
         case (.event, .category):
             subLabel = model.category?.name
         case (.event, .schedule):
@@ -195,7 +193,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
             .reorder(by: allWeekDays.map { $0.abbreviatedName })
             .joined(separator: ", ")
     }
-    
+
     private func showErrorLabelIfNeeded(text: String?) {
         guard let text else { return }
         let isHidden = text.count <= GlobalConstants.TextField.maxLength
@@ -227,7 +225,7 @@ extension NewTrackerHeaderView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableViewCells.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: SubtitleTableViewCell.reuseIdentifier,
@@ -238,7 +236,7 @@ extension NewTrackerHeaderView: UITableViewDataSource {
         }
         let cellType = tableViewCells[indexPath.row]
         let label = cellType.name
-        var subLabel: String? = nil
+        var subLabel: String?
         if let newTrackerViewController = parentViewController as? NewTrackerViewController,
            let model = newTrackerViewController.presenter?.newTrackerModel {
             subLabel = getSubLabel(model: model, cellType: cellType)
@@ -272,12 +270,16 @@ extension NewTrackerHeaderView: UITableViewDelegate {
             parentViewController.present(viewController, animated: true)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         GlobalConstants.TableViewCell.height
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
         UITableView.addCornerRadiusForFirstAndLastCells(tableView, cell: cell, indexPath: indexPath)
     }
 

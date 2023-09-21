@@ -5,7 +5,6 @@
 
 import CoreData
 
-
 // MARK: - TrackerRecordStoreProtocol
 protocol TrackerRecordStoreProtocol: AnyObject {
     var numberOfRecords: Int { get }
@@ -17,20 +16,18 @@ protocol TrackerRecordStoreProtocol: AnyObject {
     func record(with trackerId: UUID, date: NSDate) -> TrackerRecordCoreData?
 }
 
-
 // MARK: - TrackerRecordStore
 final class TrackerRecordStore: NSObject {
 
     // MARK: - Private Properties
     private let context: NSManagedObjectContext
-    
+
     // MARK: - Initializers
     init(context: NSManagedObjectContext) {
         self.context = context
     }
 
 }
-
 
 // MARK: - TrackerRecordStoreProtocol
 extension TrackerRecordStore: TrackerRecordStoreProtocol {

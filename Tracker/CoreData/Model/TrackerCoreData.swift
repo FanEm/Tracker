@@ -5,9 +5,8 @@
 
 import CoreData
 
-
 // MARK: - TrackerCoreData
-final class TrackerCoreData: NSManagedObject  {
+final class TrackerCoreData: NSManagedObject {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<TrackerCoreData> {
         return NSFetchRequest<TrackerCoreData>(entityName: "TrackerCoreData")
@@ -24,7 +23,6 @@ final class TrackerCoreData: NSManagedObject  {
     @NSManaged public var category: TrackerCategoryCoreData
     @NSManaged public var records: NSSet
 }
-
 
 // MARK: Generated accessors for records
 extension TrackerCoreData {

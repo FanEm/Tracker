@@ -5,13 +5,11 @@
 
 import UIKit
 
-
 // MARK: - NewTrackerFooterViewDelegate
 protocol NewTrackerFooterViewDelegate: AnyObject {
     func didTapCancelButton()
     func didTapCreateButton()
 }
-
 
 // MARK: - NewTrackerFooterView
 final class NewTrackerFooterView: UICollectionReusableView {
@@ -79,10 +77,12 @@ final class NewTrackerFooterView: UICollectionReusableView {
 
     // MARK: - Private Methods
     private func createAllFieldsFilledObserver() {
-        return NotificationCenter.default.addObserver(self,
-                                                      selector: #selector(changeCreateButtonState(notification:)),
-                                                      name: .didAllFieldsFilled,
-                                                      object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(changeCreateButtonState(notification:)),
+            name: .didAllFieldsFilled,
+            object: nil
+        )
     }
 
     private func activateConstraints() {

@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 // MARK: - StoreUpdate
 struct StoreUpdate {
     let insertedIndexes: IndexSet

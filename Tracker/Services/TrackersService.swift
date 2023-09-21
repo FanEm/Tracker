@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - TrackersServiceProtocol
 protocol TrackersServiceProtocol {
     var numberOfSections: Int { get }
@@ -24,7 +23,6 @@ protocol TrackersServiceProtocol {
     func fetchCompletedTrackers(for date: Date)
     func fetchIncompletedTrackers(for date: Date)
 }
-
 
 // MARK: - TrackersService
 final class TrackersService {
@@ -46,6 +44,7 @@ final class TrackersService {
         self.dataProvider = dataProvider
     }
 
+    // swiftlint:disable force_cast
     private convenience init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let dataStore = appDelegate.dataStore
@@ -53,7 +52,6 @@ final class TrackersService {
     }
 
 }
-
 
 // MARK: - TrackersServiceProtocol
 extension TrackersService: TrackersServiceProtocol {
@@ -80,19 +78,19 @@ extension TrackersService: TrackersServiceProtocol {
     func add(tracker: Tracker) {
         dataProvider?.add(tracker: tracker)
     }
-    
+
     func editTracker(at indexPath: IndexPath, newTracker: Tracker) {
         dataProvider?.editTracker(at: indexPath, newTracker: newTracker)
     }
-    
+
     func pinTracker(at indexPath: IndexPath) {
         dataProvider?.pinTracker(at: indexPath)
     }
-    
+
     func unpinTracker(at indexPath: IndexPath) {
         dataProvider?.unpinTracker(at: indexPath)
     }
-    
+
     func deleteTracker(at indexPath: IndexPath) {
         dataProvider?.deleteTracker(at: indexPath)
     }

@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - StatisticsView
 final class StatisticsView: UIView {
 

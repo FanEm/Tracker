@@ -21,7 +21,7 @@ extension UIColor {
     static let trGradientBlue = UIColor(named: "trGradientBlue") ?? .blue
     static let trGradientRed = UIColor(named: "trGradientRed") ?? .red
     static let trGradientGreen = UIColor(named: "trGradientGreen") ?? .green
-    
+
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()

@@ -5,17 +5,15 @@
 
 import CoreData
 
-
 // MARK: - TrackerRecordDataProviderDelegate
 protocol TrackerRecordDataProviderDelegate: AnyObject {
     func didUpdate(_ update: StoreUpdate)
 }
 
-
 // MARK: - TrackerRecordDataProviderProtocol
 protocol TrackerRecordDataProviderProtocol {
     var numberOfRecords: Int { get }
-    
+
     func record(with trackerId: UUID, date: Date) -> TrackerRecordCoreData?
     func records(date: Date) -> [TrackerRecordCoreData]
     func recordsCount(with trackerId: UUID) -> Int
@@ -23,7 +21,6 @@ protocol TrackerRecordDataProviderProtocol {
     func markTrackerAsNotCompleted(trackerId: UUID, date: Date)
     func fetchRecords()
 }
-
 
 // MARK: - TrackerRecordDataProvider
 final class TrackerRecordDataProvider: NSObject {
@@ -37,7 +34,7 @@ final class TrackerRecordDataProvider: NSObject {
 
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
-    
+
     private lazy var fetchedResultsController: NSFetchedResultsController = {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "TrackerRecordCoreData")
         let sortDescriptors = [
@@ -51,7 +48,7 @@ final class TrackerRecordDataProvider: NSObject {
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-        
+
         fetchedResultsController.delegate = self
         try? fetchedResultsController.performFetch()
         return fetchedResultsController
@@ -64,7 +61,6 @@ final class TrackerRecordDataProvider: NSObject {
     }
 
 }
-
 
 // MARK: - TrackerRecordDataProviderProtocol
 extension TrackerRecordDataProvider: TrackerRecordDataProviderProtocol {
@@ -93,7 +89,9 @@ extension TrackerRecordDataProvider: TrackerRecordDataProviderProtocol {
     }
 
     func markTrackerAsNotCompleted(trackerId: UUID, date: Date) {
-        guard let record = dataStore.trackerRecordStore.record(with: trackerId, date: date.stripTime() as NSDate),
+        guard let record = dataStore
+                            .trackerRecordStore
+                            .record(with: trackerId, date: date.stripTime() as NSDate),
               let tracker = dataStore.trackerStore.tracker(with: trackerId)
         else { return }
         dataStore.trackerRecordStore.delete(record, tracker: tracker)
@@ -104,7 +102,6 @@ extension TrackerRecordDataProvider: TrackerRecordDataProviderProtocol {
     }
 
 }
-
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension TrackerRecordDataProvider: NSFetchedResultsControllerDelegate {

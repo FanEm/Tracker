@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 // MARK: - NewCategoryMode
 enum NewCategoryMode {
     case new

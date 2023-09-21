@@ -5,12 +5,10 @@
 
 import CoreData
 
-
 // MARK: - CategoryDataProviderDelegate
 protocol CategoryDataProviderDelegate: AnyObject {
     func didUpdate(_ update: StoreUpdate)
 }
-
 
 // MARK: - CategoryDataProviderProtocol
 protocol CategoryDataProviderProtocol {
@@ -27,7 +25,6 @@ protocol CategoryDataProviderProtocol {
     func fetchCategories()
 }
 
-
 // MARK: - CategoryDataProvider
 final class CategoryDataProvider: NSObject {
 
@@ -37,7 +34,7 @@ final class CategoryDataProvider: NSObject {
     // MARK: - Private Properties
     private let context: NSManagedObjectContext
     private let dataStore: DataStore
-    
+
     private var insertedIndexes: IndexSet?
     private var deletedIndexes: IndexSet?
 
@@ -47,18 +44,20 @@ final class CategoryDataProvider: NSObject {
             NSSortDescriptor(key: #keyPath(TrackerCategoryCoreData.name), ascending: true)
         ]
         let predicate = NSPredicate(
-            format: "%K == %@", #keyPath(TrackerCategoryCoreData.type), NSNumber(value: CategoryType.user.rawValue)
+            format: "%K == %@",
+            #keyPath(TrackerCategoryCoreData.type),
+            NSNumber(value: CategoryType.user.rawValue)
         )
         request.predicate = predicate
         request.sortDescriptors = sortDescriptors
-        
+
         let fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
             managedObjectContext: context,
             sectionNameKeyPath: nil,
             cacheName: nil
         )
-        
+
         fetchedResultsController.delegate = self
         try? fetchedResultsController.performFetch()
         return fetchedResultsController
@@ -71,7 +70,6 @@ final class CategoryDataProvider: NSObject {
     }
 
 }
-
 
 // MARK: - CategoryDataProviderProtocol
 extension CategoryDataProvider: CategoryDataProviderProtocol {
@@ -125,7 +123,6 @@ extension CategoryDataProvider: CategoryDataProviderProtocol {
     }
 
 }
-
 
 // MARK: - NSFetchedResultsControllerDelegate
 extension CategoryDataProvider: NSFetchedResultsControllerDelegate {

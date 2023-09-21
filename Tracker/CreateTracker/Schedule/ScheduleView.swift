@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - ScheduleView
 final class ScheduleView: ViewWithTableBaseView {
 

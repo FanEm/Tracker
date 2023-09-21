@@ -5,7 +5,6 @@
 
 import CoreData
 
-
 // MARK: - TrackerCategoryCoreData
 final class TrackerCategoryCoreData: NSManagedObject {
 

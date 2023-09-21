@@ -5,29 +5,28 @@
 
 import Foundation
 
-
 // MARK: - NewTrackerModel
 struct NewTrackerModel {
 
     // MARK: - Public Properties
     var type: NewTrackerType
     var id: UUID = UUID()
-    var name: String? = nil {
+    var name: String? {
         didSet {
             checkIfAllFieldsFilled()
         }
     }
-    var emoji: String? = nil {
+    var emoji: String? {
         didSet {
             checkIfAllFieldsFilled()
         }
     }
-    var color: String? = nil {
+    var color: String? {
         didSet {
             checkIfAllFieldsFilled()
         }
     }
-    var category: Category? = nil {
+    var category: Category? {
         didSet {
             checkIfAllFieldsFilled()
         }
@@ -60,8 +59,8 @@ struct NewTrackerModel {
         }
         let trackerSchedule: Set<WeekDay>
         switch type {
-            case .habit: trackerSchedule = schedule
-            case .event: trackerSchedule = Set(WeekDay.allCases)
+        case .habit: trackerSchedule = schedule
+        case .event: trackerSchedule = Set(WeekDay.allCases)
         }
         return Tracker(
             id: id,

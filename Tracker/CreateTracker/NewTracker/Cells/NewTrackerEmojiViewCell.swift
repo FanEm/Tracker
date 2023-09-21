@@ -5,7 +5,6 @@
 
 import UIKit
 
-
 // MARK: - NewTrackerEmojiViewCell
 final class NewTrackerEmojiViewCell: UICollectionViewCell {
 
@@ -51,7 +50,7 @@ final class NewTrackerEmojiViewCell: UICollectionViewCell {
     private func activateConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 

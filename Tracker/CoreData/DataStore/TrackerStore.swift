@@ -5,7 +5,6 @@
 
 import CoreData
 
-
 // MARK: - TrackerStoreProtocol
 protocol TrackerStoreProtocol: AnyObject {
     func add(_ tracker: Tracker, to category: TrackerCategoryCoreData)
@@ -17,7 +16,6 @@ protocol TrackerStoreProtocol: AnyObject {
     func tracker(with id: UUID) -> TrackerCoreData?
     func trackers(with previousCategoryId: UUID) -> [TrackerCoreData]
 }
-
 
 // MARK: - TrackerStore
 final class TrackerStore: NSObject {
@@ -31,7 +29,6 @@ final class TrackerStore: NSObject {
     }
 
 }
-
 
 // MARK: - TrackerStoreProtocol
 extension TrackerStore: TrackerStoreProtocol {
@@ -80,7 +77,7 @@ extension TrackerStore: TrackerStoreProtocol {
 
         context.saveContext()
     }
-    
+
     func pin(_ trackerCoreData: TrackerCoreData, pinCategory: TrackerCategoryCoreData) {
         trackerCoreData.previousCategoryId = trackerCoreData.category.id
         trackerCoreData.category = pinCategory
@@ -88,7 +85,7 @@ extension TrackerStore: TrackerStoreProtocol {
 
         context.saveContext()
     }
-    
+
     func unpin(_ trackerCoreData: TrackerCoreData, previousCategory: TrackerCategoryCoreData) {
         trackerCoreData.category = previousCategory
         trackerCoreData.isPinned = false

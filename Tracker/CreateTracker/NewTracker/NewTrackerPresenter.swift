@@ -3,7 +3,6 @@
 //  Tracker
 //
 
-
 // MARK: - NewTrackerPresenterProtocol
 protocol NewTrackerPresenterProtocol: AnyObject {
     var view: NewTrackerViewControllerProtocol? { get set }
@@ -12,7 +11,6 @@ protocol NewTrackerPresenterProtocol: AnyObject {
 
     func addOrEditTracker()
 }
-
 
 // MARK: - NewTrackerPresenter
 final class NewTrackerPresenter: NewTrackerPresenterProtocol {
@@ -41,7 +39,7 @@ final class NewTrackerPresenter: NewTrackerPresenterProtocol {
         case .edit(let indexPath):
             trackerService.editTracker(at: indexPath, newTracker: tracker)
         }
-        
+
     }
 
     func configureNewTrackerModel(tracker: Tracker) {
@@ -68,7 +66,6 @@ final class NewTrackerPresenter: NewTrackerPresenterProtocol {
 
 }
 
-
 // MARK: - NewTrackerBaseViewDelegate
 extension NewTrackerPresenter: NewTrackerBaseViewDelegate {
 
@@ -82,7 +79,6 @@ extension NewTrackerPresenter: NewTrackerBaseViewDelegate {
 
 }
 
-
 // MARK: - ScheduleViewControllerDelegate
 extension NewTrackerPresenter: ScheduleViewControllerDelegate {
 
@@ -92,7 +88,6 @@ extension NewTrackerPresenter: ScheduleViewControllerDelegate {
 
 }
 
-
 // MARK: - CategoryViewControllerDelegate
 extension NewTrackerPresenter: CategoryViewControllerDelegate {
 
@@ -101,7 +96,6 @@ extension NewTrackerPresenter: CategoryViewControllerDelegate {
     }
 
 }
-
 
 // MARK: - NewEventHeaderViewDelegate
 extension NewTrackerPresenter: NewTrackerHeaderViewDelegate {
