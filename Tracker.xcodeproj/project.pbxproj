@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		587BD68D3FCA7A45DC8BF984 /* libPods-TrackerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67759A93B6DADEFD6863C0EB /* libPods-TrackerTests.a */; };
 		F1979462CBD729EAA99A0742 /* Pods_Tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FDFEE42DAC41682B9B3EE86 /* Pods_Tracker.framework */; };
+		F300C6DA2AC5FF5A00D6EFF6 /* FiltersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300C6D92AC5FF5A00D6EFF6 /* FiltersTests.swift */; };
+		F300C6DD2AC6020100D6EFF6 /* CreateTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300C6DC2AC6020100D6EFF6 /* CreateTrackerTests.swift */; };
+		F300C6DF2AC6031D00D6EFF6 /* NewTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300C6DE2AC6031D00D6EFF6 /* NewTrackerTests.swift */; };
+		F300C6E12AC614D000D6EFF6 /* ScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300C6E02AC614D000D6EFF6 /* ScheduleTests.swift */; };
 		F30C82F52AB85181001E079D /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30C82F42AB85181001E079D /* CategoryType.swift */; };
 		F30FF40B2AB38B830033027C /* EventParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30FF40A2AB38B830033027C /* EventParams.swift */; };
 		F30FF40D2AB38BB60033027C /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30FF40C2AB38BB60033027C /* EventName.swift */; };
@@ -141,6 +145,10 @@
 		6FDFEE42DAC41682B9B3EE86 /* Pods_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F3E290BE381FF4A6711E06F /* Pods-TrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrackerTests.release.xcconfig"; path = "Target Support Files/Pods-TrackerTests/Pods-TrackerTests.release.xcconfig"; sourceTree = "<group>"; };
 		DC85A8C19A81EC6FF4B007B4 /* Pods-Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tracker.release.xcconfig"; path = "Target Support Files/Pods-Tracker/Pods-Tracker.release.xcconfig"; sourceTree = "<group>"; };
+		F300C6D92AC5FF5A00D6EFF6 /* FiltersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersTests.swift; sourceTree = "<group>"; };
+		F300C6DC2AC6020100D6EFF6 /* CreateTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTrackerTests.swift; sourceTree = "<group>"; };
+		F300C6DE2AC6031D00D6EFF6 /* NewTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrackerTests.swift; sourceTree = "<group>"; };
+		F300C6E02AC614D000D6EFF6 /* ScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTests.swift; sourceTree = "<group>"; };
 		F30C82F42AB85181001E079D /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		F30FF40A2AB38B830033027C /* EventParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventParams.swift; sourceTree = "<group>"; };
 		F30FF40C2AB38BB60033027C /* EventName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
@@ -300,6 +308,19 @@
 				67759A93B6DADEFD6863C0EB /* libPods-TrackerTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F300C6DB2AC601F200D6EFF6 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F37E75F52AB082950091F228 /* TrackersTests.swift */,
+				F34DCDF12AB9CF9B00C3C473 /* StatisticsTests.swift */,
+				F300C6D92AC5FF5A00D6EFF6 /* FiltersTests.swift */,
+				F300C6DC2AC6020100D6EFF6 /* CreateTrackerTests.swift */,
+				F300C6DE2AC6031D00D6EFF6 /* NewTrackerTests.swift */,
+				F300C6E02AC614D000D6EFF6 /* ScheduleTests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		F30FF4082AB38B670033027C /* Analytics */ = {
@@ -633,10 +654,9 @@
 		F37E75F42AB082950091F228 /* TrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				F300C6DB2AC601F200D6EFF6 /* Tests */,
 				F34DCDF52AB9D2D100C3C473 /* Helpers */,
 				F3AF59C92AB9B3AD0088F17D /* Fakes */,
-				F37E75F52AB082950091F228 /* TrackersTests.swift */,
-				F34DCDF12AB9CF9B00C3C473 /* StatisticsTests.swift */,
 			);
 			path = TrackerTests;
 			sourceTree = "<group>";
@@ -1073,9 +1093,13 @@
 				F34DCDF22AB9CF9B00C3C473 /* StatisticsTests.swift in Sources */,
 				F34DCDF42AB9D29B00C3C473 /* Helpers.swift in Sources */,
 				F3AF59CB2AB9B3B90088F17D /* FakeTrackerService.swift in Sources */,
+				F300C6DF2AC6031D00D6EFF6 /* NewTrackerTests.swift in Sources */,
+				F300C6DA2AC5FF5A00D6EFF6 /* FiltersTests.swift in Sources */,
 				F3AF59CF2AB9C0420088F17D /* FakeStatisticsViewModel.swift in Sources */,
 				F3AF59CD2AB9B5D60088F17D /* FakeRecordService.swift in Sources */,
+				F300C6DD2AC6020100D6EFF6 /* CreateTrackerTests.swift in Sources */,
 				F37E75F62AB082950091F228 /* TrackersTests.swift in Sources */,
+				F300C6E12AC614D000D6EFF6 /* ScheduleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
