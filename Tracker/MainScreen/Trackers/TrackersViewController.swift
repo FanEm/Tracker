@@ -49,7 +49,7 @@ final class TrackersViewController: UIViewController, TrackersViewControllerProt
         let sc = UISearchController(searchResultsController: nil)
         sc.searchResultsUpdater = self
         sc.delegate = self
-        sc.searchBar.tintColor = .trBlue
+        sc.searchBar.tintColor = A.Colors.blue.color
         sc.searchBar.placeholder = L.Trackers.SearchBar.placeholder
         sc.searchBar.delegate = self
         return sc
@@ -58,17 +58,17 @@ final class TrackersViewController: UIViewController, TrackersViewControllerProt
         let datePicker = UIDatePicker()
         datePicker.preferredDatePickerStyle = .compact
         datePicker.datePickerMode = .date
-        datePicker.tintColor = .trBlue
+        datePicker.tintColor = A.Colors.blue.color
         datePicker.locale = .current
         datePicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
         return datePicker
     }()
     private lazy var filterButton: UIButton = {
         let button = BaseButton()
-        button.setTitleColor(.trPermWhite, for: .normal)
+        button.setTitleColor(A.Colors.white.color, for: .normal)
         button.titleLabel?.font = GlobalConstants.Font.sfPro17
         button.setTitle(L.Filters.title, for: .normal)
-        button.backgroundColor = .trBlue
+        button.backgroundColor = A.Colors.blue.color
         button.addTarget(self, action: #selector(tapFiltersButton), for: .touchUpInside)
         return button
     }()
@@ -163,13 +163,13 @@ final class TrackersViewController: UIViewController, TrackersViewControllerProt
 
         navBar.prefersLargeTitles = true
         navBar.largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.trBlack
+            NSAttributedString.Key.foregroundColor: A.Colors.blackDynamic.color
         ]
         navigationItem.title = L.Trackers.title
 
         navigationItem.searchController = searchController
 
-        navBar.tintColor = .trBlack
+        navBar.tintColor = A.Colors.blackDynamic.color
     }
 
     private func createNewTrackerCreatedObserver() {

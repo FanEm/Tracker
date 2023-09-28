@@ -16,14 +16,14 @@ class SubtitleTableViewCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
 
-        backgroundColor = .trBackground
+        backgroundColor = A.Colors.backgroundDynamic.color
         separatorInset = GlobalConstants.TableViewCell.separatorInset
 
         textLabel?.font = GlobalConstants.Font.sfPro17
-        textLabel?.textColor = .trBlack
+        textLabel?.textColor = A.Colors.blackDynamic.color
 
         detailTextLabel?.font = GlobalConstants.Font.sfPro17
-        detailTextLabel?.textColor = .trGray
+        detailTextLabel?.textColor = A.Colors.gray.color
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -19,7 +19,7 @@ class NewTrackerBaseView: UIView {
     var title: UILabel = {
         let label = UILabel()
         label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -45,7 +45,7 @@ class NewTrackerBaseView: UIView {
             frame: .zero,
             collectionViewLayout: UICollectionViewFlowLayout()
         )
-        collectionView.backgroundColor = .trWhite
+        collectionView.backgroundColor = A.Colors.whiteDynamic.color
         collectionView.register(
             NewTrackerEmojiViewCell.self,
             forCellWithReuseIdentifier: NewTrackerEmojiViewCell.reuseIdentifier
@@ -105,7 +105,7 @@ class NewTrackerBaseView: UIView {
     init(tableViewCells: [NewTrackerCellType]) {
         self.tableViewCells = tableViewCells
         super.init(frame: .zero)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
 
         addSubview(title)
         addSubview(collectionView)

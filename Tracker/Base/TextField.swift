@@ -15,7 +15,7 @@ final class TextField: UITextField {
     init(padding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 40)) {
         self.padding = padding
         super.init(frame: .zero)
-        backgroundColor = .trBackground
+        backgroundColor = A.Colors.backgroundDynamic.color
         layer.cornerRadius = GlobalConstants.cornerRadius
         clearButtonMode = .whileEditing
         translatesAutoresizingMaskIntoConstraints = false

@@ -67,9 +67,9 @@ final class TabBarController: UITabBarController {
 
     // MARK: - Private Methods
     private func setupUI() {
-        tabBar.backgroundColor = .trWhite
-        tabBar.barTintColor = .trWhite
-        tabBar.tintColor = .trBlue
+        tabBar.backgroundColor = A.Colors.whiteDynamic.color
+        tabBar.barTintColor = A.Colors.whiteDynamic.color
+        tabBar.tintColor = A.Colors.blue.color
         tabBar.isTranslucent = false
         tabBar.barStyle = .default
 

@@ -35,7 +35,7 @@ final class OnboardingViewController: UIViewController {
 
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .trPermBlack
+        label.textColor = A.Colors.black.color
         label.font = .sfPro(ofSize: Constants.fontSize, withStyle: .bold)
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -46,8 +46,8 @@ final class OnboardingViewController: UIViewController {
 
     private lazy var button: UIButton = {
         let button = BaseButton()
-        button.backgroundColor = .trPermBlack
-        button.setTitleColor(.trPermWhite, for: .normal)
+        button.backgroundColor = A.Colors.black.color
+        button.setTitleColor(A.Colors.white.color, for: .normal)
         button.setTitle(L.Onboarding.button, for: .normal)
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         return button

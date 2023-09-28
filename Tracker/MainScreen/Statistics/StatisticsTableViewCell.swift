@@ -28,7 +28,7 @@ final class StatisticsTableViewCell: UITableViewCell {
 
     private let view: UIView = {
         let view = UIView()
-        view.backgroundColor = .trWhite
+        view.backgroundColor = A.Colors.whiteDynamic.color
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -39,7 +39,7 @@ final class StatisticsTableViewCell: UITableViewCell {
             ofSize: Constants.Label.FontSize.count,
             withStyle: .bold
         )
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.lineBreakMode = .byTruncatingTail
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,7 +48,7 @@ final class StatisticsTableViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .sfPro(ofSize: Constants.Label.FontSize.title)
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.lineBreakMode = .byTruncatingTail
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -60,9 +60,9 @@ final class StatisticsTableViewCell: UITableViewCell {
         gradient.startPoint = CGPoint(x: 1, y: 0.5)
         gradient.endPoint = CGPoint(x: 0, y: 0.5)
         gradient.colors = [
-            UIColor.trGradientBlue.cgColor,
-            UIColor.trGradientGreen.cgColor,
-            UIColor.trGradientRed.cgColor
+            A.Colors.Gradient.blueGr.color.cgColor,
+            A.Colors.Gradient.greenGr.color.cgColor,
+            A.Colors.Gradient.redGr.color.cgColor
         ]
 
         let shape = CAShapeLayer()
@@ -111,7 +111,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         view.layer.masksToBounds = true
 
         selectionStyle = .none
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
     }
 
     private func activateConstraints() {

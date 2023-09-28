@@ -52,7 +52,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         textField.attributedPlaceholder = NSAttributedString(
             string: L.NewTracker.TextField.placeholder,
             attributes: [
-                .foregroundColor: UIColor.trGray,
+                .foregroundColor: A.Colors.gray.color,
                 .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
             ]
         )
@@ -67,7 +67,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
         label.font = GlobalConstants.Font.sfPro17
         label.isHidden = true
         label.textAlignment = .center
-        label.textColor = .trRed
+        label.textColor = A.Colors.red.color
         label.numberOfLines = 1
         return label
     }()
@@ -83,7 +83,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
 
         addSubview(textField)
         addSubview(errorLabel)

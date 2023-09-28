@@ -29,7 +29,6 @@
 		F32A88292A8F97D0002FFC43 /* Set+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A88282A8F97D0002FFC43 /* Set+Extensions.swift */; };
 		F33706CB2A72709300E6D128 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33706CA2A72709300E6D128 /* AppDelegate.swift */; };
 		F33706CD2A72709300E6D128 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33706CC2A72709300E6D128 /* SceneDelegate.swift */; };
-		F33706D42A72709400E6D128 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F33706D32A72709400E6D128 /* Assets.xcassets */; };
 		F33706D72A72709400E6D128 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F33706D52A72709400E6D128 /* LaunchScreen.storyboard */; };
 		F34DCDF22AB9CF9B00C3C473 /* StatisticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34DCDF12AB9CF9B00C3C473 /* StatisticsTests.swift */; };
 		F34DCDF42AB9D29B00C3C473 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34DCDF32AB9D29B00C3C473 /* Helpers.swift */; };
@@ -105,6 +104,8 @@
 		F3AF59CB2AB9B3B90088F17D /* FakeTrackerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF59CA2AB9B3B90088F17D /* FakeTrackerService.swift */; };
 		F3AF59CD2AB9B5D60088F17D /* FakeRecordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF59CC2AB9B5D60088F17D /* FakeRecordService.swift */; };
 		F3AF59CF2AB9C0420088F17D /* FakeStatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF59CE2AB9C0420088F17D /* FakeStatisticsViewModel.swift */; };
+		F3B4C27C2AC5BA30002E2288 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3B4C27B2AC5BA30002E2288 /* Icons.xcassets */; };
+		F3B4C27E2AC5BAEC002E2288 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3B4C27D2AC5BAEC002E2288 /* Images.xcassets */; };
 		F3E717102A979B19001AAD3A /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E7170F2A979B19001AAD3A /* OnboardingPageViewController.swift */; };
 		F3E717122A97A99A001AAD3A /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E717112A97A99A001AAD3A /* OnboardingViewController.swift */; };
 		F3E717142A97AA00001AAD3A /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E717132A97AA00001AAD3A /* OnboardingPage.swift */; };
@@ -161,7 +162,6 @@
 		F33706C72A72709300E6D128 /* Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F33706CA2A72709300E6D128 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F33706CC2A72709300E6D128 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F33706D32A72709400E6D128 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F33706D62A72709400E6D128 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F33706D82A72709400E6D128 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F34DCDF12AB9CF9B00C3C473 /* StatisticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTests.swift; sourceTree = "<group>"; };
@@ -241,6 +241,8 @@
 		F3AF59CA2AB9B3B90088F17D /* FakeTrackerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTrackerService.swift; sourceTree = "<group>"; };
 		F3AF59CC2AB9B5D60088F17D /* FakeRecordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeRecordService.swift; sourceTree = "<group>"; };
 		F3AF59CE2AB9C0420088F17D /* FakeStatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeStatisticsViewModel.swift; sourceTree = "<group>"; };
+		F3B4C27B2AC5BA30002E2288 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		F3B4C27D2AC5BAEC002E2288 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F3E7170F2A979B19001AAD3A /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		F3E717112A97A99A001AAD3A /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		F3E717132A97AA00001AAD3A /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
@@ -673,8 +675,9 @@
 			children = (
 				F3E815792A77DD5A000BE1DE /* SF-Pro-Text-Bold.otf */,
 				F3E8157A2A77DD5A000BE1DE /* SF-Pro-Text-Regular.otf */,
-				F33706D32A72709400E6D128 /* Assets.xcassets */,
 				F37E76072AB0AFE60091F228 /* Colors.xcassets */,
+				F3B4C27D2AC5BAEC002E2288 /* Images.xcassets */,
+				F3B4C27B2AC5BA30002E2288 /* Icons.xcassets */,
 				F3579D292A780B7C00D1EFA2 /* Localizable.strings */,
 				F3579D7D2A7E9E1A00D1EFA2 /* Localizable.stringsdict */,
 				F38A2B532AB07B050097C464 /* InfoPlist.strings */,
@@ -836,12 +839,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F37E76082AB0AFE60091F228 /* Colors.xcassets in Resources */,
+				F3B4C27C2AC5BA30002E2288 /* Icons.xcassets in Resources */,
 				F3579D272A780B7C00D1EFA2 /* Localizable.strings in Resources */,
 				F38A2B512AB07B050097C464 /* InfoPlist.strings in Resources */,
 				F33706D72A72709400E6D128 /* LaunchScreen.storyboard in Resources */,
-				F33706D42A72709400E6D128 /* Assets.xcassets in Resources */,
 				F3E8157C2A77DD5A000BE1DE /* SF-Pro-Text-Regular.otf in Resources */,
 				F3E8157B2A77DD5A000BE1DE /* SF-Pro-Text-Bold.otf in Resources */,
+				F3B4C27E2AC5BAEC002E2288 /* Images.xcassets in Resources */,
 				F3579D7B2A7E9E1A00D1EFA2 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

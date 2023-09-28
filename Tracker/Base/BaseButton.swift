@@ -14,9 +14,9 @@ final class BaseButton: UIButton {
         layer.cornerRadius = GlobalConstants.cornerRadius
         contentEdgeInsets = GlobalConstants.Button.edgeInsets
         titleLabel?.font = GlobalConstants.Font.sfPro16
-        setTitleColor(.trWhite, for: .normal)
+        setTitleColor(A.Colors.whiteDynamic.color, for: .normal)
         layer.masksToBounds = true
-        backgroundColor = .trBlack
+        backgroundColor = A.Colors.blackDynamic.color
         translatesAutoresizingMaskIntoConstraints = false
     }
 

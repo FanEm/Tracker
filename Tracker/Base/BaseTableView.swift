@@ -11,9 +11,9 @@ final class BaseTableView: UITableView {
     // MARK: - Initializers
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         separatorStyle = .singleLine
-        separatorColor = .trGray
+        separatorColor = A.Colors.gray.color
         showsVerticalScrollIndicator = false
         translatesAutoresizingMaskIntoConstraints = false
         tableFooterView = UIView()

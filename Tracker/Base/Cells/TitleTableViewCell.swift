@@ -16,11 +16,11 @@ class TitleTableViewCell: UITableViewCell {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
 
-        backgroundColor = .trBackground
+        backgroundColor = A.Colors.backgroundDynamic.color
         separatorInset = GlobalConstants.TableViewCell.separatorInset
 
         textLabel?.font = GlobalConstants.Font.sfPro17
-        textLabel?.textColor = .trBlack
+        textLabel?.textColor = A.Colors.blackDynamic.color
     }
 
     required init?(coder aDecoder: NSCoder) {

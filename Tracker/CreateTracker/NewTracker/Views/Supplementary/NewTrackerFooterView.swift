@@ -34,18 +34,18 @@ final class NewTrackerFooterView: UICollectionReusableView {
         let button = BaseButton()
         button.backgroundColor = .clear
         button.layer.borderWidth = Constants.Button.borderWidth
-        button.layer.borderColor = UIColor.trRed.cgColor
+        button.layer.borderColor = A.Colors.red.color.cgColor
         button.setTitle(L.NewTracker.Button.cancel, for: .normal)
-        button.setTitleColor(.trRed, for: .normal)
+        button.setTitleColor(A.Colors.red.color, for: .normal)
         button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         return button
     }()
 
     private lazy var createButton: UIButton = {
         let button = BaseButton()
-        button.backgroundColor = .trGray
+        button.backgroundColor = A.Colors.gray.color
         button.setTitle(L.NewTracker.Button.create, for: .normal)
-        button.setTitleColor(.trPermWhite, for: .normal)
+        button.setTitleColor(A.Colors.white.color, for: .normal)
         button.isEnabled = false
         button.addTarget(self, action: #selector(didTapCreateButton), for: .touchUpInside)
         return button
@@ -65,7 +65,7 @@ final class NewTrackerFooterView: UICollectionReusableView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         addSubview(stackView)
         createAllFieldsFilledObserver()
         activateConstraints()
@@ -116,9 +116,11 @@ final class NewTrackerFooterView: UICollectionReusableView {
 
     @objc private func changeCreateButtonState(notification: Notification) {
         guard let isEnabled = notification.object as? Bool else { return }
+        let titleColor = isEnabled ? A.Colors.whiteDynamic.color : A.Colors.white.color
+        let backgroundColor = isEnabled ? A.Colors.blackDynamic.color : A.Colors.gray.color
         createButton.isEnabled = isEnabled
-        createButton.backgroundColor = isEnabled ? .trBlack : .trGray
-        createButton.setTitleColor(isEnabled ? .trWhite : .trPermWhite , for: .normal)
+        createButton.backgroundColor = backgroundColor
+        createButton.setTitleColor(titleColor, for: .normal)
     }
 
 }

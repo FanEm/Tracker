@@ -53,7 +53,7 @@ class EmptyView: UIView {
         let label = UILabel()
         label.text = self.props.label
         label.font = .sfPro(ofSize: Constants.fontSize)
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -66,7 +66,7 @@ class EmptyView: UIView {
         self.props = props
 
         super.init(frame: .zero)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
 
         addSubview(nothingToShowImageView)
         addSubview(nothingToShowLabel)

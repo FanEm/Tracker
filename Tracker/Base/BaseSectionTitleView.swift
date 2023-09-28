@@ -15,7 +15,7 @@ final class BaseSectionTitleView: UICollectionReusableView {
         let label = UILabel()
         label.textAlignment = .left
         label.font = .sfPro(ofSize: Constants.fontSize, withStyle: .bold)
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

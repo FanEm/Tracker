@@ -31,7 +31,7 @@ final class StatisticsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .trWhite
+        view.backgroundColor = A.Colors.whiteDynamic.color
 
         statisticsView.tableView.dataSource = self
         statisticsView.tableView.delegate = self
@@ -44,7 +44,7 @@ final class StatisticsViewController: UIViewController {
     private func configureNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.trBlack
+            NSAttributedString.Key.foregroundColor: A.Colors.blackDynamic.color
         ]
         navigationItem.title = L.Statistics.title
     }

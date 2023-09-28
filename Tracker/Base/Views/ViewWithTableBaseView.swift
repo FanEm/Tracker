@@ -12,7 +12,7 @@ class ViewWithTableBaseView: UIView {
     var title: UILabel = {
         let label = UILabel()
         label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,7 +36,7 @@ class ViewWithTableBaseView: UIView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         addSubview(title)
         addSubview(tableView)
         addSubview(button)

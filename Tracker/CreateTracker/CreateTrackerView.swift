@@ -42,7 +42,7 @@ final class CreateTrackerView: UIView {
         let label = UILabel()
         label.text = L.CreateTracker.title
         label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -51,7 +51,7 @@ final class CreateTrackerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         addSubview(title)
         addSubview(habitButton)
         addSubview(eventButton)
