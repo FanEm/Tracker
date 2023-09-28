@@ -39,7 +39,6 @@ final class NewTrackerPresenter: NewTrackerPresenterProtocol {
         case .edit(let indexPath):
             trackerService.editTracker(at: indexPath, newTracker: tracker)
         }
-
     }
 
     func configureNewTrackerModel(tracker: Tracker) {
