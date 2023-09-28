@@ -26,7 +26,7 @@ final class CategoryEmptyView: EmptyView {
     private var title: UILabel = {
         let label = UILabel()
         label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.text = L.Category.title
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

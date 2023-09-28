@@ -61,7 +61,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private var label: UILabel = {
         let label = UILabel()
         label.font = .sfPro(ofSize: Constants.Label.fontSize)
-        label.textColor = .trPermWhite
+        label.textColor = A.Colors.white.color
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +72,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .sfPro(ofSize: Constants.Emoji.fontSize)
         label.textAlignment = .center
-        label.backgroundColor = .trTransperentWhite
+        label.backgroundColor = A.Colors.whiteTransparent.color
         label.layer.cornerRadius = Constants.Emoji.cornerRadius
         label.layer.masksToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +88,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private lazy var quantityLabel: UILabel = {
         let label = UILabel()
         label.font = .sfPro(ofSize: Constants.Label.fontSize)
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -219,7 +219,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         if currentDate > Date().stripTime() {
             setImageForButton(
                 image: A.Icons.Trackers.Tracker.plus.image,
-                color: .trGray
+                color: A.Colors.gray.color
             )
             quantityButton.isEnabled = false
             return
@@ -227,8 +227,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
 
         quantityButton.isEnabled = true
         let image: UIImage = isTrackerCompleted
-                             ? A.Icons.Trackers.Tracker.minus.image
-                             : A.Icons.Trackers.Tracker.plus.image
+        ? A.Icons.Trackers.Tracker.minus.image
+        : A.Icons.Trackers.Tracker.plus.image
         setImageForButton(image: image, color: color)
     }
 
@@ -253,8 +253,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         guard let tracker else { return }
         let color = UIColor(hexString: tracker.color)
         let image: UIImage = isTrackerCompleted
-                             ? A.Icons.Trackers.Tracker.plus.image
-                             : A.Icons.Trackers.Tracker.minus.image
+        ? A.Icons.Trackers.Tracker.plus.image
+        : A.Icons.Trackers.Tracker.minus.image
         setImageForButton(image: image, color: color)
         delegate?.didTapOnQuantityButton(self)
     }

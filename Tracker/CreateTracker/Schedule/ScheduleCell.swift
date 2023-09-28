@@ -20,7 +20,7 @@ final class ScheduleCell: TitleTableViewCell {
     // MARK: - Private Properties
     private lazy var switchView: UISwitch = {
         let switchView = UISwitch(frame: .zero)
-        switchView.onTintColor = .trBlue
+        switchView.onTintColor = A.Colors.blue.color
         switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
         return switchView
     }()

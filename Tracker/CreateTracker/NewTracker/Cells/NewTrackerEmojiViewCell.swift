@@ -55,13 +55,13 @@ final class NewTrackerEmojiViewCell: UICollectionViewCell {
     }
 
     private func selectCell() {
-        backgroundColor = .trLightGray
+        backgroundColor = A.Colors.grayLight.color
         layer.masksToBounds = true
         layer.cornerRadius = GlobalConstants.cornerRadius
     }
 
     private func deselectCell() {
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         layer.cornerRadius = 0
     }
 

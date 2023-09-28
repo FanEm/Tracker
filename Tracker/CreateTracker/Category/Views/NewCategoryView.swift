@@ -16,7 +16,7 @@ final class NewCategoryView: UIView {
         textField.attributedPlaceholder = NSAttributedString(
             string: L.NewCategory.TextField.placeholder,
             attributes: [
-                .foregroundColor: UIColor.trGray,
+                .foregroundColor: A.Colors.gray.color,
                 .font: GlobalConstants.Font.sfPro17 ?? UIFont.systemFont(ofSize: 17)
             ]
         )
@@ -28,9 +28,9 @@ final class NewCategoryView: UIView {
 
     lazy var button: UIButton = {
         let button = BaseButton()
-        button.setTitleColor(.trPermWhite, for: .normal)
+        button.setTitleColor(A.Colors.white.color, for: .normal)
         button.setTitle(L.NewCategory.Button.done, for: .normal)
-        button.backgroundColor = .trGray
+        button.backgroundColor = A.Colors.gray.color
         button.isEnabled = false
         return button
     }()
@@ -66,7 +66,7 @@ final class NewCategoryView: UIView {
         let label = UILabel()
         label.text = titleText
         label.font = GlobalConstants.Font.sfPro16
-        label.textColor = .trBlack
+        label.textColor = A.Colors.blackDynamic.color
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -89,7 +89,7 @@ final class NewCategoryView: UIView {
     init(mode: NewCategoryMode) {
         self.mode = mode
         super.init(frame: .zero)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         addSubview(title)
         addSubview(textField)
         addSubview(button)
@@ -103,8 +103,8 @@ final class NewCategoryView: UIView {
     // MARK: - Private Methods
     @objc private func changeButtonState(isEnabled: Bool) {
         button.isEnabled = isEnabled
-        button.backgroundColor = isEnabled ? .trBlack : .trGray
-        button.setTitleColor(isEnabled ? .trWhite : .trPermWhite, for: .normal)
+        button.backgroundColor = isEnabled ? A.Colors.blackDynamic.color : A.Colors.gray.color
+        button.setTitleColor(isEnabled ? A.Colors.whiteDynamic.color : A.Colors.white.color, for: .normal)
     }
 
     @objc private func textFieldChanged(_ textField: UITextField) {

@@ -11,7 +11,7 @@ final class StatisticsView: UIView {
     // MARK: - Public Properties
     var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .trWhite
+        tableView.backgroundColor = A.Colors.whiteDynamic.color
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(
@@ -38,7 +38,7 @@ final class StatisticsView: UIView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         addSubview(tableView)
         activateConstraints()
     }

@@ -24,7 +24,7 @@ final class TrackersView: UIView {
             withReuseIdentifier: BaseSectionTitleView.reuseIdentifier
         )
         collectionView.contentInset = Constants.CollectionView.contentInset
-        collectionView.backgroundColor = .trWhite
+        collectionView.backgroundColor = A.Colors.whiteDynamic.color
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -46,7 +46,7 @@ final class TrackersView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .trWhite
+        backgroundColor = A.Colors.whiteDynamic.color
         addSubview(collectionView)
         activateConstraints()
     }

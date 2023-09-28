@@ -23,8 +23,8 @@ final class OnboardingPageViewController: UIPageViewController {
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
 
-        pageControl.currentPageIndicatorTintColor = .trPermBlack
-        pageControl.pageIndicatorTintColor = .trPermBlack.withAlphaComponent(0.3)
+        pageControl.currentPageIndicatorTintColor = A.Colors.black.color
+        pageControl.pageIndicatorTintColor = A.Colors.black.color.withAlphaComponent(0.3)
         pageControl.isUserInteractionEnabled = false
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
