@@ -14,6 +14,7 @@ final class FakeStatisticsViewModel: StatisticsViewModelProtocol {
         case empty
         case all(count: Int)
     }
+    var analyticsService: AnalyticsService
     var onStatisticsChange: (() -> Void)?
     var statistics: Set<Statistic> {
         switch state {
@@ -32,6 +33,7 @@ final class FakeStatisticsViewModel: StatisticsViewModelProtocol {
 
     // MARK: - Initializers
     init(state: State) {
+        self.analyticsService = AnalyticsService()
         self.state = state
     }
 

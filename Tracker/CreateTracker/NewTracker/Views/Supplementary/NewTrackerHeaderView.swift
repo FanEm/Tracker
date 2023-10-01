@@ -32,6 +32,7 @@ final class NewTrackerHeaderView: UICollectionReusableView {
     }()
 
     // MARK: - Private Properties
+    private let analyticsService = AnalyticsService()
     private enum Constants {
         static let leadingAndTrailingInsets: CGFloat = 16
         enum TextField {
@@ -253,20 +254,24 @@ extension NewTrackerHeaderView: UITableViewDataSource {
 extension NewTrackerHeaderView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let parentViewController else { return }
-        let newTrackerViewController = parentViewController as? NewTrackerViewController
-        let newTrackerPresenter = newTrackerViewController?.presenter
+        guard let parentViewController,
+              let newTrackerViewController = parentViewController as? NewTrackerViewController,
+              let newTrackerPresenter = newTrackerViewController.presenter,
+              let type = newTrackerViewController.type
+        else { return }
         switch tableViewCells[indexPath.row] {
         case .category:
             let categoryViewModel = CategoryViewModel()
             let viewController = CategoryViewController(categoryViewModel: categoryViewModel)
             viewController.delegate = newTrackerPresenter as? any CategoryViewControllerDelegate
-            categoryViewModel.selectedCategory = newTrackerPresenter?.newTrackerModel.category
+            categoryViewModel.selectedCategory = newTrackerPresenter.newTrackerModel.category
+            analyticsService.didClickCategory(type: type)
             parentViewController.present(viewController, animated: true)
         case .schedule:
             let viewController = ScheduleViewController()
             viewController.delegate = newTrackerPresenter as? any ScheduleViewControllerDelegate
-            viewController.schedule = newTrackerPresenter?.newTrackerModel.schedule ?? []
+            viewController.schedule = newTrackerPresenter.newTrackerModel.schedule
+            analyticsService.didClickSchedule(type: type)
             parentViewController.present(viewController, animated: true)
         }
     }

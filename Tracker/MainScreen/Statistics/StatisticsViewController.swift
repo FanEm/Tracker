@@ -40,6 +40,16 @@ final class StatisticsViewController: UIViewController {
         addBindToStatistics()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.analyticsService.didOpenStatisticsScreen()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.analyticsService.didCloseStatisticsScreen()
+    }
+
     // MARK: Private Methods
     private func configureNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true

@@ -220,6 +220,7 @@ final class TrackersViewController: UIViewController, TrackersViewControllerProt
     @objc private func datePickerChanged(picker: UIDatePicker) {
         currentDate = picker.date.stripTime()
         currentFilter = .all
+        presenter?.analyticsService.didChangeDate()
         reloadCollectionView()
     }
 

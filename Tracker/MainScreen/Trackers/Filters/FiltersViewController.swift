@@ -11,6 +11,7 @@ final class FiltersViewController: UIViewController {
     // MARK: - Private Properties
     private let filtersView = FiltersView()
     private let userDefaults = UserDefaults.standard
+    private let analyticsService = AnalyticsService()
     private let filters: [FilterType] = [.all, .today, .completed, .incompleted]
     private var currentFilter: FilterType {
         get {
@@ -33,12 +34,23 @@ final class FiltersViewController: UIViewController {
         filtersView.tableView.dataSource = self
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        analyticsService.didOpenFiltersScreen()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.didCloseFiltersScreen()
+    }
+
     // MARK: - Private Methods
     private func selectCell(in tableView: UITableView, at indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         tableView.visibleCells.forEach { $0.accessoryType = .none }
         cell.accessoryType = .checkmark
         currentFilter = filters[indexPath.row]
+        analyticsService.didChangeFilter()
     }
 
 }

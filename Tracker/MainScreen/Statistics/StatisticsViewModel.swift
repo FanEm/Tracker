@@ -9,12 +9,14 @@ import Foundation
 protocol StatisticsViewModelProtocol {
     var onStatisticsChange: (() -> Void)? { get set }
     var statistics: Set<Statistic> { get }
+    var analyticsService: AnalyticsService { get }
 }
 
 // MARK: - StatisticsViewModel
 final class StatisticsViewModel: StatisticsViewModelProtocol {
 
     // MARK: - Public Properties
+    let analyticsService: AnalyticsService
     var onStatisticsChange: (() -> Void)?
     private(set) var statistics: Set<Statistic> = [] {
         didSet {
@@ -27,6 +29,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
 
     // MARK: - Initializers
     init(recordService: RecordServiceProtocol) {
+        self.analyticsService = AnalyticsService()
         self.recordService = recordService
         self.recordService.dataProviderDelegate = self
         fetchRecords()
