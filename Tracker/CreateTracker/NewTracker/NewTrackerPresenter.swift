@@ -8,6 +8,7 @@ protocol NewTrackerPresenterProtocol: AnyObject {
     var view: NewTrackerViewControllerProtocol? { get set }
     var newTrackerModel: NewTrackerModel { get }
     var mode: NewTrackerMode { get }
+    var analyticsService: AnalyticsService { get }
 
     func addOrEditTracker()
 }
@@ -17,6 +18,7 @@ final class NewTrackerPresenter: NewTrackerPresenterProtocol {
 
     // MARK: - Public Properties
     weak var view: NewTrackerViewControllerProtocol?
+    let analyticsService: AnalyticsService
     private(set) var newTrackerModel: NewTrackerModel
     private(set) var mode: NewTrackerMode
 
@@ -26,6 +28,7 @@ final class NewTrackerPresenter: NewTrackerPresenterProtocol {
 
     // MARK: - Initializers
     init(type: NewTrackerType, mode: NewTrackerMode = .new) {
+        self.analyticsService = AnalyticsService()
         self.mode = mode
         self.newTrackerModel = NewTrackerModel(type: type)
     }
@@ -39,6 +42,7 @@ final class NewTrackerPresenter: NewTrackerPresenterProtocol {
         case .edit(let indexPath):
             trackerService.editTracker(at: indexPath, newTracker: tracker)
         }
+        analyticsService.didClickCreateTracker(type: newTrackerModel.type)
     }
 
     func configureNewTrackerModel(tracker: Tracker) {
@@ -70,10 +74,12 @@ extension NewTrackerPresenter: NewTrackerBaseViewDelegate {
 
     func didTapOnColor(_ hexString: String) {
         newTrackerModel.color = hexString
+        analyticsService.didClickColor(type: newTrackerModel.type)
     }
 
     func didTapOnEmoji(_ emoji: String) {
         newTrackerModel.emoji = emoji
+        analyticsService.didClickEmoji(type: newTrackerModel.type)
     }
 
 }

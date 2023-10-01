@@ -15,6 +15,9 @@ final class NewTrackerViewController: UIViewController, NewTrackerViewController
 
     // MARK: - Public Properties
     var presenter: NewTrackerPresenterProtocol?
+    var type: NewTrackerType? {
+        presenter?.newTrackerModel.type
+    }
 
     // MARK: - Overrides Methods
     override func loadView() {
@@ -35,6 +38,18 @@ final class NewTrackerViewController: UIViewController, NewTrackerViewController
         (view as? NewTrackerBaseView)?.delegate = presenter as? any NewTrackerBaseViewDelegate
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let presenter, let type else { return }
+        presenter.analyticsService.didOpenNewTrackerScreen(type: type)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        guard let presenter, let type else { return }
+        presenter.analyticsService.didCloseNewTrackerScreen(type: type)
+    }
+
     // MARK: - Private Methods
     private func closePresentingController() {
         let presentingViewController = presentingViewController
@@ -50,6 +65,8 @@ extension NewTrackerViewController: NewTrackerFooterViewDelegate {
 
     func didTapCancelButton() {
         dismiss(animated: true)
+        guard let presenter, let type else { return }
+        presenter.analyticsService.didClickCancel(type: type)
     }
 
     func didTapCreateButton() {

@@ -10,6 +10,7 @@ final class CreateTrackerViewController: UIViewController {
 
     // MARK: - Private Properties
     private let createTrackerView = CreateTrackerView()
+    private let analyticsService = AnalyticsService()
 
     // MARK: - Overrides Methods
     override func loadView() {
@@ -20,6 +21,16 @@ final class CreateTrackerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createTrackerView.delegate = self
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        analyticsService.didOpenCreateTrackerScreen()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.didCloseCreateTrackerScreen()
     }
 
     // MARK: - Private Methods

@@ -15,7 +15,6 @@
 		F300C6E12AC614D000D6EFF6 /* ScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F300C6E02AC614D000D6EFF6 /* ScheduleTests.swift */; };
 		F30C82F52AB85181001E079D /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30C82F42AB85181001E079D /* CategoryType.swift */; };
 		F30FF40B2AB38B830033027C /* EventParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30FF40A2AB38B830033027C /* EventParams.swift */; };
-		F30FF40D2AB38BB60033027C /* EventName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30FF40C2AB38BB60033027C /* EventName.swift */; };
 		F30FF40F2AB38CC50033027C /* StatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30FF40E2AB38CC50033027C /* StatisticsTableViewCell.swift */; };
 		F32A87E32A8A65E2002FFC43 /* Tracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F32A87E12A8A65E2002FFC43 /* Tracker.xcdatamodeld */; };
 		F32A87E72A8B835A002FFC43 /* TrackerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32A87E62A8B8359002FFC43 /* TrackerStore.swift */; };
@@ -151,7 +150,6 @@
 		F300C6E02AC614D000D6EFF6 /* ScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTests.swift; sourceTree = "<group>"; };
 		F30C82F42AB85181001E079D /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		F30FF40A2AB38B830033027C /* EventParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventParams.swift; sourceTree = "<group>"; };
-		F30FF40C2AB38BB60033027C /* EventName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventName.swift; sourceTree = "<group>"; };
 		F30FF40E2AB38CC50033027C /* StatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		F32A87E22A8A65E2002FFC43 /* Tracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tracker.xcdatamodel; sourceTree = "<group>"; };
 		F32A87E62A8B8359002FFC43 /* TrackerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerStore.swift; sourceTree = "<group>"; };
@@ -336,7 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				F30FF40A2AB38B830033027C /* EventParams.swift */,
-				F30FF40C2AB38BB60033027C /* EventName.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1043,7 +1040,6 @@
 				F3E86A7E2AB48733001B22E1 /* Statistic.swift in Sources */,
 				F3579D3D2A78FA4400D1EFA2 /* ScheduleViewController.swift in Sources */,
 				F3579D6C2A7BE15D00D1EFA2 /* ViewWithTableBaseView.swift in Sources */,
-				F30FF40D2AB38BB60033027C /* EventName.swift in Sources */,
 				F3579D2C2A780E4100D1EFA2 /* UIFont+Extensions.swift in Sources */,
 				F3579D642A7BD43C00D1EFA2 /* Category.swift in Sources */,
 				F32A88292A8F97D0002FFC43 /* Set+Extensions.swift in Sources */,

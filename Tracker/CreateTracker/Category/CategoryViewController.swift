@@ -47,6 +47,16 @@ final class CategoryViewController: UIViewController {
         addBindToCategories()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        categoryViewModel.analyticsService.didOpenCategoryScreen()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        categoryViewModel.analyticsService.didCloseCategoryScreen()
+    }
+
     // MARK: - Private Methods
     private func setNeededView() {
         view = categoryViewModel.categoriesExist ? categoryView : emptyView
@@ -84,12 +94,14 @@ final class CategoryViewController: UIViewController {
     }
 
     private func selectCategory(_ category: Category?) {
-        self.categoryViewModel.selectedCategory = category
-        self.delegate?.didTapOnCategory(category)
+        categoryViewModel.selectedCategory = category
+        delegate?.didTapOnCategory(category)
         NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)
+        categoryViewModel.analyticsService.didSelectCategory()
     }
 
     @objc private func onTap() {
+        categoryViewModel.analyticsService.didClickAddCategory()
         let viewController = NewCategoryViewController(
             categoryViewModel: categoryViewModel,
             mode: .new
@@ -146,9 +158,11 @@ extension CategoryViewController: UITableViewDelegate {
             UIMenu(children: [
                 UIAction(title: L.ContextMenu.edit) { [weak self] _ in
                     self?.edit(indexPath: indexPath)
+                    self?.categoryViewModel.analyticsService.didClickEditCategory()
                 },
                 UIAction(title: L.ContextMenu.delete, attributes: .destructive) { [weak self] _ in
                     self?.delete(indexPath: indexPath)
+                    self?.categoryViewModel.analyticsService.didClickDeleteCategory()
                 }
             ])
         })

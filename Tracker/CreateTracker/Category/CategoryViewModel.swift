@@ -11,22 +11,21 @@ final class CategoryViewModel {
     // MARK: - Public Properties
     @Observable
     private(set) var categories: [Category] = []
-
     var numberOfCategories: Int {
         categoryService.numberOfCategories
     }
-
     var categoriesExist: Bool {
         numberOfCategories > 0
     }
-
     var selectedCategory: Category?
+    let analyticsService: AnalyticsService
 
     // MARK: - Private Properties
     private var categoryService: CategoryServiceProtocol
 
     // MARK: - Initializers
     init(categoryService: CategoryServiceProtocol) {
+        self.analyticsService = AnalyticsService()
         self.categoryService = categoryService
         self.categoryService.dataProviderDelegate = self
         fetchCategories()

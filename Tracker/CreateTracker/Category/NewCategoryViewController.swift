@@ -57,6 +57,16 @@ final class NewCategoryViewController: UIViewController {
         registerKeyboardObserver()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        categoryViewModel.analyticsService.didOpenNewCategoryScreen()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        categoryViewModel.analyticsService.didCloseNewCategoryScreen()
+    }
+
     // MARK: - Private Methods
     @objc private func addNewCategory() {
         guard let categoryName = newCategoryView.textField.text else { return }
@@ -67,6 +77,7 @@ final class NewCategoryViewController: UIViewController {
         }
 
         categoryViewModel.add(category: category)
+        categoryViewModel.analyticsService.didClickAddNewCategory()
         dismiss(animated: true)
     }
 
@@ -82,7 +93,7 @@ final class NewCategoryViewController: UIViewController {
         }
         categoryViewModel.renameCategory(at: indexPath, to: categoryName)
         delegate?.categoryWasRenamed(category: category, newName: categoryName)
-
+        categoryViewModel.analyticsService.didClickEditNewCategory()
         dismiss(animated: true)
     }
 

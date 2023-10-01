@@ -18,6 +18,7 @@ final class ScheduleViewController: UIViewController {
     weak var delegate: ScheduleViewControllerDelegate?
 
     // MARK: - Private Properties
+    private let analyticsService = AnalyticsService()
     private let scheduleView = ScheduleView()
     private let weekDays: [WeekDay] = WeekDay.allCases
 
@@ -34,10 +35,21 @@ final class ScheduleViewController: UIViewController {
         scheduleView.tableView.delegate = self
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        analyticsService.didOpenScheduleScreen()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService.didCloseScheduleScreen()
+    }
+
     // MARK: - Private Methods
     @objc private func onTap() {
         delegate?.didTapDoneButton(schedule: schedule)
         NotificationCenter.default.post(name: .didScheduleOrCategoryChosen, object: nil)
+        analyticsService.didSelectSchedule()
         dismiss(animated: true)
     }
 
