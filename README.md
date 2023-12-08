@@ -13,6 +13,15 @@
 
 [Дизайн Figma](https://www.figma.com/file/owAO4CAPTJdpM1BZU5JHv7/Tracker-(YP)?t=SZDLmkWeOPX4y6mp-0)
 
+# Скринкаст
+
+<details>
+  <summary>Посмотреть</summary>
+https://github.com/FanEm/Tracker/assets/2598509/556ceb81-c7e8-464c-a090-0a29926f8e48
+</details>
+
+
+
 # Назначение и цели приложения
 
 Приложение помогает пользователям формировать полезные привычки и контролировать их выполнение.
