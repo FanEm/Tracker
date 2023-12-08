@@ -13,11 +13,23 @@
 
 [Дизайн Figma](https://www.figma.com/file/owAO4CAPTJdpM1BZU5JHv7/Tracker-(YP)?t=SZDLmkWeOPX4y6mp-0)
 
-# Скринкаст
+# Скриншоты
 
 <details>
   <summary>Посмотреть</summary>
-https://github.com/FanEm/Tracker/assets/2598509/556ceb81-c7e8-464c-a090-0a29926f8e48
+<img src="https://github.com/FanEm/Tracker/assets/2598509/bb5ac77a-8e70-45bb-b949-ff084578460d" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/23e6fb1f-bd12-4716-afbc-29fb4161323a" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/758d88c8-fb52-4c40-b803-f3036be94382" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/c997f321-b5fa-4eb6-8e3c-7665457c0b23" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/b2691aa7-aec0-47f2-80da-5806e11316b6" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/40f9e5b6-c7ec-48e6-b44a-8b357be62d88" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/85d11155-6d3b-48cb-b072-8946c4bb1a27" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/412129a0-c64d-4b35-9136-cd1c5b258a40" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/0a7b1693-84ea-4ea2-ad8c-22775f92b12d" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/ddb6354f-6ea7-4424-b229-59ac5a5c5807" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/99541e4b-dd63-4de5-ade5-210e29a21fd7" width="250"/>
+<img src="https://github.com/FanEm/Tracker/assets/2598509/b23be389-fc92-4bf4-b6f5-0ab7c47e932d" width="250"/>
+
 </details>
 
 
